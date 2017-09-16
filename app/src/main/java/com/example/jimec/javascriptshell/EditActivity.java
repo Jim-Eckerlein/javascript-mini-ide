@@ -169,7 +169,7 @@ public class EditActivity extends AppCompatActivity {
      * considering syntax highlighting.
      */
     private void syncText() {
-        String fixed = Highlighter.toHtml(mInternalText.toString(), mCursor);
+        String fixed = HtmlGenerator.toHtml(mInternalText.toString(), mCursor);
         String html = "<pre style=\"font-size:12pt\"><code>" + fixed + "</code></pre>";
         mEditor.loadData(html, "text/html; charset=UTF-8", null);
     }

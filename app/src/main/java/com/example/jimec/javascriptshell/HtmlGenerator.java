@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * everything else is private in irrelevant to the user.
  */
 
-class Highlighter {
+class HtmlGenerator {
 
     private static final String COLOR_KEYWORD = "steelblue";
     private static final String COLOR_STRING = "yellowgreen";
