@@ -25,23 +25,23 @@ public class LineList {
 
     public static void main(String[] args) {
         LineList lines = new LineList();
-        lines.write("AAAA(){\nfirst\n}");
-        lines.moveCursorToStart();
-        lines.write("BBBB(){\nsecond\n}");
+        lines.write("AAAA");
+        lines.moveCursorLeft();
         lines.writeEnter();
         System.out.println(lines);
     }
 
-    // TODO: add appendix to writeEnter(), so you can break within a line
     void writeEnter() {
         Line line = new Line();
-        line.setCode("");
+        String oldCodeLine = mLines.get(mCursor.mLine).getCode();
+        line.setCode(oldCodeLine.substring(0, mCursor.mCol));
         if (mLines.size() > 0) {
             line.detectIndent(mLines.get(mCursor.mLine));
         }
+        mLines.get(mCursor.mLine).setCode(oldCodeLine.substring(mCursor.mCol));
         mLines.add(mCursor.mLine, line);
-        mCursor.mCol++;
-        mCursor.mLine = 0;
+        mCursor.mLine++;
+        moveCursorToLineStart();
     }
 
     /**
@@ -66,7 +66,7 @@ public class LineList {
                 line = mLines.get(mCursor.mLine);
                 String oldLine = line.getCode();
                 if (mCursor.mCol < oldLine.length()) {
-                    appendix = oldLine.substring(mCursor.mCol, oldLine.length());
+                    appendix = oldLine.substring(mCursor.mCol);
                 }
                 line.setCode(oldLine.substring(0, mCursor.mCol) + textLine);
             } else {
