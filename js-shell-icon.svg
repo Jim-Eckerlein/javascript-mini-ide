@@ -6,15 +6,15 @@
     xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
     xmlns:xlink="http://www.w3.org/1999/xlink" height="512" id="svg2" version="1.1"
     viewBox="0 0 512.00001 512.00001" width="512" xmlns="http://www.w3.org/2000/svg"
-    inkscape:export-filename="C:\Users\Jim\Desktop\js-shell-icon.png" inkscape:export-xdpi="90"
-    inkscape:export-ydpi="90" inkscape:version="0.91 r13725" sodipodi:docname="js-shell-icon.svg">
+    inkscape:export-filename="js-shell-icon.png" inkscape:export-xdpi="75" inkscape:export-ydpi="75"
+    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)" sodipodi:docname="js-shell-icon.svg">
     <sodipodi:namedview bordercolor="#666666" borderopacity="1.0" id="base" pagecolor="#ffffff"
         showborder="true" showgrid="false" showguides="false" units="px"
-        inkscape:current-layer="layer1" inkscape:cx="265.54416" inkscape:cy="219.12279"
+        inkscape:current-layer="layer1" inkscape:cx="284.39657" inkscape:cy="244.32193"
         inkscape:document-units="px" inkscape:pageopacity="0" inkscape:pageshadow="2"
         inkscape:showpageshadow="false" inkscape:window-height="1017" inkscape:window-maximized="1"
         inkscape:window-width="1920" inkscape:window-x="-8" inkscape:window-y="-8"
-        inkscape:zoom="0.7766103" />
+        inkscape:zoom="1.5532206" />
     <defs id="defs4">
         <linearGradient id="linearGradient15825" inkscape:collect="always">
             <stop style="stop-color:#e95200;stop-opacity:1" id="stop15827" offset="0" />
@@ -31,28 +31,34 @@
         <linearGradient gradientTransform="translate(12,0)" gradientUnits="userSpaceOnUse"
             id="linearGradient15823" x1="180.77354" x2="445.61636" y1="694.99823" y2="971.67493"
             inkscape:collect="always" xlink:href="#linearGradient15825" />
+        <clipPath clipPathUnits="userSpaceOnUse" id="clipPath852">
+            <circle style="fill:#ffc107;fill-opacity:1" cx="256" cy="796.36218" id="circle854"
+                r="256" />
+        </clipPath>
     </defs>
     <metadata id="metadata7">
         <rdf:RDF>
             <cc:Work rdf:about="">
                 <dc:format>image/svg+xml</dc:format>
                 <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-                <dc:title></dc:title>
+                <dc:title />
             </cc:Work>
         </rdf:RDF>
     </metadata>
     <g id="layer1" transform="translate(0,-540.36216)" inkscape:groupmode="layer"
         inkscape:label="Layer 1">
-        <circle style="fill:#ffc107;fill-opacity:1" cx="256" cy="796.36218" id="path4197" r="256" />
+        <circle style="fill:#ffc107;fill-opacity:1" cx="256" cy="796.36218" id="circle850"
+            r="256" />
         <circle style="fill:#ffa000;fill-opacity:1" clip-path="url(#clipPath4203)" cx="256"
             cy="796.36218" id="circle4199" r="256" transform="matrix(1,0,0,-1,0,1592.7243)" />
         <path
             style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:153.61869812px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Medium';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient15823);fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+            clip-path="url(#clipPath852)"
             d="m 222.13086,747.11997 c -10.23547,-10.17173 -21.63112,-23.71183 -31.82294,-32.36438 -8.13649,0.86666 -15.61122,-0.48491 -18.37042,2.31872 -0.39743,27.70935 0.79122,56.45189 -0.58789,83.52177 -27.87459,-28.69698 -9.31032,-10.25929 -38.32227,-39.18873 l -62.783199,27.90234 c -0.295078,7.651 -0.04426,8.78369 -0.319334,13.87556 16.998349,16.50523 38.404563,38.85939 55.409173,55.36092 6.57369,6.89422 13.40511,13.62033 20.2754,20.3224 -0.0653,4.18896 -2.59749,8.96117 -2.9343,15.29893 364.11467,364.0015 21.16211,20.68193 293.11398,293.5569 80.28539,-18.4762 202.1014,-95.1049 294.32414,-134.2834 0,0 -179.35532,-178.97727 -263.85146,-264.02278 -10.80999,-3.82791 -20.22479,-7.21612 -33.48059,-14.20299 l -44.57699,-40.2272 c -15.01129,-1.584 -20.37383,42.97393 -25.77137,32.97643 -12.25099,-11.63681 -37.5986,-36.75912 -49.85042,-48.39404 -25.55444,-2.68954 -83.66949,-12.34685 -90.45151,27.54955 z"
             id="path11683" inkscape:connector-curvature="0"
             sodipodi:nodetypes="cccccccccccccccccc" />
         <flowRoot
-       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"
+       style="font-style:normal;font-weight:normal;line-height:0.01%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="flowRoot4269"
        xml:space="preserve"><flowRegion
          id="flowRegion4271"><rect
@@ -61,7 +67,8 @@
            width="134.75459"
            x="605.48517"
            y="25.790867" /></flowRegion><flowPara
-         id="flowPara4275" /></flowRoot>
+         style="font-size:40px;line-height:1.25"
+         id="flowPara4275"> </flowPara></flowRoot>
         <g style="font-style:normal;font-weight:normal;font-size:52.1415863px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
             id="text4154-1" transform="translate(8.763916,-1.2840038)" />
         <g style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:193.20237732px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"

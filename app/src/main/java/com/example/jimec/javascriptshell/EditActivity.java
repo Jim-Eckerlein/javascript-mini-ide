@@ -26,7 +26,7 @@ public class EditActivity extends AppCompatActivity {
     private FrameLayout mKeyboardContainer;
     private boolean mShift = false;
     private StringBuilder mInternalText = new StringBuilder();
-    private Cursor mCursor = new Cursor();
+    private LineList.Cursor mCursor = new LineList.Cursor();
     private int mDesiredCursorCol = 0;
 
     public static String readTextFile(Context ctx, int resId) {

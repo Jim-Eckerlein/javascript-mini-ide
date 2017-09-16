@@ -40,13 +40,17 @@ public class Line {
             mIndent++;
         }
 
-        if (previousLine.mCode.matches(".*\\}\\s*$")        // { block ended
-                || previousLine.mCode.matches(".*\\)\\s*$") // ( block ended
-                || previousLine.mCode.matches(".*\\]\\s*$") // [ block ended
+        if (mCode.matches("^\\s*\\}\\s*$")        // { block ended
+                || mCode.matches("^\\s*\\)\\s*$") // ( block ended
+                || mCode.matches("^\\s*\\]\\s*$") // [ block ended
                 ) {
             // Decrease indent if greater than 0
             mIndent = mIndent > 0 ? mIndent - 1 : 0;
         }
     }
 
+    @Override
+    public String toString() {
+        return "(@" + mIndent + ") " + mCode;
+    }
 }

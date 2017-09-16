@@ -24,7 +24,7 @@ class Highlighter {
      * @param plain Plain JavaScript code
      * @return HTML decorated code
      */
-    static String toHtml(String plain, Cursor cursor) {
+    static String toHtml(String plain, LineList.Cursor cursor) {
         Category currentCategory = Category.Code;
         Category commentSurroundingCategory = Category.Code;
         ArrayList<Span> spans = new ArrayList<>();
@@ -94,7 +94,7 @@ class Highlighter {
         }
 
         // Build final HTML string by adding HTML spans and add cursor
-        Cursor position = new Cursor();
+        LineList.Cursor position = new LineList.Cursor();
         StringBuilder html = new StringBuilder();
         for (Span span : spans) {
             switch (span.mCategory) {
@@ -132,7 +132,7 @@ class Highlighter {
         return text;
     }
 
-    private static String highlightCode(String text, Cursor cursor, Cursor position) {
+    private static String highlightCode(String text, LineList.Cursor cursor, LineList.Cursor position) {
         text = maskHtmlChars(text);
 
         // Search operators:
@@ -153,21 +153,21 @@ class Highlighter {
         return text;
     }
 
-    private static String highlightString(String text, Cursor cursor, Cursor position) {
+    private static String highlightString(String text, LineList.Cursor cursor, LineList.Cursor position) {
         text = maskHtmlChars(text);
         text = "<span style=\"color:" + COLOR_STRING + "\"><i>" + text + "</i></span>";
         text = insertCursor(text, cursor, position);
         return text;
     }
 
-    private static String highlightComment(String text, Cursor cursor, Cursor position) {
+    private static String highlightComment(String text, LineList.Cursor cursor, LineList.Cursor position) {
         text = maskHtmlChars(text);
         text = "<span style=\"color:" + COLOR_COMMENT + "\"><i>" + text + "</i></span>";
         text = insertCursor(text, cursor, position);
         return text;
     }
 
-    private static String insertCursor(String text, Cursor cursor, Cursor position) {
+    private static String insertCursor(String text, LineList.Cursor cursor, LineList.Cursor position) {
         for (int i = 0; i < text.length(); i++) {
 
             // Check for line-break:
