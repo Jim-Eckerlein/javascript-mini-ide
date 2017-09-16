@@ -18,17 +18,46 @@ public class LineList {
      * Construct an empty line list.
      */
     LineList() {
-        Line line = new Line();
-        line.setCode("");
-        mLines.add(line);
+        clear();
     }
 
     public static void main(String[] args) {
         LineList lines = new LineList();
-        lines.write("AAAA");
-        lines.moveCursorLeft();
+        lines.write("1234\n5678");
+        lines.moveCursorToLineStart();
+        lines.backspace();
+        lines.moveCursorRight();
         lines.writeEnter();
+        lines.clear();
+        lines.write("hello");
         System.out.println(lines);
+    }
+
+    void clear() {
+        mLines.clear();
+
+        Line line = new Line();
+        line.setCode("");
+        mLines.add(line);
+
+        mCursor.reset();
+    }
+
+    void backspace() {
+        if (mCursor.mCol > 0) {
+            // Delete char under cursor
+            mCursor.mCol--;
+            StringBuilder codeLine = new StringBuilder(mLines.get(mCursor.mLine).getCode());
+            codeLine.deleteCharAt(mCursor.mCol);
+            mLines.get(mCursor.mLine).setCode(codeLine.toString());
+        } else if (mCursor.mLine > 0) {
+            // Delete line break by merging lines, only possible if not first line
+            int newCol = mLines.get(mCursor.mLine - 1).getCode().length();
+            mLines.get(mCursor.mLine - 1).setCode(mLines.get(mCursor.mLine - 1).getCode()
+                    + mLines.get(mCursor.mLine).getCode());
+            mLines.remove(mCursor.mLine--);
+            mCursor.mCol = newCol;
+        }
     }
 
     void writeEnter() {
@@ -181,6 +210,10 @@ public class LineList {
         @Override
         public String toString() {
             return "" + mLine + ":" + mCol;
+        }
+
+        public void reset() {
+            mCol = mLine = mDesiredCol = 0;
         }
     }
 }
