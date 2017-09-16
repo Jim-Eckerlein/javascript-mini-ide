@@ -20,14 +20,31 @@ import java.security.InvalidParameterException;
 
 public class EditActivity extends AppCompatActivity {
 
+    public static final String EXTRA_CODE = "com.example.jimec.javascriptshell.CODE";
+    private static final int INDENTATION_LENGTH = 4;
     private WebView mEditor;
     private FrameLayout mKeyboardContainer;
     private boolean mShift = false;
     private StringBuilder mInternalText = new StringBuilder();
-    private Highlighter.Cursor mCursor = new Highlighter.Cursor();
+    private Cursor mCursor = new Cursor();
     private int mDesiredCursorCol = 0;
-    private static final int INDENTATION_LENGTH = 4;
-    public static final String EXTRA_CODE = "com.example.jimec.javascriptshell.CODE";
+
+    public static String readTextFile(Context ctx, int resId) {
+        InputStream inputStream = ctx.getResources().openRawResource(resId);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        StringBuilder text = new StringBuilder();
+        try {
+            while ((line = reader.readLine()) != null) {
+                text.append(line);
+                text.append('\n');
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return text.toString();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,23 +162,6 @@ public class EditActivity extends AppCompatActivity {
 
     private int getLineCount() {
         return mInternalText.toString().split("\n").length;
-    }
-
-    public static String readTextFile(Context ctx, int resId) {
-        InputStream inputStream = ctx.getResources().openRawResource(resId);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        String line;
-        StringBuilder text = new StringBuilder();
-        try {
-            while ((line = reader.readLine()) != null) {
-                text.append(line);
-                text.append('\n');
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return text.toString();
     }
 
     /**
