@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <LinearLayout style="@style/KeyboardRow">
+
+        <Button
+            style="@style/KeyboardButtonPrimary"
+            android:text="1" />
+
+        <Button
+            style="@style/KeyboardButtonPrimary"
+            android:text="2" />
+
+        <Button
+            style="@style/KeyboardButtonPrimary"
+            android:text="3" />
+
+        <Button
+            style="@style/KeyboardButtonPrimary"
+            android:text="4" />
+
+        <Button
+            style="@style/KeyboardButtonPrimary"
+            android:text="5" />
+
+        <Button
+            style="@style/KeyboardButtonPrimary"
+            android:text="6" />
+
+        <Button
+            style="@style/KeyboardButtonPrimary"
+            android:text="7" />
+
+        <Button
+            style="@style/KeyboardButtonPrimary"
+            android:text="8" />
+
+        <Button
+            style="@style/KeyboardButtonPrimary"
+            android:text="9" />
+
+        <Button
+            style="@style/KeyboardButtonPrimary"
+            android:text="0" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/KeyboardRow">
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="q" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="w" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="e" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="r" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="t" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="z" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="u" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="i" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="o" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="p" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/KeyboardRow">
+
+        <Button
+            style="@style/KeyboardButtonAccent"
+            android:text=";" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="a" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="s" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="d" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="f" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="g" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="h" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="j" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="k" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="l" />
+
+        <Button
+            style="@style/KeyboardButtonPrimary"
+            android:text="," />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/KeyboardRow">
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="y" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="x" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="c" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="v" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="b" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="n" />
+
+        <Button
+            style="@style/KeyboardButtonNormal"
+            android:text="m" />
+
+        <Button
+            style="@style/KeyboardButtonPrimary"
+            android:text="(" />
+
+        <Button
+            style="@style/KeyboardButtonPrimary"
+            android:text=")" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/KeyboardRow">
+
+        <Button
+            style="@style/KeyboardButtonSwitcher"
+            android:layout_weight="0.5"
+            android:onClick="gotoKeyboard1"
+            android:text="{ }" />
+
+        <Button
+            style="@style/KeyboardButtonAccent"
+            android:onClick="toggleShift"
+            android:text="SHIFT" />
+
+        <Button
+            style="@style/KeyboardButtonAccent"
+            android:onClick="writeSpace"
+            android:text="SPACE"
+            android:textColor="@color/colorAccent" />
+
+        <Button
+            style="@style/KeyboardButtonAccent"
+            android:onClick="writeEnter"
+            android:text="ENTER" />
+
+        <Button
+            style="@style/KeyboardButtonAccent"
+            android:layout_weight="0.5"
+            android:onClick="backspace"
+            android:text="⌫" />
+
+    </LinearLayout>
+
+</LinearLayout>

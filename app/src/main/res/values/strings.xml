@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">JavaScript Shell</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="examples_prompt">Examples</string>
+    <string-array name="examples_array">
+        <item>Demo</item>
+        <item>Print</item>
+        <item>Array</item>
+        <item>Object</item>
+        <item>Function</item>
+        <item>Time</item>
+    </string-array>
+</resources>
