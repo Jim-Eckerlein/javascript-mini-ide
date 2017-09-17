@@ -123,64 +123,77 @@ public class LineList {
         mLines.get(mCursor.mLine).setCode(mLines.get(mCursor.mLine).getCode() + appendix);
     }
 
-    void moveCursorToLineStart() {
-        mCursor.mDesiredCol = mCursor.mCol = 0;
+    boolean moveCursorToLineStart() {
+        if (mCursor.mCol != 0) {
+            mCursor.mDesiredCol = mCursor.mCol = 0;
+            return true;
+        } else return false;
     }
 
-    void moveCursorToLineEnding() {
-        mCursor.mDesiredCol = mCursor.mCol = mLines.get(mCursor.mLine).getCode().length();
+    boolean moveCursorToLineEnding() {
+        if (mCursor.mCol != mLines.get(mCursor.mLine).getCode().length()) {
+            mCursor.mDesiredCol = mCursor.mCol = mLines.get(mCursor.mLine).getCode().length();
+            return true;
+        } else return false;
     }
 
-    void moveCursorToStart() {
-        mCursor.mLine = 0;
-        mCursor.mDesiredCol = mCursor.mCol = 0;
+    boolean moveCursorToStart() {
+        if (mCursor.mLine != 0 || mCursor.mCol != 0) {
+            mCursor.mLine = 0;
+            mCursor.mDesiredCol = mCursor.mCol = 0;
+            return true;
+        } else return false;
     }
 
-    void moveCursorToEnding() {
-        mCursor.mLine = mLines.size() - 1;
-        moveCursorToLineEnding();
-    }
-
-    void moveCursorLeft() {
+    boolean moveCursorLeft() {
         if (mCursor.mCol == 0) {
             // Cursor is already at line start
             if (mCursor.mLine > 0) {
+                // Cursor moves up
                 mCursor.mLine--;
                 moveCursorToLineEnding();
-            }
+                return true;
+            } else return false;
         } else {
             mCursor.mDesiredCol = --mCursor.mCol;
+            return true;
         }
     }
 
-    void moveCursorRight() {
+    boolean moveCursorRight() {
         if (mCursor.mCol == mLines.get(mCursor.mLine).getCode().length()) {
             // Cursor is already at line end
             if (mCursor.mLine < mLines.size() - 1) {
+                // Cursor moves down
                 mCursor.mLine++;
                 moveCursorToLineStart();
-            }
+                return true;
+            } else return false;
         } else {
             mCursor.mDesiredCol = ++mCursor.mCol;
+            return true;
         }
     }
 
-    void moveCursorUp() {
+    boolean moveCursorUp() {
         if (mCursor.mLine > 0) {
             mCursor.mLine--;
             mCursor.mCol = Math.min(mLines.get(mCursor.mLine).getCode().length(), mCursor.mDesiredCol);
+            return true;
         }
+        return false;
     }
 
-    void moveCursorDown() {
+    boolean moveCursorDown() {
         if (mCursor.mLine < mLines.size() - 1) {
             mCursor.mLine++;
             mCursor.mCol = Math.min(mLines.get(mCursor.mLine).getCode().length(), mCursor.mDesiredCol);
+            return true;
         }
+        return false;
     }
 
-    @Override
-    public String toString() {
+    public void dump() {
         StringBuilder sb = new StringBuilder();
 
         sb.append("LineList, ").append(mLines.size()).append(" lines, cursor at ").append(mCursor.toString()).append('\n');
@@ -192,6 +205,20 @@ public class LineList {
             }
             sb.append(line.getCode()).append("\n");
             i++;
+        }
+
+        System.out.println(sb.toString());
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        for (Line line : mLines) {
+            for (int indent = 0; indent < line.getIndent(); indent++) {
+                sb.append("    ");
+            }
+            sb.append(line.getCode()).append("\n");
         }
 
         return sb.toString();
