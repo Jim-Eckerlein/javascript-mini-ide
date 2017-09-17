@@ -33,6 +33,14 @@ public class LineList {
         System.out.println(lines);
     }
 
+    public Cursor getCursor() {
+        return mCursor;
+    }
+
+    public ArrayList<Line> getLines() {
+        return mLines;
+    }
+
     void clear() {
         mLines.clear();
 

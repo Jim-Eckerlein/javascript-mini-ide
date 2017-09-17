@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <style>
+* {
+    font-family: monospace;
+    color: #111;
+    font-size: 1.2rem;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+td {
+    width: auto;
+    padding: 0;
+}
+
+.code-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.line-number {
+    color: #999;
+    padding: 2px 16px 2px 2px;
+    width: 1%;
+    white-space: nowrap;
+}
+
+.code-line {
+    white-space: pre;
+}
+
+.active-line .code-line {
+    background-color: #ddd;
+    border-radius: 4px;
+}
+
+.active-line .line-number {
+    color: #444;
+}
+
+.cursor-container {
+    position: relative;
+}
+
+#cursor {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    background-color: #f50;
+    width: 2px;
+    height: 100%;
+}
+
+    </style>
+</head>
+
+<body>
+<table class="code-table">
+    <tr>
+        <td class="line-number">1</td>
+        <td class="code-line">function foo() {</td>
+    </tr>
+    <tr class="active-line">
+        <td class="line-number">2</td>
+        <td class="code-line"> print('hello <span class="cursor-container"><span id="cursor"></span>w</span>orld');
+        </td>
+    </tr>
+    <tr>
+        <td class="line-number">3</td>
+        <td class="code-line">}</td>
+    </tr>
+</table>
+
+<script>
+        let cursor = document.getElementById("cursor");
+        let old;
+        setInterval(() => {
+            let now = Math.trunc(new Date().getMilliseconds() / 500);
+            if(now !== old) {
+                cursor.style.visibility = cursor.style.visibility === "visible" ? "hidden" : "visible";
+                old = now;
+            }
+        }, 100);
+
+</script>
+</body>
+</html>
