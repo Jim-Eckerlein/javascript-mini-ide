@@ -1,6 +1,7 @@
 package com.example.jimec.javascriptshell;
 
-import java.security.InvalidParameterException;
+import android.content.Context;
+
 import java.util.ArrayList;
 
 /**
@@ -9,14 +10,30 @@ import java.util.ArrayList;
  * everything else is private in irrelevant to the user.
  */
 
-class HtmlGenerator {
+class OldHtmlGenerator {
 
-    private static final String COLOR_KEYWORD = "steelblue";
-    private static final String COLOR_STRING = "yellowgreen";
-    private static final String COLOR_COMMENT = "gray";
-    private static final String COLOR_OPERATOR = "deeppink";
-    private static final String COLOR_NUMBER = "orange";
-    private static final String CURSOR = "▏";
+    /**
+     * Generates a complete HTML Document out of a line list code.
+     */
+    static String toHtml(Context context, LineList lines) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("<!doctype html><html><head><meta charset='utf-8'/><style>")
+                .append(Util.readTextFile(context, R.raw.editor))
+                .append("</style><body><table class='code-table'>");
+
+        for (int lineNumber = 0; lineNumber < lines.getLines().size(); lineNumber++) {
+            Line line = lines.getLines().get(lineNumber);
+
+            sb.append("<tr><td class='line-number'>")
+                    .append(lineNumber)
+                    .append("</td><td class='code-line'>")
+                    .append(toHtml(line.getCode(), lines.getCursor()))
+                    .append("</td></tr>");
+        }
+
+        return sb.toString();
+    }
 
     /**
      * Generates an HTML string version of the supplied plain text, adding highlighting HTML tags.
@@ -136,9 +153,9 @@ class HtmlGenerator {
         text = maskHtmlChars(text);
 
         // Search operators:
-        text = text.replaceAll("([+*/{}(),|;~.=\\[\\]-]|&amp;|&lt;|gt;)", "<span style=\"color:" + COLOR_OPERATOR + "\">$1</span>");
+        text = text.replaceAll("([+*/{}(),|;~.=\\[\\]-]|&amp;|&lt;|gt;)", "<span class='code-highlight-operator'>$1</span>");
         // Search numbers:
-        text = text.replaceAll("([0-9])", "<span style=\"color:" + COLOR_NUMBER + "\">$1</span>");
+        text = text.replaceAll("([0-9])", "<span class='code-highlight-number'>$1</span>");
         // Search keywords:
         for (String keyword : new String[]{
                 "function", "var", "let", "return",
@@ -147,7 +164,7 @@ class HtmlGenerator {
                 "new", "true", "false", "null", "undefined",
                 "this", "print", "in"
         })
-            text = text.replaceAll("\\b" + keyword + "\\b", "<span style=\"color:" + COLOR_KEYWORD + "\">" + keyword + "</span>");
+            text = text.replaceAll("\\b" + keyword + "\\b", "<span class='code-highlight-keyword'>" + keyword + "</span>");
 
         text = insertCursor(text, cursor, position);
         return text;
@@ -155,18 +172,66 @@ class HtmlGenerator {
 
     private static String highlightString(String text, LineList.Cursor cursor, LineList.Cursor position) {
         text = maskHtmlChars(text);
-        text = "<span style=\"color:" + COLOR_STRING + "\"><i>" + text + "</i></span>";
+        text = "<span class='code-highlight-string'>" + text + "</span>";
         text = insertCursor(text, cursor, position);
         return text;
     }
 
     private static String highlightComment(String text, LineList.Cursor cursor, LineList.Cursor position) {
         text = maskHtmlChars(text);
-        text = "<span style=\"color:" + COLOR_COMMENT + "\"><i>" + text + "</i></span>";
+        text = "<span class='code-highlight-comment'><i>" + text + "</i></span>";
         text = insertCursor(text, cursor, position);
         return text;
     }
 
+    // <span class='cursor-container'><span id='cursor'></span>
+
+    private static String insertCursor(String text, LineList.Cursor cursor, LineList.Cursor position) {
+        boolean inHtml = false; // < ... >
+        boolean inMasked = false; // & ... ;
+
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+
+            if ('<' == c) {
+                inHtml = true;
+                continue;
+            }
+
+            if ('>' == c && inHtml) {
+                inHtml = false;
+                continue;
+            }
+
+            if (inHtml) {
+                continue;
+            }
+
+            if ('&' == c) {
+                inMasked = true;
+                continue;
+            }
+
+            if (';' == c && inMasked) {
+                inMasked = false;
+                continue;
+            }
+
+            if (inMasked) {
+                continue;
+            }
+
+            if (Character.isWhitespace(c)) {
+                continue;
+            }
+
+
+        }
+
+        return "";
+    }
+
+    /*
     private static String insertCursor(String text, LineList.Cursor cursor, LineList.Cursor position) {
         for (int i = 0; i < text.length(); i++) {
 
@@ -217,7 +282,7 @@ class HtmlGenerator {
 
         return text;
     }
-
+*/
     private enum Category {
         Code,
         String,

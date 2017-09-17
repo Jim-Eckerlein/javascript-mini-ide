@@ -1,6 +1,5 @@
 package com.example.jimec.javascriptshell;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +11,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.security.InvalidParameterException;
 
 public class EditActivity extends AppCompatActivity {
@@ -28,23 +23,6 @@ public class EditActivity extends AppCompatActivity {
     private StringBuilder mInternalText = new StringBuilder();
     private LineList.Cursor mCursor = new LineList.Cursor();
     private int mDesiredCursorCol = 0;
-
-    public static String readTextFile(Context ctx, int resId) {
-        InputStream inputStream = ctx.getResources().openRawResource(resId);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        String line;
-        StringBuilder text = new StringBuilder();
-        try {
-            while ((line = reader.readLine()) != null) {
-                text.append(line);
-                text.append('\n');
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return text.toString();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +59,7 @@ public class EditActivity extends AppCompatActivity {
                     default:
                         throw new InvalidParameterException("Unknown example at position " + pos);
                 }
-                mInternalText.append(readTextFile(activity, script));
+                mInternalText.append(Util.readTextFile(activity, script));
                 mCursor.mCol = mCursor.mLine = 0;
                 syncText();
             }
@@ -169,7 +147,7 @@ public class EditActivity extends AppCompatActivity {
      * considering syntax highlighting.
      */
     private void syncText() {
-        String fixed = HtmlGenerator.toHtml(mInternalText.toString(), mCursor);
+        String fixed = OldHtmlGenerator.toHtml(mInternalText.toString(), mCursor);
         String html = "<pre style=\"font-size:12pt\"><code>" + fixed + "</code></pre>";
         mEditor.loadData(html, "text/html; charset=UTF-8", null);
     }

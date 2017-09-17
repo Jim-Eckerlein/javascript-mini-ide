@@ -17,7 +17,7 @@ public class RunActivity extends AppCompatActivity {
         mConsole.getSettings().setJavaScriptEnabled(true);
 
         String script = "<html><head></head><body>"
-                + EditActivity.readTextFile(this, R.raw.run)
+                + Util.readTextFile(this, R.raw.run)
                 + "<script>"
                 + getIntent().getStringExtra(EditActivity.EXTRA_CODE)
                 + "</script></body></html>";
