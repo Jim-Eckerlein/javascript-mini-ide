@@ -1,6 +1,7 @@
 package com.example.jimec.javascriptshell;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import static com.example.jimec.javascriptshell.Util.strncmp;
 
@@ -15,13 +16,23 @@ public class HtmlGenerator {
 
     private static final String CURSOR_HTML = "<span class='cursor-container'><span id='cursor'></span></span>";
     private static final String LINE_PREFIX_HTML = "&#xFEFF;";
-    final ArrayList<Span> mSpans = new ArrayList<>();
+    private static final String[] KEYWORDS = {
+            "function", "var", "let", "return",
+            "if", "for", "while", "do", "switch", "case", "default",
+            "break", "continue",
+            "new", "true", "false", "null", "undefined",
+            "this", "print", "in"
+    };
+    private static final Pattern HIGHLIGHT_OPERATOR_REGEX = Pattern.compile("([+*/{}(),|.;~=\\[\\]-]|&amp;|&lt;|&gt;)");
+    private static final Pattern HIGHLIGHT_NUMBER_REGEX = Pattern.compile("(0x[0-9A-F]+|\\d+)");
+
+    private final ArrayList<Span> mSpans = new ArrayList<>();
 
     public static void main(String[] args) {
         LineList lines = new LineList();
         HtmlGenerator htmlGenerator = new HtmlGenerator();
 
-        lines.write("if(1 < 4 && 3 > 5 || 787 >= 43) {\nprint('hello');\n}");
+        lines.write("if(1 < 4 && 3 > 5.9 || 787 >= 0x43) {\nprint('hello');\n}");
 
         System.out.println(htmlGenerator.generateHtml(lines));
     }
@@ -185,21 +196,16 @@ public class HtmlGenerator {
             String text = span.mText;
 
             // Search operators:
-            text = text.replace("&", "&amp;");
-            text = text.replace("<", "&lt;");
-            text = text.replace(">", "&gt;");
-            text = text.replaceAll("([+*/{}(),|;~.=\\[\\]-]|&amp;|&lt;|&gt;)", "<span class='code-highlight-operator'>$1</span>");
+            text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+            text = HIGHLIGHT_OPERATOR_REGEX.matcher(text).replaceAll("<span class='code-highlight-operator'>$1</span>");
+
             // Search numbers:
-            text = text.replaceAll("([0-9])", "<span class='code-highlight-number'>$1</span>");
+            text = HIGHLIGHT_NUMBER_REGEX.matcher(text).replaceAll("<span class='code-highlight-number'>$1</span>");
+
             // Search keywords:
-            for (String keyword : new String[]{
-                    "function", "var", "let", "return",
-                    "if", "for", "while", "do", "switch", "case", "default",
-                    "break", "continue",
-                    "new", "true", "false", "null", "undefined",
-                    "this", "print", "in"
-            })
+            for (String keyword : KEYWORDS) {
                 text = text.replaceAll("\\b" + keyword + "\\b", "<span class='code-highlight-keyword'>" + keyword + "</span>");
+            }
 
             span.mText = text;
         }
