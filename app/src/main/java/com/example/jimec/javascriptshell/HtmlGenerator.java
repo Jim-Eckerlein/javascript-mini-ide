@@ -32,7 +32,7 @@ public class HtmlGenerator {
         LineList lines = new LineList();
         HtmlGenerator htmlGenerator = new HtmlGenerator();
 
-        lines.write("if(1 < 4 && 3 > 5.9 || 787 >= 0x43) {\nprint('hello');\n}");
+        lines.write("print('hello'");
 
         System.out.println(htmlGenerator.generateHtml(lines));
     }
@@ -56,9 +56,9 @@ public class HtmlGenerator {
 
             if (cursor.mLine == lineNumber) {
                 // This is the active line
-                mSpans.add(new Span(Span.HTML, "<tr class='active-line'>"));
+                mSpans.add(new Span(Span.LINE, "<tr class='active-line'>"));
             } else {
-                mSpans.add(new Span(Span.HTML, "<tr>"));
+                mSpans.add(new Span(Span.LINE, "<tr>"));
             }
             mSpans.add(new Span(Span.HTML, "<td class='line-number'>" + (lineNumber + 1) + "</td>" +
                     "<td class='code-line'>" + LINE_PREFIX_HTML));
@@ -68,8 +68,9 @@ public class HtmlGenerator {
                 mSpans.add(new Span(Span.HTML, "    "));
             }
 
+            mSpans.add(new Span(Span.RAW, line.getCode()));
             // Create cursor and raw spans:
-            if (cursor.mLine != lineNumber) {
+            /*if (cursor.mLine != lineNumber) {
                 // This line does not contain the cursor => simply copy whole content into a raw span
                 mSpans.add(new Span(Span.RAW, line.getCode()));
             } else if (cursor.mCol == 0) {
@@ -85,108 +86,110 @@ public class HtmlGenerator {
                 mSpans.add(new Span(Span.RAW, line.getCode().substring(0, cursor.mCol)));
                 mSpans.add(new Span(Span.CURSOR, CURSOR_HTML));
                 mSpans.add(new Span(Span.RAW, line.getCode().substring(cursor.mCol)));
-            }
+            }*/
 
             mSpans.add(new Span(Span.HTML, "</tr>\n"));
         }
 
-        boolean insideMultilineComment = false;
-        int commentSurroundingSpan = Span.CODE;
-        int currentSpanType = Span.CODE;
+        {
+            boolean insideMultilineComment = false;
+            int commentSurroundingSpan = Span.CODE;
+            int currentSpanType = Span.CODE;
 
-        // Expand raw spans to code, string and comment
-        for (int iSpan = 0; iSpan < mSpans.size(); iSpan++) {
+            // Expand raw spans to code, string and comment
+            for (int iSpan = 0; iSpan < mSpans.size(); iSpan++) {
 
-            if (Span.RAW != mSpans.get(iSpan).mType) continue;
+                if (Span.RAW != mSpans.get(iSpan).mType) continue;
 
-            int i = 0;
-            int lastSpanStart = 0;
-            String text = mSpans.get(iSpan).mText;
-            ArrayList<Span> newSpans = new ArrayList<>();
+                int i = 0;
+                int lastSpanStart = 0;
+                String text = mSpans.get(iSpan).mText;
+                ArrayList<Span> newSpans = new ArrayList<>();
 
-            try {
-                for (; i < mSpans.get(iSpan).mText.length(); i++) {
+                try {
+                    for (; i < mSpans.get(iSpan).mText.length(); i++) {
 
-                    // Multiline comment start
-                    if (strncmp(text, "/*", i)) {
-                        if (i != 0) {
-                            newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
+                        // Multiline comment start
+                        if (strncmp(text, "/*", i)) {
+                            if (i != 0) {
+                                newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
+                            }
+                            commentSurroundingSpan = currentSpanType;
+                            currentSpanType = Span.COMMENT_MULTILINE;
+                            lastSpanStart = i;
+                            insideMultilineComment = true;
+                            continue;
                         }
-                        commentSurroundingSpan = currentSpanType;
-                        currentSpanType = Span.COMMENT_MULTILINE;
-                        lastSpanStart = i;
-                        insideMultilineComment = true;
-                        continue;
-                    }
 
-                    // Multiline comment end
-                    if (strncmp(text, "*/", i) && currentSpanType == Span.COMMENT_MULTILINE) {
-                        i += 2; // Include */
-                        newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
-                        currentSpanType = commentSurroundingSpan;
-                        lastSpanStart = i;
-                        insideMultilineComment = false;
-                        continue;
-                    }
-
-                    if (insideMultilineComment) continue;
-
-                    // Single line comment
-                    if (strncmp(text, "//", i)) {
-                        if (i != 0) {
+                        // Multiline comment end
+                        if (strncmp(text, "*/", i) && currentSpanType == Span.COMMENT_MULTILINE) {
+                            i += 2; // Include */
                             newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
+                            currentSpanType = commentSurroundingSpan;
+                            lastSpanStart = i;
+                            insideMultilineComment = false;
+                            continue;
                         }
-                        currentSpanType = Span.COMMENT_SINGLE_LINE;
-                        lastSpanStart = i;
-                        continue;
-                    }
 
-                    // String starting
-                    if (strncmp(text, "'", i) && currentSpanType == Span.CODE) {
-                        if (i != 0) {
-                            newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
-                        }
-                        currentSpanType = Span.STRING;
-                        lastSpanStart = i;
-                        continue;
-                    }
+                        if (insideMultilineComment) continue;
 
-                    // String ending
-                    if (strncmp(text, "'", i) && currentSpanType == Span.STRING) {
-                        if (i != 0) {
-                            i++;
-                            newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
+                        // Single line comment
+                        if (strncmp(text, "//", i)) {
+                            if (i != 0) {
+                                newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
+                            }
+                            currentSpanType = Span.COMMENT_SINGLE_LINE;
+                            lastSpanStart = i;
+                            continue;
                         }
-                        currentSpanType = Span.CODE;
-                        lastSpanStart = i;
+
+                        // String starting
+                        if (strncmp(text, "'", i) && currentSpanType == Span.CODE) {
+                            if (i != 0) {
+                                newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
+                            }
+                            currentSpanType = Span.STRING;
+                            lastSpanStart = i;
+                            continue;
+                        }
+
+                        // String ending
+                        if (strncmp(text, "'", i) && currentSpanType == Span.STRING) {
+                            if (i != 0) {
+                                i++;
+                                newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
+                            }
+                            currentSpanType = Span.CODE;
+                            lastSpanStart = i;
+                        }
+                    }
+                } catch (StringIndexOutOfBoundsException ignored) {
+                    // It is ok if comparisons like */ exceed the current line, they simply should fail and finish the loop
+                }
+
+                // Wrap rest
+                if (lastSpanStart < text.length()) {
+                    newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart)));
+                }
+
+                // Generate highlighting HTML of string and comment blocks,
+                // code is highlighted inline, without extra spans for operators, keywords, etc.
+                for (Span span : newSpans) {
+                    if (span.mType == Span.STRING) {
+                        span.mText = "<span class='code-highlight-string'>" + span.mText + "</span>";
+                    }
+                    if (span.mType == Span.COMMENT_SINGLE_LINE) {
+                        span.mText = "<span class='code-highlight-comment'>" + span.mText + "</span>";
+                    }
+                    if (span.mType == Span.COMMENT_MULTILINE) {
+                        span.mText = "<span class='code-highlight-comment'>" + span.mText + "</span>";
                     }
                 }
-            } catch (StringIndexOutOfBoundsException ignored) {
-                // It is ok if comparisons like */ exceed the current line, they simply should fail and finish the loop
+
+                // Replace old raw span by new spans:
+                mSpans.remove(iSpan);
+                mSpans.addAll(iSpan, newSpans);
             }
-
-            // Wrap rest
-            if (lastSpanStart < text.length()) {
-                newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart)));
-            }
-
-            // Generate highlighting HTML of string and comment blocks,
-            // code is highlighted inline, without extra spans for operators, keywords, etc.
-            for (Span span : newSpans) {
-                if (span.mType == Span.STRING) {
-                    span.mText = "<span class='code-highlight-string'>" + span.mText + "</span>";
-                }
-                if (span.mType == Span.COMMENT_SINGLE_LINE) {
-                    span.mText = "<span class='code-highlight-comment'>" + span.mText + "</span>";
-                }
-                if (span.mType == Span.COMMENT_MULTILINE) {
-                    span.mText = "<span class='code-highlight-comment'>" + span.mText + "</span>";
-                }
-            }
-
-            // Replace old raw span by new spans:
-            mSpans.remove(iSpan);
-            mSpans.addAll(iSpan, newSpans);
         }
 
         // Expand code spans to support highlighting
@@ -208,6 +211,39 @@ public class HtmlGenerator {
             }
 
             span.mText = text;
+        }
+
+        // Insert cursor
+        {
+            int line = -1;
+            int col = -1;
+            LineList.Cursor cursor = lines.getCursor();
+
+            for (Span span : mSpans) {
+
+                if (Span.LINE == span.mType) {
+                    line++;
+                }
+                if (span.mType == Span.LINE || span.mType == Span.HTML || cursor.mLine != line) {
+                    continue;
+                }
+
+                // Found line with cursor
+                for (int c = 0; c <= span.mText.length(); c++) {
+                    if (c < span.mText.length() && '<' == span.mText.charAt(c)) {
+                        // Skip HTML
+                        while ('>' != span.mText.charAt(c)) {
+                            c++;
+                        }
+                        continue;
+                    }
+                    col++;
+                    if (col == cursor.mCol) {
+                        // Found cursor
+                        span.mText = span.mText.substring(0, c) + CURSOR_HTML + span.mText.substring(c);
+                    }
+                }
+            }
         }
 
         // Create final HTML
@@ -240,6 +276,7 @@ public class HtmlGenerator {
 
     private class Span {
         static final int RAW = 0;
+        static final int LINE = 10;
         static final int HTML = 1;
         static final int CURSOR = 2;
         static final int CODE = 3;
