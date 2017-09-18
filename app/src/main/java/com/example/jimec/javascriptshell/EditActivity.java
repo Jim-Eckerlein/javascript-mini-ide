@@ -121,7 +121,9 @@ public class EditActivity extends AppCompatActivity {
      * considering syntax highlighting.
      */
     private void syncText() {
-        mEditor.loadData(mHtmlGenerator.generateHtml(mCodeLines), "text/html; charset=UTF-8", null);
+        String html = mHtmlGenerator.generateHtml(mCodeLines);
+        System.out.println(html);
+        mEditor.loadData(html, "text/html; charset=UTF-8", null);
         mEditor.reload();
     }
 
