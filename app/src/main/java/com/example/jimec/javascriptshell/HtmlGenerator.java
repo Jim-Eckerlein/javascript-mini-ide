@@ -2,6 +2,8 @@ package com.example.jimec.javascriptshell;
 
 import java.util.ArrayList;
 
+import static com.example.jimec.javascriptshell.Util.strncmp;
+
 /**
  * Workflow of the HTML Generator:
  * <p>
@@ -19,7 +21,7 @@ public class HtmlGenerator {
         LineList lines = new LineList();
         HtmlGenerator htmlGenerator = new HtmlGenerator();
 
-        lines.write("function() {\nprintf('hello world!');\n}");
+        lines.write("print('hello/* this is \n multiline */ hello'); // this is a comment 'string' 8");
 
         System.out.println(htmlGenerator.generateHtml(lines));
     }
@@ -77,7 +79,106 @@ public class HtmlGenerator {
             mSpans.add(new Span(Span.HTML, "</tr>\n"));
         }
 
-        // TODO: Expand raw spans to code, string and comment
+        boolean insideMultilineComment = false;
+        int commentSurroundingSpan = Span.CODE;
+        int currentSpanType = Span.CODE;
+
+        // Expand raw spans to code, string and comment
+        for (int iSpan = 0; iSpan < mSpans.size(); iSpan++) {
+
+            if (Span.RAW != mSpans.get(iSpan).mType) continue;
+
+            int i = 0;
+            int lastSpanStart = 0;
+            String text = mSpans.get(iSpan).mText;
+            ArrayList<Span> newSpans = new ArrayList<>();
+
+            try {
+                for (; i < mSpans.get(iSpan).mText.length(); i++) {
+
+                    // Multiline comment start
+                    if (strncmp(text, "/*", i)) {
+                        if (i != 0) {
+                            newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
+                        }
+                        commentSurroundingSpan = currentSpanType;
+                        currentSpanType = Span.COMMENT_MULTILINE;
+                        lastSpanStart = i;
+                        insideMultilineComment = true;
+                        continue;
+                    }
+
+                    // Multiline comment end
+                    if (strncmp(text, "*/", i) && currentSpanType == Span.COMMENT_MULTILINE) {
+                        i += 2; // Include */
+                        newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
+                        currentSpanType = commentSurroundingSpan;
+                        lastSpanStart = i;
+                        insideMultilineComment = false;
+                        continue;
+                    }
+
+                    if (insideMultilineComment) continue;
+
+                    // Single line comment
+                    if (strncmp(text, "//", i)) {
+                        if (i != 0) {
+                            newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
+                        }
+                        currentSpanType = Span.COMMENT_SINGLE_LINE;
+                        lastSpanStart = i;
+                        continue;
+                    }
+
+                    // String starting
+                    if (strncmp(text, "'", i) && currentSpanType == Span.CODE) {
+                        if (i != 0) {
+                            newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
+                        }
+                        currentSpanType = Span.STRING;
+                        lastSpanStart = i;
+                        continue;
+                    }
+
+                    // String ending
+                    if (strncmp(text, "'", i) && currentSpanType == Span.STRING) {
+                        if (i != 0) {
+                            i++;
+                            newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
+                        }
+                        currentSpanType = Span.CODE;
+                        lastSpanStart = i;
+                    }
+                }
+            } catch (StringIndexOutOfBoundsException ignored) {
+                // It is ok if comparisons like */ exceed the current line, they simply should fail and finish the loop
+            }
+
+            // Wrap rest
+            if (lastSpanStart < text.length()) {
+                newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart)));
+            }
+
+            // Generate highlighting HTML of string and comment blocks,
+            // code is highlighted inline, without extra spans for operators, keywords, etc.
+            for (Span span : newSpans) {
+                if (span.mType == Span.STRING) {
+                    span.mText = "<span class='code-highlight-string'>" + span.mText + "</span>";
+                }
+                if (span.mType == Span.COMMENT_SINGLE_LINE) {
+                    span.mText = "<span class='code-highlight-comment'>" + span.mText + "</span>";
+                }
+                if (span.mType == Span.COMMENT_MULTILINE) {
+                    span.mText = "<span class='code-highlight-comment'>" + span.mText + "</span>";
+                }
+            }
+
+            // Replace old raw span by new spans:
+            mSpans.remove(iSpan);
+            mSpans.addAll(iSpan, newSpans);
+        }
+
+        // TODO: Expand code spans to support highlighting
 
         // Create final HTML
         mSpans.add(new Span(Span.HTML, "\n</table>\n" +
@@ -113,7 +214,8 @@ public class HtmlGenerator {
         static final int CURSOR = 2;
         static final int CODE = 3;
         static final int STRING = 4;
-        static final int COMMENT = 5;
+        static final int COMMENT_SINGLE_LINE = 5;
+        static final int COMMENT_MULTILINE = 6;
 
         int mType;
         String mText;
@@ -124,6 +226,28 @@ public class HtmlGenerator {
         Span(int type, String text) {
             mType = type;
             mText = text;
+        }
+
+        @Override
+        public String toString() {
+            switch (mType) {
+                case RAW:
+                    return "(RAW):" + mText;
+                case HTML:
+                    return "(HTML):" + mText;
+                case CURSOR:
+                    return "(CURSOR):" + mText;
+                case CODE:
+                    return "(CODE):" + mText;
+                case STRING:
+                    return "(STRING):" + mText;
+                case COMMENT_SINGLE_LINE:
+                    return "(COMMENT_SINGLE_LINE):" + mText;
+                case COMMENT_MULTILINE:
+                    return "(COMMENT_MULTILINE):" + mText;
+                default:
+                    return "(ERROR-TYPE " + mType + "):" + mText;
+            }
         }
     }
 
