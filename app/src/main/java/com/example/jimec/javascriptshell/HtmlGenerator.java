@@ -21,7 +21,7 @@ public class HtmlGenerator {
         LineList lines = new LineList();
         HtmlGenerator htmlGenerator = new HtmlGenerator();
 
-        lines.write("print('hello/* this is \n multiline */ hello'); // this is a comment 'string' 8");
+        lines.write("if(1 < 4 && 3 > 5 || 787 >= 43) {\nprint('hello');\n}");
 
         System.out.println(htmlGenerator.generateHtml(lines));
     }
@@ -178,7 +178,31 @@ public class HtmlGenerator {
             mSpans.addAll(iSpan, newSpans);
         }
 
-        // TODO: Expand code spans to support highlighting
+        // Expand code spans to support highlighting
+        for (Span span : mSpans) {
+            if (Span.CODE != span.mType) continue;
+
+            String text = span.mText;
+
+            // Search operators:
+            text = text.replace("&", "&amp;");
+            text = text.replace("<", "&lt;");
+            text = text.replace(">", "&gt;");
+            text = text.replaceAll("([+*/{}(),|;~.=\\[\\]-]|&amp;|&lt;|&gt;)", "<span class='code-highlight-operator'>$1</span>");
+            // Search numbers:
+            text = text.replaceAll("([0-9])", "<span class='code-highlight-number'>$1</span>");
+            // Search keywords:
+            for (String keyword : new String[]{
+                    "function", "var", "let", "return",
+                    "if", "for", "while", "do", "switch", "case", "default",
+                    "break", "continue",
+                    "new", "true", "false", "null", "undefined",
+                    "this", "print", "in"
+            })
+                text = text.replaceAll("\\b" + keyword + "\\b", "<span class='code-highlight-keyword'>" + keyword + "</span>");
+
+            span.mText = text;
+        }
 
         // Create final HTML
         mSpans.add(new Span(Span.HTML, "\n</table>\n" +
