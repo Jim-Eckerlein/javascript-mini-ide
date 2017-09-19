@@ -1,5 +1,6 @@
 package com.example.jimec.javascriptshell;
 
+import static com.example.jimec.javascriptshell.Util.containsString;
 import static com.example.jimec.javascriptshell.Util.strbackcmp;
 import static com.example.jimec.javascriptshell.Util.strcmp;
 
@@ -11,6 +12,9 @@ public class ParallelHtmlGenerator {
     private static final int COMMENT_MULTI_LINE = 3;
     private static final int KEYWORD = 4;
     private static final int NUMBER = 5;
+    private static final int HEX_NUMBER = 6;
+    private static final int HEX_NUMBER_PREFIX = 7;
+    private static final int DECIMAL_PART_NUMBER = 8;
 
     private static final String[] KEYWORD_LIST = new String[]{
             "print",
@@ -34,16 +38,16 @@ public class ParallelHtmlGenerator {
             "while", "with", "yield"
     };
 
-    private static final char[] OPERATOR_LIST = new char[]{
-            '+', '*', '/', '{', '}', '(', ')', ',', '|', '!', '?', '%', '^',
-            '.', ';', '~', '=', '[', ']', '-', '&', '<', '>', '\\'
+    private static final String[] OPERATOR_LIST = new String[]{
+            "+", "*", "/", "{", "}", "(", ")", ",", "|", "!", "?", "%", "^",
+            ".", ";", "~", "=", "[", "]", "-", "&", "<", ">", "\\"
     };
 
     public static void main(String[] args) {
         ParallelHtmlGenerator htmlGenerator = new ParallelHtmlGenerator();
         LineList lines = new LineList();
 
-        lines.write("in('h')");
+        lines.write("//c\nin(3.1415.12414.1441)");
         String html = htmlGenerator.generateHtml(lines);
 
         System.out.println(html);
@@ -86,16 +90,23 @@ public class ParallelHtmlGenerator {
 
                 char c = text.charAt(i);
                 boolean spanEndsAfterwards = false;
+                boolean reprocessCurrentCharacter = false;
 
                 // Cursor
                 if (cursor.mLine == lineNumber && cursor.mCol == i) {
                     sb.append("<span class='cursor-container'><span id='cursor'></span></span>");
                 }
 
-                // Single line comment
+                // Single line comment start
                 else if (strcmp(text, "//", i) && currentTextType == NEUTRAL) {
                     sb.append("<span class='code-highlight-comment'>");
                     currentTextType = COMMENT_SINGE_LINE;
+                }
+
+                // Single line comment end
+                else if (currentTextType == COMMENT_SINGE_LINE && (i == text.length() - 1)) {
+                    spanEndsAfterwards = true;
+                    currentTextType = NEUTRAL;
                 }
 
                 // Multi line comment start
@@ -110,16 +121,45 @@ public class ParallelHtmlGenerator {
                     currentTextType = STRING;
                 }
 
-                // Keyword start
-                else if (Character.isLetter(c) && currentTextType == NEUTRAL) {
-                    for (String keyWord : KEYWORD_LIST) {
-                        if (strcmp(text, keyWord, i)) {
-                            currentTextType = KEYWORD;
-                            sb.append("<span class='code-highlight-keyword'>");
-                            break;
-                        }
-                    }
+                // String ending
+                else if (strbackcmp(text, "'", i) && currentTextType == STRING) {
+                    spanEndsAfterwards = true;
                 }
+
+                // Keyword start
+                else if (Character.isLetter(c) && currentTextType == NEUTRAL && containsString(KEYWORD_LIST, text, i)) {
+                    currentTextType = KEYWORD;
+                    sb.append("<span class='code-highlight-keyword'>");
+                }
+
+                // Keyword end
+                else if (!Character.isLetter(c) && currentTextType == KEYWORD) {
+                    sb.append("</span>");
+                    currentTextType = NEUTRAL;
+                    reprocessCurrentCharacter = true;
+                }
+
+                // Hex number start
+                else if (strcmp(text, "0x", i) && currentTextType == NEUTRAL) {
+                    sb.append("<span class='code-highlight-number'>");
+                    currentTextType = HEX_NUMBER_PREFIX;
+                }
+
+                // Hex number start x
+                else if (currentTextType == HEX_NUMBER_PREFIX && c == 'x') {
+                    currentTextType = HEX_NUMBER;
+                }
+
+                // Hex number end
+                else if (currentTextType == HEX_NUMBER && (!Character.isDigit(c)
+                        && !(c >= 'a' && c <= 'f')
+                        && !(c >= 'A' && c <= 'F')
+                )) {
+                    sb.append("</span>");
+                    currentTextType = NEUTRAL;
+                    reprocessCurrentCharacter = true;
+                }
+
 
                 // Number start
                 else if (Character.isDigit(c) && currentTextType == NEUTRAL) {
@@ -127,16 +167,16 @@ public class ParallelHtmlGenerator {
                     currentTextType = NUMBER;
                 }
 
-                // Keyword end
-                else if (!Character.isLetter(c) && currentTextType == KEYWORD) {
-                    sb.append("</span>");
-                    currentTextType = NEUTRAL;
+                // Decimal part of number
+                else if (c == '.' && currentTextType == NUMBER) {
+                    currentTextType = DECIMAL_PART_NUMBER;
                 }
 
                 // Number end
-                else if (!Character.isDigit(c) && currentTextType == NUMBER) {
+                else if (!Character.isDigit(c) && (currentTextType == NUMBER || currentTextType == DECIMAL_PART_NUMBER)) {
                     sb.append("</span>");
                     currentTextType = NEUTRAL;
+                    reprocessCurrentCharacter = true;
                 }
 
                 // Multi line comment end
@@ -144,10 +184,13 @@ public class ParallelHtmlGenerator {
                     spanEndsAfterwards = true;
                 }
 
-                // String ending
-                else if (strbackcmp(text, "'", i) && currentTextType == STRING) {
+                // Operator
+                else if (!Character.isWhitespace(c) && containsString(OPERATOR_LIST, text, i) && currentTextType == NEUTRAL) {
+                    sb.append("<span class='code-highlight-operator'>");
                     spanEndsAfterwards = true;
                 }
+
+                if (reprocessCurrentCharacter) continue;
 
                 sb.append(c);
                 i++;
@@ -158,12 +201,9 @@ public class ParallelHtmlGenerator {
                 }
             }
 
-            // Finish line
-            if (currentTextType != NEUTRAL) {
-                sb.append("</span>");
-            }
-
             // If cursor is on last position within line, append here:
+
+            sb.append("</tr>\n");
         }
 
         /*sb.append("\n</table>\n" +
