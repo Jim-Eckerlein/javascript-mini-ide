@@ -144,6 +144,11 @@ public class EditActivity extends AppCompatActivity {
         syncText();
     }
 
+    public void writeSpace(View view) {
+        mCodeLines.write(" ");
+        syncText();
+    }
+
     public void writeEnter(View view) {
         mCodeLines.writeEnter();
         syncText();

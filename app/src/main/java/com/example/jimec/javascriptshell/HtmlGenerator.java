@@ -47,7 +47,9 @@ public class HtmlGenerator {
         HtmlGenerator htmlGenerator = new HtmlGenerator();
         LineList lines = new LineList();
 
-        lines.write("print('hello')");
+        lines.write("print");
+        lines.write(" ");
+        lines.write("('hello')");
         String html = htmlGenerator.generateHtml(lines);
 
         System.out.println(html);

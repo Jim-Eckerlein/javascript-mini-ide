@@ -92,9 +92,13 @@ public class LineList {
         String appendix = "";
 
         for (int i = 0; i < textLines.length; i++) {
-            // Trim text
             String textLine = textLines[i];
-            textLine = textLine.replaceAll("^\\s*", "").replaceAll("\\s*$", "");
+
+            // Remove leading and following white spaces, but only if the code contains
+            // characters other than white spaces:
+            if (!textLine.matches("^\\s*$")) {
+                textLine = textLine.replaceAll("^\\s*", "").replaceAll("\\s*$", "");
+            }
 
             Line line;
 
