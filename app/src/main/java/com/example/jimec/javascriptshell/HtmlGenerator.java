@@ -3,8 +3,6 @@ package com.example.jimec.javascriptshell;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import static com.example.jimec.javascriptshell.Util.strncmp;
-
 /**
  * Workflow of the HTML Generator:
  * <p>
@@ -110,7 +108,7 @@ public class HtmlGenerator {
                     for (; i < mSpans.get(iSpan).mText.length(); i++) {
 
                         // Multiline comment start
-                        if (strncmp(text, "/*", i)) {
+                        if (Util.strcmp(text, "/*", i)) {
                             if (i != 0) {
                                 newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
                             }
@@ -122,7 +120,7 @@ public class HtmlGenerator {
                         }
 
                         // Multiline comment end
-                        if (strncmp(text, "*/", i) && currentSpanType == Span.COMMENT_MULTILINE) {
+                        if (Util.strcmp(text, "*/", i) && currentSpanType == Span.COMMENT_MULTILINE) {
                             i += 2; // Include */
                             newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
                             currentSpanType = commentSurroundingSpan;
@@ -134,7 +132,7 @@ public class HtmlGenerator {
                         if (insideMultilineComment) continue;
 
                         // Single line comment
-                        if (strncmp(text, "//", i)) {
+                        if (Util.strcmp(text, "//", i)) {
                             if (i != 0) {
                                 newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
                             }
@@ -144,7 +142,7 @@ public class HtmlGenerator {
                         }
 
                         // String starting
-                        if (strncmp(text, "'", i) && currentSpanType == Span.CODE) {
+                        if (Util.strcmp(text, "'", i) && currentSpanType == Span.CODE) {
                             if (i != 0) {
                                 newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));
                             }
@@ -154,7 +152,7 @@ public class HtmlGenerator {
                         }
 
                         // String ending
-                        if (strncmp(text, "'", i) && currentSpanType == Span.STRING) {
+                        if (Util.strcmp(text, "'", i) && currentSpanType == Span.STRING) {
                             if (i != 0) {
                                 i++;
                                 newSpans.add(new Span(currentSpanType, text.substring(lastSpanStart, i)));

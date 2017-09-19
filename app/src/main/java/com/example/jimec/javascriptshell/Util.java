@@ -12,7 +12,7 @@ public class Util {
     private Util() {
     }
 
-    public static String readTextFile(Context ctx, int resId) {
+    static String readTextFile(Context ctx, int resId) {
         InputStream inputStream = ctx.getResources().openRawResource(resId);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         String line;
@@ -29,35 +29,48 @@ public class Util {
     }
 
     /**
-     * Compares characters of string <code>a</code> at position
+     * Compare characters of string <code>a</code> at position
      * <code>start</code> to string <code>b</code>.
+     *
+     * Return false is string `b` is too long as the comparison could succeed.
      *
      * @param a     First string.
      * @param b     Second string.
      * @param start Start position in string a.
      * @return True if comparision succeeded.
      */
-    public static boolean strncmp(String a, String b, int start) {
-        return strncmp(a, b, start, b.length());
+    static boolean strcmp(String a, String b, int start) {
+        return ((start + b.length()) <= a.length())
+                && a.substring(start, start + b.length()).equals(b.substring(0, b.length()));
     }
 
     /**
-     * Compares <code>count</code> characters of string <code>a</code> at position
-     * <code>start</code> to the first <code>count</code> characters of string <code>b</code>.
+     * Compare string `b` reversely character-wise to string `a` at position `start`.
+     * Only as many characters are compared as string `b` is long.
+     * Though the underlying comparison is done reversely, string be `b` is still given in the same
+     * text direction as string `a`, since it's reversed by this function behind the scenes.
+     *
+     * Return false is string `b` is too long as the comparison could succeed.
      *
      * @param a     First string.
      * @param b     Second string.
-     * @param start Start position in string a.
-     * @param count Count of characters.
-     * @return True if comparision succeeded.
+     * @param start Position within first string to start comparison.
+     * @return True if comparison succeeded.
      */
-    public static boolean strncmp(String a, String b, int start, int count) {
-        return a.substring(start, start + count).equals(b.substring(0, count));
+    static boolean strbackcmp(String a, String b, int start) {
+        return (b.length() <= (start + 1))
+                && (start < a.length())
+                && new StringBuilder(a.substring(0, start + 1)).reverse().substring(0, b.length())
+                .equals(new StringBuilder(b).reverse().toString());
     }
 
     public static void main(String[] args) {
-        System.out.println(strncmp("hello", "llo", 2));
-        System.out.println(strncmp("hello", "llo", 0));
+        System.out.println("Should be true:  " + strcmp("hello", "llo", 2));
+        System.out.println("Should be false: " + strcmp("hello", "llo", 0));
+
+        System.out.println("Should be true:  " + strbackcmp("hello", "llo", 4));
+        System.out.println("Should be false: " + strbackcmp("hello", "llo", 2));
+        System.out.println("Should be false: " + strbackcmp("hello", "lo", 3));
     }
 
 }
