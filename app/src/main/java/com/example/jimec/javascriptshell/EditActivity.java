@@ -57,6 +57,9 @@ public class EditActivity extends AppCompatActivity {
                     case 5:
                         script = R.raw.time_example;
                         break;
+                    case 6:
+                        script = R.raw.typeof_example;
+                        break;
                     default:
                         throw new InvalidParameterException("Unknown example at position " + pos);
                 }

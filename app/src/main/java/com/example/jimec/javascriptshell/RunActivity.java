@@ -30,6 +30,7 @@ public class RunActivity extends AppCompatActivity {
                 "\n" +
                 "<div id=\"console\"></div>" +
                 "<script>" +
+                "    'use strict';" +
                 "    try {" +
                 "        eval(`" + getIntent().getStringExtra(EditActivity.EXTRA_CODE) + "`);" +
                 "    } catch(err) {" +

@@ -12,5 +12,6 @@
         <item>Object</item>
         <item>Function</item>
         <item>Time</item>
+        <item>Typeof</item>
     </string-array>
 </resources>
