@@ -5,6 +5,7 @@ import static com.example.jimec.javascriptshell.Util.strcmp;
 
 public class HtmlGenerator {
 
+    static final String CSS = "*{font-family:monospace;font-size:1.1rem}body,html{color:#111;margin:0;padding:0;width:100%}td{width:auto;padding:0}.code-table{width:100%;border-collapse:collapse}.line-number{color:#999;padding:2px 8px 2px 2px;width:1%;white-space:nowrap}.code-line{white-space:pre;padding-left:8px}.active-line .code-line{background-color:#eee;border-radius:8px}.active-line .line-number{color:#444}.cursor-container{position:relative}#cursor{position:absolute;display:block;top:0;left:0;background-color:#f50;width:2px;height:100%}.code-highlight-keyword{color:#4682b4}.code-highlight-string{color:#9acd32}.code-highlight-comment{color:gray}.code-highlight-operator{color:#ff1493}.code-highlight-number{color:orange}";
     private static final int NEUTRAL = 0;
     private static final int STRING = 1;
     private static final int COMMENT_SINGE_LINE = 2;
@@ -14,7 +15,6 @@ public class HtmlGenerator {
     private static final int HEX_NUMBER = 6;
     private static final int HEX_NUMBER_PREFIX = 7;
     private static final int DECIMAL_PART_NUMBER = 8;
-
     private static final String[] KEYWORD_LIST = new String[]{
             "print",
             "NaN", "Infinity",
@@ -46,7 +46,12 @@ public class HtmlGenerator {
         HtmlGenerator htmlGenerator = new HtmlGenerator();
         LineList lines = new LineList();
 
-        lines.write("( 'string') print a // comment");
+        lines.write("var person = {\n" +
+                "    greet: function () {\n" +
+                "        print('Hi, I am ' + this.name);\n" +
+                "    }\n" +
+                "};\n" +
+                "in");
         String html = htmlGenerator.generateHtml(lines);
 
         System.out.println(html);
@@ -60,7 +65,7 @@ public class HtmlGenerator {
         sb.append("<!doctype html>" +
                 "<html><head>\n" +
                 "    <meta charset='utf-8'/>\n" +
-                "    <style>*{font-family:monospace;font-size:1.1rem}body,html{color:#111;margin:0;padding:0;width:100%}td{width:auto;padding:0}.code-table{width:100%;border-collapse:collapse}.line-number{color:#999;padding:2px 8px 2px 2px;width:1%;white-space:nowrap}.code-line{white-space:pre;padding-left:8px}.active-line .code-line{background-color:#eee;border-radius:8px}.active-line .line-number{color:#444}.cursor-container{position:relative}#cursor{position:absolute;display:block;top:0;left:0;background-color:#f50;width:2px;height:100%}.code-highlight-keyword{color:#4682b4}.code-highlight-string{color:#9acd32}.code-highlight-comment{color:gray}.code-highlight-operator{color:#ff1493}.code-highlight-number{color:orange}</style>\n" +
+                "    <style>" + CSS + "</style>\n" +
                 "</head><body>\n" +
                 "    <table class='code-table'>\n");
 

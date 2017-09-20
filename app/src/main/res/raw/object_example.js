@@ -6,12 +6,12 @@ var person = {
     greet: function () {
         print('Hi, I am ' + this.name);
     }
-}
+};
 
 /*
  Iterate over the object members:
 */
-print('Members:')
+print('Members:');
 for(member in person) {
     print('- ' + member);
 }

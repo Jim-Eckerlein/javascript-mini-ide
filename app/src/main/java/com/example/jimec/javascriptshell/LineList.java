@@ -23,18 +23,8 @@ public class LineList {
 
     public static void main(String[] args) {
         LineList lines = new LineList();
-        //lines.write("function {\nprint\n}");
-        lines.write("function {");
-        lines.writeEnter();
-        lines.write("print");
-        lines.writeEnter();
-        lines.write("in}");
-        lines.moveCursorLeft();
-        lines.backspace();
-        lines.backspace();
-        lines.backspace();
-        lines.writeEnter();
-        System.out.println(lines);
+        lines.write("print\n// this is a comment\nwhile /* another comment */ for\nin");
+        System.out.println(lines.toStringWithoutComments());
     }
 
     public Cursor getCursor() {
@@ -252,6 +242,12 @@ public class LineList {
         }
 
         return sb.toString();
+    }
+
+    public String toStringWithoutComments() {
+        return toString()
+                .replaceAll("(?m)^//.*$", "")
+                .replaceAll("/\\*.*\\*/", "");
     }
 
     /**

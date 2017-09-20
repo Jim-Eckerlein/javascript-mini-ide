@@ -32,17 +32,17 @@ public class Line {
     public void detectIndent(Line previousLine) {
         mIndent = previousLine.mIndent;
 
-        if (previousLine.mCode.matches(".*\\{\\s*$")        // { block started
-                || previousLine.mCode.matches(".*\\(\\s*$") // ( block started
-                || previousLine.mCode.matches(".*\\[\\s*$") // [ block started
+        if (previousLine.mCode.matches(".*\\{.*$")        // { block started
+                || previousLine.mCode.matches(".*\\(.*$") // ( block started
+                || previousLine.mCode.matches(".*\\[.*$") // [ block started
                 ) {
             // Increase indent
             mIndent++;
         }
 
-        if (mCode.matches("^\\s*\\}\\s*$")        // { block ended
-                || mCode.matches("^\\s*\\)\\s*$") // ( block ended
-                || mCode.matches("^\\s*\\]\\s*$") // [ block ended
+        if (mCode.matches("^\\s*\\}.*$")        // { block ended
+                || mCode.matches("^\\s*\\).*$") // ( block ended
+                || mCode.matches("^\\s*\\].*$") // [ block ended
                 ) {
             // Decrease indent if greater than 0
             mIndent = mIndent > 0 ? mIndent - 1 : 0;

@@ -16,13 +16,31 @@ public class RunActivity extends AppCompatActivity {
         mConsole = (WebView) findViewById(R.id.console);
         mConsole.getSettings().setJavaScriptEnabled(true);
 
-        String script = "<html><head></head><body>"
-                + Util.readTextFile(this, R.raw.run)
-                + "<script>"
-                + getIntent().getStringExtra(EditActivity.EXTRA_CODE)
-                + "</script></body></html>";
+        String html = "<!doctype html><html><head><style>" +
+                HtmlGenerator.CSS +
+                "</style></head><body>" +
+                "<script>\n" +
+                "  function print(message) {\n" +
+                "    var p = document.createElement('p');\n" +
+                "    p.appendChild(document.createTextNode(message));\n" +
+                "    document.getElementById('console').appendChild(p);\n" +
+                "  }\n" +
+                "\n" +
+                "</script>\n" +
+                "\n" +
+                "<div id=\"console\"></div>" +
+                "<script>" +
+                "    try {" +
+                "        eval(`" + getIntent().getStringExtra(EditActivity.EXTRA_CODE) + "`);" +
+                "    } catch(err) {" +
+                "        print(err);" +
+                "    }" +
+                "</script></body></html>";
 
-        mConsole.loadData(script, "text/html; charset=UTF-8", null);
+        System.out.println("CODE:");
+        System.out.println(html);
+
+        mConsole.loadData(html, "text/html; charset=UTF-8", null);
     }
 
     public void quit(View view) {
