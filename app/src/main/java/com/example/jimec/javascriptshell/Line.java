@@ -31,22 +31,20 @@ public class Line {
      */
     public void detectIndent(Line previousLine) {
         mIndent = previousLine.mIndent;
+        mIndent += countBrace(previousLine.mCode, '{', '}');
+        mIndent += Math.min(countBrace(mCode, '{', '}'), 0); // The current line cannot lift it's indention by itself
 
-        if (previousLine.mCode.matches(".*\\{.*$")        // { block started
-                || previousLine.mCode.matches(".*\\(.*$") // ( block started
-                || previousLine.mCode.matches(".*\\[.*$") // [ block started
-                ) {
-            // Increase indent
-            mIndent++;
-        }
+        // Level can be lower than 0
+        mIndent = mIndent < 0 ? 0 : mIndent;
+    }
 
-        if (mCode.matches("^\\s*\\}.*$")        // { block ended
-                || mCode.matches("^\\s*\\).*$") // ( block ended
-                || mCode.matches("^\\s*\\].*$") // [ block ended
-                ) {
-            // Decrease indent if greater than 0
-            mIndent = mIndent > 0 ? mIndent - 1 : 0;
+    private int countBrace(String code, char opening, char closing) {
+        int indent = 0;
+        for (int i = 0; i < code.length(); i++) {
+            if (code.charAt(i) == opening) indent++;
+            else if (code.charAt(i) == closing) indent--;
         }
+        return indent;
     }
 
     @Override
