@@ -134,11 +134,13 @@ public class EditActivity extends AppCompatActivity {
 
     public void run(View view) {
         Intent intent = new Intent(this, RunActivity.class);
+        // TODO: remove eval? get location of error?
         String code = "try { eval(`" + mCodeLines.toString() + "`); } catch(err) { print(err); }";
         intent.putExtra(EXTRA_CODE, code);
         startActivity(intent);
     }
 
+    @SuppressWarnings("unused")
     public void write(View view) {
         mCodeLines.write(((Button) view).getText().toString());
         syncText();

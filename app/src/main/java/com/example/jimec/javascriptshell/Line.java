@@ -3,22 +3,22 @@ package com.example.jimec.javascriptshell;
 public class Line {
 
     private int mIndent;
-    private String mCode;
+    private String mCode = "";
 
     public String getCode() {
         return mCode;
     }
 
-    public void setCode(String mCode) {
-        this.mCode = mCode;
+    public void setCode(String code) {
+        mCode = code;
     }
 
     public int getIndent() {
         return mIndent;
     }
 
-    public void setIndent(int mIndent) {
-        this.mIndent = mIndent;
+    public void setIndent(int indent) {
+        mIndent = indent;
     }
 
     /**

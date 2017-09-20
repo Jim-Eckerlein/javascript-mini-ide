@@ -23,13 +23,17 @@ public class LineList {
 
     public static void main(String[] args) {
         LineList lines = new LineList();
-        lines.write("1234\n5678");
-        lines.moveCursorToLineStart();
-        lines.backspace();
-        lines.moveCursorRight();
+        //lines.write("function {\nprint\n}");
+        lines.write("function {");
         lines.writeEnter();
-        lines.clear();
-        lines.write("hello");
+        lines.write("print");
+        lines.writeEnter();
+        lines.write("in}");
+        lines.moveCursorLeft();
+        lines.backspace();
+        lines.backspace();
+        lines.backspace();
+        lines.writeEnter();
         System.out.println(lines);
     }
 
@@ -58,6 +62,11 @@ public class LineList {
             StringBuilder codeLine = new StringBuilder(mLines.get(mCursor.mLine).getCode());
             codeLine.deleteCharAt(mCursor.mCol);
             mLines.get(mCursor.mLine).setCode(codeLine.toString());
+
+            if (mCursor.mCol == 0 && mCursor.mLine > 0) {
+                // Deleted first character, indentation could change:
+                mLines.get(mCursor.mLine).detectIndent(mLines.get(mCursor.mLine - 1));
+            }
         } else if (mCursor.mLine > 0) {
             // Delete line break by merging lines, only possible if not first line
             int newCol = mLines.get(mCursor.mLine - 1).getCode().length();
@@ -69,6 +78,7 @@ public class LineList {
     }
 
     void writeEnter() {
+        /*
         Line line = new Line();
         String oldCodeLine = mLines.get(mCursor.mLine).getCode();
         line.setCode(oldCodeLine.substring(0, mCursor.mCol));
@@ -77,6 +87,18 @@ public class LineList {
         }
         mLines.get(mCursor.mLine).setCode(oldCodeLine.substring(mCursor.mCol));
         mLines.add(mCursor.mLine, line);
+        mCursor.mLine++;
+        moveCursorToLineStart();*/
+
+        Line currentLine = mLines.get(mCursor.mLine);
+        Line newLine = new Line();
+        if (mCursor.mCol < currentLine.getCode().length()) {
+            // Cursor is not at the end of the current line, move the rest into the new line:
+            newLine.setCode(currentLine.getCode().substring(mCursor.mCol));
+            currentLine.setCode(currentLine.getCode().substring(0, mCursor.mCol));
+        }
+        newLine.detectIndent(currentLine);
+        mLines.add(mCursor.mLine + 1, newLine);
         mCursor.mLine++;
         moveCursorToLineStart();
     }
@@ -110,6 +132,10 @@ public class LineList {
                     appendix = oldLine.substring(mCursor.mCol);
                 }
                 line.setCode(oldLine.substring(0, mCursor.mCol) + textLine);
+
+                if (mCursor.mCol == 0 && mCursor.mLine > 0) {
+                    line.detectIndent(mLines.get(mCursor.mLine - 1));
+                }
             } else {
                 // Create new line
                 mCursor.mCol = 0;
@@ -236,15 +262,6 @@ public class LineList {
         int mLine;
         int mCol;
         int mDesiredCol;
-
-        public void nextCol() {
-            mCol++;
-        }
-
-        public void nextLine() {
-            mCol = 0;
-            mLine++;
-        }
 
         @Override
         public String toString() {
