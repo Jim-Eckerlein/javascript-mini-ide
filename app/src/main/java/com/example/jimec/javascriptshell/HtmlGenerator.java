@@ -1,6 +1,5 @@
 package com.example.jimec.javascriptshell;
 
-import static com.example.jimec.javascriptshell.Util.containsString;
 import static com.example.jimec.javascriptshell.Util.strbackcmp;
 import static com.example.jimec.javascriptshell.Util.strcmp;
 
@@ -38,18 +37,16 @@ public class HtmlGenerator {
             "while", "with", "yield"
     };
 
-    private static final String[] OPERATOR_LIST = new String[]{
-            "+", "*", "/", "{", "}", "(", ")", ",", "|", "!", "?", "%", "^",
-            ".", ";", "~", "=", "[", "]", "-", "&", "<", ">", "\\"
+    private static final char[] OPERATOR_LIST = new char[]{
+            '+', '*', '/', '{', '}', '(', ')', ',', '|', '!', '?', '%', '^',
+            '.', ';', '~', '=', '[', ']', '-', '&', '<', '>', '\\'
     };
 
     public static void main(String[] args) {
         HtmlGenerator htmlGenerator = new HtmlGenerator();
         LineList lines = new LineList();
 
-        lines.write("print");
-        lines.write(" ");
-        lines.write("('hello')");
+        lines.write("( 'string') print a // comment");
         String html = htmlGenerator.generateHtml(lines);
 
         System.out.println(html);
@@ -129,7 +126,7 @@ public class HtmlGenerator {
                 }
 
                 // Keyword start
-                else if (Character.isLetter(c) && currentTextType == NEUTRAL && containsString(KEYWORD_LIST, codeLine, i)) {
+                else if (Character.isLetter(c) && currentTextType == NEUTRAL && isKeyword(codeLine, i)) {
                     currentTextType = KEYWORD;
                     sb.append("<span class='code-highlight-keyword'>");
                 }
@@ -187,7 +184,7 @@ public class HtmlGenerator {
                 }
 
                 // Operator
-                else if (!Character.isWhitespace(c) && containsString(OPERATOR_LIST, codeLine, i) && currentTextType == NEUTRAL) {
+                else if (!Character.isWhitespace(c) && isOperator(codeLine, i) && currentTextType == NEUTRAL) {
                     sb.append("<span class='code-highlight-operator'>");
                     spanEndsAfterwards = true;
                 }
@@ -226,6 +223,22 @@ public class HtmlGenerator {
                 "</body></html>");
 
         return sb.toString();
+    }
+
+    private boolean isKeyword(String code, int position) {
+        code = code.substring(position).replaceFirst("^([a-z]+).*$", "$1");
+        for (String item : KEYWORD_LIST) {
+            if (code.equals(item)) return true;
+        }
+        return false;
+    }
+
+    private boolean isOperator(String code, int position) {
+        for (char c : OPERATOR_LIST) {
+            if (code.charAt(position) == c)
+                return true;
+        }
+        return false;
     }
 
 }

@@ -64,13 +64,6 @@ public class Util {
                 .equals(new StringBuilder(b).reverse().toString());
     }
 
-    static boolean containsString(String[] array, String src, int srcPosition) {
-        for (String anArray : array) {
-            if (strcmp(src, anArray, srcPosition)) return true;
-        }
-        return false;
-    }
-
     public static void main(String[] args) {
         System.out.println("Should be true:  " + strcmp("hello", "llo", 2));
         System.out.println("Should be false: " + strcmp("hello", "llo", 0));
