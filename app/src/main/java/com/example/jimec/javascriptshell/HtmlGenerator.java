@@ -46,12 +46,7 @@ public class HtmlGenerator {
         HtmlGenerator htmlGenerator = new HtmlGenerator();
         LineList lines = new LineList();
 
-        lines.write("var person = {\n" +
-                "    greet: function () {\n" +
-                "        print('Hi, I am ' + this.name);\n" +
-                "    }\n" +
-                "};\n" +
-                "in");
+        lines.write("/*\na\n*/\nwhile");
         String html = htmlGenerator.generateHtml(lines);
 
         System.out.println(html);
@@ -119,6 +114,22 @@ public class HtmlGenerator {
                     currentTextType = COMMENT_MULTI_LINE;
                 }
 
+                // Multi line comment continues
+                else if (currentTextType == COMMENT_MULTI_LINE && (i == 0)) {
+                    sb.append("<span class='code-highlight-comment'>");
+                }
+
+                // Multi line comment end
+                else if (strbackcmp(codeLine, "*/", i) && currentTextType == COMMENT_MULTI_LINE) {
+                    spanEndsAfterwards = true;
+                    currentTextType = NEUTRAL;
+                }
+
+                // Multi line comment break
+                else if (currentTextType == COMMENT_MULTI_LINE && (i == codeLine.length() - 1)) {
+                    spanEndsAfterwards = true;
+                }
+
                 // String starting
                 else if (strcmp(codeLine, "'", i) && currentTextType == NEUTRAL) {
                     sb.append("<span class='code-highlight-string'>");
@@ -128,6 +139,7 @@ public class HtmlGenerator {
                 // String ending
                 else if (strbackcmp(codeLine, "'", i) && currentTextType == STRING) {
                     spanEndsAfterwards = true;
+                    currentTextType = NEUTRAL;
                 }
 
                 // Keyword start
@@ -183,15 +195,11 @@ public class HtmlGenerator {
                     reprocessCurrentCharacter = true;
                 }
 
-                // Multi line comment end
-                else if (strbackcmp(codeLine, "*/", i) && currentTextType == COMMENT_MULTI_LINE) {
-                    spanEndsAfterwards = true;
-                }
-
                 // Operator
                 else if (!Character.isWhitespace(c) && isOperator(codeLine, i) && currentTextType == NEUTRAL) {
                     sb.append("<span class='code-highlight-operator'>");
                     spanEndsAfterwards = true;
+                    currentTextType = NEUTRAL;
                 }
 
                 if (reprocessCurrentCharacter) continue;
@@ -201,7 +209,6 @@ public class HtmlGenerator {
 
                 if (spanEndsAfterwards) {
                     sb.append("</span>");
-                    currentTextType = NEUTRAL;
                 }
             }
 
