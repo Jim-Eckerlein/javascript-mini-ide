@@ -1,4 +1,4 @@
-package com.example.jimec.javascriptshell;
+package com.example.jimec.javascriptshell.keyboard_view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -7,26 +7,28 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class KeyboardButton extends LinearLayout implements View.OnLongClickListener {
+import com.example.jimec.javascriptshell.R;
+
+public class Key extends LinearLayout implements View.OnLongClickListener {
 
     private TextView mPrimary;
     private TextView mSecondary;
 
-    public KeyboardButton(Context context) {
+    public Key(Context context) {
         super(context);
     }
 
-    public KeyboardButton(Context context, AttributeSet attrs) {
+    public Key(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public KeyboardButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Key(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
-    public KeyboardButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public Key(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
     }
@@ -36,10 +38,10 @@ public class KeyboardButton extends LinearLayout implements View.OnLongClickList
         mPrimary = findViewById(R.id.primary);
         mSecondary = findViewById(R.id.secondary);
 
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.KeyboardButton, 0, 0);
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Key, 0, 0);
         try {
-            setPrimaryText(a.getString(R.styleable.KeyboardButton_primary));
-            setSecondaryText(a.getString(R.styleable.KeyboardButton_secondary));
+            setPrimaryText(a.getString(R.styleable.Key_primary));
+            setSecondaryText(a.getString(R.styleable.Key_secondary));
         } finally {
             a.recycle();
         }

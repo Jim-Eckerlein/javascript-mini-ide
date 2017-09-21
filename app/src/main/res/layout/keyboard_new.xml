@@ -8,14 +8,14 @@
 
     <LinearLayout style="@style/KeyboardRow">
 
-        <com.example.jimec.javascriptshell.KeyboardButton
+        <com.example.jimec.javascriptshell.keyboard_view.Key
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:primary="q"
             app:secondary="&amp;"/>
 
-        <com.example.jimec.javascriptshell.KeyboardButton
+        <com.example.jimec.javascriptshell.keyboard_view.Key
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
