@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="bottom"
-              android:orientation="vertical">
+<com.example.jimec.javascriptshell.keyboard_view.Keyboard
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout style="@style/KeyboardRow">
+    <com.example.jimec.javascriptshell.keyboard_view.Row
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <com.example.jimec.javascriptshell.keyboard_view.Key
             android:layout_width="0dp"
@@ -22,6 +24,60 @@
             app:primary="w"
             app:secondary="|"/>
 
-    </LinearLayout>
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="e"
+            app:secondary="!"/>
 
-</LinearLayout>
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="r"
+            app:secondary="\?"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="t"
+            app:secondary="%"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="z"
+            app:secondary="_"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="u"
+            app:secondary="~"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="i"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="o"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="p"/>
+
+    </com.example.jimec.javascriptshell.keyboard_view.Row>
+
+</com.example.jimec.javascriptshell.keyboard_view.Keyboard>
+

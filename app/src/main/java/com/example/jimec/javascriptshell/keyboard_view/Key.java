@@ -34,7 +34,7 @@ public class Key extends LinearLayout implements View.OnLongClickListener {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        inflate(context, R.layout.keyboard_button, this);
+        inflate(context, R.layout.keyboard_key, this);
         mPrimary = findViewById(R.id.primary);
         mSecondary = findViewById(R.id.secondary);
 
