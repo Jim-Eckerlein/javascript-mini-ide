@@ -70,15 +70,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
-        <include layout="@layout/keyboard_0" />
-
-        <include
-            layout="@layout/keyboard_1"
-            android:visibility="gone" />
-
-        <include
-            layout="@layout/keyboard_navigation"
-            android:visibility="gone" />
+        <include layout="@layout/keyboard_new"/>
 
     </FrameLayout>
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="KeyboardButton">
+        <attr name="primary" format="string"/>
+        <attr name="secondary" format="string"/>
+    </declare-styleable>
+</resources>
