@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.jimec.javascriptshell.R;
 import com.example.jimec.javascriptshell.code_lines.LineList;
 
 public class Keyboard extends LinearLayout {
@@ -19,21 +18,14 @@ public class Keyboard extends LinearLayout {
 
     public Keyboard(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
     }
 
     public Keyboard(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs);
     }
 
     public Keyboard(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs);
-    }
-
-    private void init(Context context, AttributeSet attrs) {
-        inflate(context, R.layout.keyboard_keyboard, this);
     }
 
     @Override
@@ -50,8 +42,9 @@ public class Keyboard extends LinearLayout {
             }
         } else {
             if (view instanceof Key) {
-                Key key = ((Key) view);
-                key.setKeyboard(this);
+                ((Key) view).setKeyboard(this);
+            } else if (view instanceof BackspaceKey) {
+                ((BackspaceKey) view).setKeyboard(this);
             }
         }
     }
@@ -70,6 +63,10 @@ public class Keyboard extends LinearLayout {
 
     public void writeEnter() {
         mLineList.writeEnter();
+    }
+
+    public void backspace() {
+        mLineList.backspace();
     }
 
 }

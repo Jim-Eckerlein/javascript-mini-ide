@@ -12,7 +12,7 @@ var person = {
  Iterate over the object members:
 */
 print('Members:');
-for(let member in person) {
+for(let  member in person) {
     print('- ' + member);
 }
 

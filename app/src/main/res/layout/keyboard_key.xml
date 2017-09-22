@@ -25,6 +25,6 @@
         android:padding="0dp"
         android:text="q"
         android:textColor="#666"
-        android:textSize="12sp"/>
+        android:textSize="10sp"/>
 
 </LinearLayout>

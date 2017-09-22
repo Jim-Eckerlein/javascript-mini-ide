@@ -15,6 +15,74 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            app:primary="1"
+            app:secondary="++"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="2"
+            app:secondary="--"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="3"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="4"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="5"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="6"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="7"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="8"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="9"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="0"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             app:primary="q"
             app:secondary="&amp;"/>
 
@@ -77,6 +145,147 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:primary="p"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            />
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="a"
+            app:secondary="+"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="s"
+            app:secondary="-"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="d"
+            app:secondary="*"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="f"
+            app:secondary="/"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="g"
+            app:secondary="="/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="h"
+            app:secondary="&lt;"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="j"
+            app:secondary="&gt;"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="k"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="l"
+            app:secondary="'"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="y"
+            app:secondary="{"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="x"
+            app:secondary="("/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="c"
+            app:secondary="["/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="v"
+            app:secondary=":"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="b"
+            app:secondary="]"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="n"
+            app:secondary=")"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary="m"
+            app:secondary="}"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.BackspaceKey
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="4dp"/>
 
     </LinearLayout>
 
