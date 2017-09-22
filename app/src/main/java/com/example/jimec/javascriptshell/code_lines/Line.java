@@ -1,4 +1,4 @@
-package com.example.jimec.javascriptshell;
+package com.example.jimec.javascriptshell.code_lines;
 
 public class Line {
 

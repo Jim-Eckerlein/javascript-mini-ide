@@ -1,11 +1,17 @@
-package com.example.jimec.javascriptshell;
+package com.example.jimec.javascriptshell.js_editor_view;
+
+import android.content.Context;
+
+import com.example.jimec.javascriptshell.R;
+import com.example.jimec.javascriptshell.Util;
+import com.example.jimec.javascriptshell.code_lines.Line;
+import com.example.jimec.javascriptshell.code_lines.LineList;
 
 import static com.example.jimec.javascriptshell.Util.strbackcmp;
 import static com.example.jimec.javascriptshell.Util.strcmp;
 
 public class HtmlGenerator {
 
-    static final String CSS = "*{font-family:monospace;font-size:1.1rem}body,html{color:#111;margin:0;padding:0;width:100%}td{width:auto;padding:0}.code-table{width:100%;border-collapse:collapse}.line-number{color:#999;padding:2px 8px 2px 2px;width:1%;white-space:nowrap}.code-line{white-space:pre;padding-left:8px}.active-line .code-line{background-color:#eee;border-radius:8px}.active-line .line-number{color:#444}.cursor-container{position:relative}#cursor{position:absolute;display:block;top:0;left:0;background-color:#f50;width:2px;height:100%}.code-highlight-keyword{color:#4682b4}.code-highlight-string{color:#9acd32}.code-highlight-comment{color:gray}.code-highlight-operator{color:#ff1493}.code-highlight-number{color:orange}";
     private static final int NEUTRAL = 0;
     private static final int STRING = 1;
     private static final int COMMENT_SINGE_LINE = 2;
@@ -36,20 +42,15 @@ public class HtmlGenerator {
             "try", "typeof", "var", "void",
             "while", "with", "yield"
     };
-
     private static final char[] OPERATOR_LIST = new char[]{
             '+', '*', '/', '{', '}', '(', ')', ',', '|', '!', '?', '%', '^',
             '.', ';', '~', '=', '[', ']', '-', '&', '<', '>', '\\'
     };
 
-    public static void main(String[] args) {
-        HtmlGenerator htmlGenerator = new HtmlGenerator();
-        LineList lines = new LineList();
+    private final Context mContext;
 
-        lines.write("/*\na\n*/\nwhile");
-        String html = htmlGenerator.generateHtml(lines);
-
-        System.out.println(html);
+    public HtmlGenerator(Context context) {
+        mContext = context;
     }
 
     public String generateHtml(LineList lines) {
@@ -61,7 +62,7 @@ public class HtmlGenerator {
         sb.append("<!doctype html>" +
                 "<html><head>\n" +
                 "    <meta charset='utf-8'/>\n" +
-                "    <style>" + CSS + "</style>\n" +
+                "    <style>" + Util.readTextFile(mContext, R.raw.html_style) + "</style>\n" +
                 "</head><body>\n" +
                 "    <table class='code-table'>\n");
 

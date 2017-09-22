@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.jimec.javascriptshell.LineList;
 import com.example.jimec.javascriptshell.R;
+import com.example.jimec.javascriptshell.code_lines.LineList;
 
 public class Keyboard extends LinearLayout {
 

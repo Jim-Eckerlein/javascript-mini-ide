@@ -1,0 +1,76 @@
+* {
+	font-family: monospace;
+	font-size: 1.1rem;
+}
+
+body, html {
+	color: #111;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+td {
+	width: auto;
+	padding: 0;
+}
+
+.code-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.line-number {
+	color: #999;
+	width: 1%;
+	white-space: nowrap;
+	padding: 2px 8px 2px 2px;
+}
+
+.code-line {
+	white-space: pre;
+	padding-left: 8px;
+}
+
+.active-line .code-line {
+	background-color: #eee;
+	border-radius: 8px;
+}
+
+.active-line .line-number {
+	color: #444;
+}
+
+.cursor-container {
+	position: relative;
+}
+
+#cursor {
+	position: absolute;
+	display: block;
+	top: 0;
+	left: 0;
+	background-color: #f50;
+	width: 2px;
+	height: 100%;
+}
+
+.code-highlight-keyword {
+	color: #4682b4;
+}
+
+.code-highlight-string {
+	color: #9acd32;
+}
+
+.code-highlight-comment {
+	color: gray;
+}
+
+.code-highlight-operator {
+	color: #ff1493;
+}
+
+.code-highlight-number {
+	color: orange;
+}

@@ -4,12 +4,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 
-import com.example.jimec.javascriptshell.HtmlGenerator;
-import com.example.jimec.javascriptshell.LineList;
+import com.example.jimec.javascriptshell.code_lines.LineList;
 
 public class JSEditorView extends WebView implements LineList.OnEditListener {
 
-    private HtmlGenerator mHtmlGenerator = new HtmlGenerator();
+    private HtmlGenerator mHtmlGenerator = new HtmlGenerator(getContext());
 
     public JSEditorView(Context context) {
         super(context);

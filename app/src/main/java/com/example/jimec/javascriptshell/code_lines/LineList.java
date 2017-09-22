@@ -1,4 +1,4 @@
-package com.example.jimec.javascriptshell;
+package com.example.jimec.javascriptshell.code_lines;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ public class LineList {
     /**
      * Construct an empty line list.
      */
-    LineList() {
+    public LineList() {
         clear();
     }
 

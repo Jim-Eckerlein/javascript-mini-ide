@@ -17,7 +17,7 @@ public class RunActivity extends AppCompatActivity {
         mConsole.getSettings().setJavaScriptEnabled(true);
 
         String html = "<!doctype html><html><head><style>" +
-                HtmlGenerator.CSS +
+                Util.readTextFile(getApplication(), R.raw.html_style) +
                 "</style></head><body>" +
                 "<script>\n" +
                 "  function print(message) {\n" +
