@@ -9,10 +9,11 @@ import android.widget.TextView;
 
 import com.example.jimec.javascriptshell.R;
 
-public class Key extends LinearLayout implements View.OnLongClickListener {
+public class Key extends LinearLayout implements View.OnLongClickListener, View.OnClickListener {
 
     private TextView mPrimary;
     private TextView mSecondary;
+    private Keyboard mKeyboard;
 
     public Key(Context context) {
         super(context);
@@ -47,11 +48,17 @@ public class Key extends LinearLayout implements View.OnLongClickListener {
         }
 
         setOnLongClickListener(this);
+        setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        mKeyboard.write(getPrimaryText());
     }
 
     @Override
     public boolean onLongClick(View view) {
-        System.out.println("SEC: " + getSecondaryText());
+        mKeyboard.write(getSecondaryText());
         return true;
     }
 
@@ -73,5 +80,13 @@ public class Key extends LinearLayout implements View.OnLongClickListener {
         mSecondary.setText(text);
         invalidate();
         requestLayout();
+    }
+
+    public Keyboard getKeyboard() {
+        return mKeyboard;
+    }
+
+    public void setKeyboard(Keyboard keyboard) {
+        mKeyboard = keyboard;
     }
 }

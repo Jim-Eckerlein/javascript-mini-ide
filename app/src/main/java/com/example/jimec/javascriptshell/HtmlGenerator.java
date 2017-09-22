@@ -52,7 +52,7 @@ public class HtmlGenerator {
         System.out.println(html);
     }
 
-    String generateHtml(LineList lines) {
+    public String generateHtml(LineList lines) {
         StringBuilder sb = new StringBuilder();
         LineList.Cursor cursor = lines.getCursor();
         int currentTextType = NEUTRAL;

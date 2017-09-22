@@ -12,7 +12,7 @@ public class Util {
     private Util() {
     }
 
-    static String readTextFile(Context ctx, int resId) {
+    public static String readTextFile(Context ctx, int resId) {
         InputStream inputStream = ctx.getResources().openRawResource(resId);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         String line;
@@ -39,7 +39,7 @@ public class Util {
      * @param start Start position in string a.
      * @return True if comparision succeeded.
      */
-    static boolean strcmp(String a, String b, int start) {
+    public static boolean strcmp(String a, String b, int start) {
         return ((start + b.length()) <= a.length())
                 && a.substring(start, start + b.length()).equals(b.substring(0, b.length()));
     }
@@ -57,7 +57,7 @@ public class Util {
      * @param start Position within first string to start comparison.
      * @return True if comparison succeeded.
      */
-    static boolean strbackcmp(String a, String b, int start) {
+    public static boolean strbackcmp(String a, String b, int start) {
         return (b.length() <= (start + 1))
                 && (start < a.length())
                 && new StringBuilder(a.substring(0, start + 1)).reverse().substring(0, b.length())

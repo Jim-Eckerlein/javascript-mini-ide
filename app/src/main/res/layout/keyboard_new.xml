@@ -2,11 +2,12 @@
 <com.example.jimec.javascriptshell.keyboard_view.Keyboard
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/keyboard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.example.jimec.javascriptshell.keyboard_view.Row
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -77,7 +78,7 @@
             android:layout_weight="1"
             app:primary="p"/>
 
-    </com.example.jimec.javascriptshell.keyboard_view.Row>
+    </LinearLayout>
 
 </com.example.jimec.javascriptshell.keyboard_view.Keyboard>
 

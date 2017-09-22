@@ -35,7 +35,7 @@ public class LineList {
         return mLines;
     }
 
-    void clear() {
+    public void clear() {
         mLines.clear();
 
         Line line = new Line();
@@ -45,7 +45,7 @@ public class LineList {
         mCursor.reset();
     }
 
-    void backspace() {
+    public void backspace() {
         if (mCursor.mCol > 0) {
             // Delete char under cursor
             mCursor.mCol--;
@@ -67,7 +67,7 @@ public class LineList {
         }
     }
 
-    void writeEnter() {
+    public void writeEnter() {
         /*
         Line line = new Line();
         String oldCodeLine = mLines.get(mCursor.mLine).getCode();
@@ -99,7 +99,7 @@ public class LineList {
      *
      * @param text Text code to be added
      */
-    void write(String text) {
+    public void write(String text) {
         String[] textLines = text.split("\\n");
         String appendix = "";
 
@@ -143,21 +143,21 @@ public class LineList {
         mLines.get(mCursor.mLine).setCode(mLines.get(mCursor.mLine).getCode() + appendix);
     }
 
-    boolean moveCursorToLineStart() {
+    public boolean moveCursorToLineStart() {
         if (mCursor.mCol != 0) {
             mCursor.mDesiredCol = mCursor.mCol = 0;
             return true;
         } else return false;
     }
 
-    boolean moveCursorToLineEnding() {
+    public boolean moveCursorToLineEnding() {
         if (mCursor.mCol != mLines.get(mCursor.mLine).getCode().length()) {
             mCursor.mDesiredCol = mCursor.mCol = mLines.get(mCursor.mLine).getCode().length();
             return true;
         } else return false;
     }
 
-    boolean moveCursorToStart() {
+    public boolean moveCursorToStart() {
         if (mCursor.mLine != 0 || mCursor.mCol != 0) {
             mCursor.mLine = 0;
             mCursor.mDesiredCol = mCursor.mCol = 0;
@@ -165,7 +165,7 @@ public class LineList {
         } else return false;
     }
 
-    boolean moveCursorLeft() {
+    public boolean moveCursorLeft() {
         if (mCursor.mCol == 0) {
             // Cursor is already at line start
             if (mCursor.mLine > 0) {
@@ -180,7 +180,7 @@ public class LineList {
         }
     }
 
-    boolean moveCursorRight() {
+    public boolean moveCursorRight() {
         if (mCursor.mCol == mLines.get(mCursor.mLine).getCode().length()) {
             // Cursor is already at line end
             if (mCursor.mLine < mLines.size() - 1) {
@@ -195,7 +195,7 @@ public class LineList {
         }
     }
 
-    boolean moveCursorUp() {
+    public boolean moveCursorUp() {
         if (mCursor.mLine > 0) {
             mCursor.mLine--;
             mCursor.mCol = Math.min(mLines.get(mCursor.mLine).getCode().length(), mCursor.mDesiredCol);
@@ -204,30 +204,13 @@ public class LineList {
         return false;
     }
 
-    boolean moveCursorDown() {
+    public boolean moveCursorDown() {
         if (mCursor.mLine < mLines.size() - 1) {
             mCursor.mLine++;
             mCursor.mCol = Math.min(mLines.get(mCursor.mLine).getCode().length(), mCursor.mDesiredCol);
             return true;
         }
         return false;
-    }
-
-    public void dump() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("LineList, ").append(mLines.size()).append(" lines, cursor at ").append(mCursor.toString()).append('\n');
-        int i = 0;
-        for (Line line : mLines) {
-            sb.append('[').append(i).append("]");
-            for (int indent = 0; indent < line.getIndent(); indent++) {
-                sb.append("    ");
-            }
-            sb.append(line.getCode()).append("\n");
-            i++;
-        }
-
-        System.out.println(sb.toString());
     }
 
     @Override
@@ -253,7 +236,7 @@ public class LineList {
     /**
      * Represents the cursor position within the code text.
      */
-    static class Cursor {
+    public static class Cursor {
 
         int mLine;
         int mCol;
