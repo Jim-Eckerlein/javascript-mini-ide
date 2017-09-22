@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class LineList {
 
-    private Cursor mCursor = new Cursor();
+    private Cursor mCursor = new Cursor(this);
     private ArrayList<Line> mLines = new ArrayList<>();
     private ArrayList<OnEditListener> mEditListeners = new ArrayList<>();
 
@@ -30,6 +30,14 @@ public class LineList {
 
     public ArrayList<Line> getLines() {
         return mLines;
+    }
+
+    Line getLine(int index) {
+        return mLines.get(index);
+    }
+
+    int getLineCount() {
+        return mLines.size();
     }
 
     public void addOnEditListener(OnEditListener listener) {
@@ -166,81 +174,46 @@ public class LineList {
         notifyEditListeners();
     }
 
-    public boolean moveCursorToLineStart() {
-        if (mCursor.mCol != 0) {
-            mCursor.mDesiredCol = mCursor.mCol = 0;
+    public void moveCursorToLineStart() {
+        if (mCursor.moveToLineStart()) {
             notifyEditListeners();
-            return true;
-        } else return false;
-    }
-
-    public boolean moveCursorToLineEnding() {
-        if (mCursor.mCol != mLines.get(mCursor.mLine).getCode().length()) {
-            mCursor.mDesiredCol = mCursor.mCol = mLines.get(mCursor.mLine).getCode().length();
-            notifyEditListeners();
-            return true;
-        } else return false;
-    }
-
-    public boolean moveCursorToStart() {
-        if (mCursor.mLine != 0 || mCursor.mCol != 0) {
-            mCursor.mLine = 0;
-            mCursor.mDesiredCol = mCursor.mCol = 0;
-            notifyEditListeners();
-            return true;
-        } else return false;
-    }
-
-    public boolean moveCursorLeft() {
-        if (mCursor.mCol == 0) {
-            // Cursor is already at line start
-            if (mCursor.mLine > 0) {
-                // Cursor moves up
-                mCursor.mLine--;
-                moveCursorToLineEnding();
-                return true;
-            } else return false;
-        } else {
-            mCursor.mDesiredCol = --mCursor.mCol;
-            notifyEditListeners();
-            return true;
         }
     }
 
-    public boolean moveCursorRight() {
-        if (mCursor.mCol == mLines.get(mCursor.mLine).getCode().length()) {
-            // Cursor is already at line end
-            if (mCursor.mLine < mLines.size() - 1) {
-                // Cursor moves down
-                mCursor.mLine++;
-                moveCursorToLineStart();
-                return true;
-            } else return false;
-        } else {
-            mCursor.mDesiredCol = ++mCursor.mCol;
+    public void moveCursorToLineEnding() {
+        if (mCursor.moveToLineEnding()) {
             notifyEditListeners();
-            return true;
         }
     }
 
-    public boolean moveCursorUp() {
-        if (mCursor.mLine > 0) {
-            mCursor.mLine--;
-            mCursor.mCol = Math.min(mLines.get(mCursor.mLine).getCode().length(), mCursor.mDesiredCol);
+    public void moveCursorToStart() {
+        if (mCursor.moveToStart()) {
             notifyEditListeners();
-            return true;
         }
-        return false;
     }
 
-    public boolean moveCursorDown() {
-        if (mCursor.mLine < mLines.size() - 1) {
-            mCursor.mLine++;
-            mCursor.mCol = Math.min(mLines.get(mCursor.mLine).getCode().length(), mCursor.mDesiredCol);
+    public void moveCursorLeft() {
+        if (mCursor.moveLeft()) {
             notifyEditListeners();
-            return true;
         }
-        return false;
+    }
+
+    public void moveCursorRight() {
+        if (mCursor.moveRight()) {
+            notifyEditListeners();
+        }
+    }
+
+    public void moveCursorUp() {
+        if (mCursor.moveUp()) {
+            notifyEditListeners();
+        }
+    }
+
+    public void moveCursorDown() {
+        if (mCursor.moveDown()) {
+            notifyEditListeners();
+        }
     }
 
     @Override
@@ -269,22 +242,4 @@ public class LineList {
 
     }
 
-    /**
-     * Represents the cursor position within the code text.
-     */
-    public class Cursor {
-
-        int mLine;
-        int mCol;
-        int mDesiredCol;
-
-        @Override
-        public String toString() {
-            return "" + mLine + ":" + mCol;
-        }
-
-        public void reset() {
-            mCol = mLine = mDesiredCol = 0;
-        }
-    }
 }

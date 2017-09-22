@@ -59,12 +59,11 @@ public class HtmlGenerator {
         int cursorLine = lines.getCursorLine();
         int cursorCol = lines.getCursorCol();
 
-        sb.append("<!doctype html>" +
-                "<html><head>\n" +
-                "    <meta charset='utf-8'/>\n" +
-                "    <style>" + Util.readTextFile(mContext, R.raw.html_style) + "</style>\n" +
-                "</head><body>\n" +
-                "    <table class='code-table'>\n");
+        sb.append("<!doctype html><html><head><meta charset='utf-8'/><style>")
+                .append(Util.readTextFile(mContext, R.raw.html_style))
+                .append("</style>")
+                .append("</head><body>")
+                .append("<table class='code-table'>");
 
         for (int lineNumber = 0; lineNumber < lines.getLines().size(); lineNumber++) {
 
