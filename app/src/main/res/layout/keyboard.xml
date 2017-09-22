@@ -232,6 +232,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <com.example.jimec.javascriptshell.keyboard_view.ShiftKey
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:padding="2dp"/>
+
         <com.example.jimec.javascriptshell.keyboard_view.Key
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -284,8 +290,8 @@
         <com.example.jimec.javascriptshell.keyboard_view.BackspaceKey
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="4dp"/>
+            android:layout_weight="0.9"
+            android:padding="2dp"/>
 
     </LinearLayout>
 

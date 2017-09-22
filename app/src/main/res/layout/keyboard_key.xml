@@ -15,7 +15,7 @@
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         android:text="q"
-        android:textColor="#222"
+        android:textColor="@color/keyPrimary"
         android:textSize="18sp"/>
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_height="match_parent"
         android:padding="0dp"
         android:text="q"
-        android:textColor="#666"
+        android:textColor="@color/keySecondary"
         android:textSize="10sp"/>
 
 </LinearLayout>

@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.example.jimec.javascriptshell.R;
 
-public class Key extends LinearLayout {
+public class Key extends LinearLayout implements KeyboardKeyConnection {
 
     private TextView mPrimary;
     private TextView mSecondary;
@@ -46,7 +46,7 @@ public class Key extends LinearLayout {
             a.recycle();
         }
 
-        setOnTouchListener(new KeyTouchListener());
+        setOnTouchListener(new TouchListener());
     }
 
     public String getPrimaryText() {
@@ -77,11 +77,22 @@ public class Key extends LinearLayout {
         mKeyboard.write(getSecondaryText());
     }
 
-    public Keyboard getKeyboard() {
-        return mKeyboard;
-    }
-
+    @Override
     public void setKeyboard(Keyboard keyboard) {
         mKeyboard = keyboard;
     }
+
+    private class TouchListener extends AbstractKeyTouchListener {
+
+        @Override
+        public void onTap() {
+            writePrimaryText();
+        }
+
+        @Override
+        public void onLongTap() {
+            writeSecondaryText();
+        }
+    }
+
 }

@@ -1,12 +1,13 @@
 package com.example.jimec.javascriptshell.keyboard_view;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.example.jimec.javascriptshell.R;
 
-public class BackspaceKey extends android.support.v7.widget.AppCompatImageView implements View.OnClickListener {
+public class BackspaceKey extends android.support.v7.widget.AppCompatImageView implements View.OnClickListener, KeyboardKeyConnection {
 
     private Keyboard mKeyboard;
 
@@ -26,10 +27,11 @@ public class BackspaceKey extends android.support.v7.widget.AppCompatImageView i
     }
 
     private void init() {
-        setImageDrawable(getResources().getDrawable(R.drawable.ic_backspace, getContext().getTheme()));
+        setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_backspace));
         setOnClickListener(this);
     }
 
+    @Override
     public void setKeyboard(Keyboard keyboard) {
         mKeyboard = keyboard;
     }

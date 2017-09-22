@@ -3,5 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="sand">#f9c94a</color>
+    <color name="keyPrimary">#222</color>
+    <color name="keySecondary">#555</color>
+    <color name="keyInactive">#35000000</color>
+    <color name="keyAccent">#FF4081</color>
 </resources>
