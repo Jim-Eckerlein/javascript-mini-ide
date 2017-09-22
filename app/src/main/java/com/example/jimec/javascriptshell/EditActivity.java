@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
+import com.example.jimec.javascriptshell.js_editor_view.JSEditorView;
 import com.example.jimec.javascriptshell.keyboard_view.Keyboard;
 
 import java.security.InvalidParameterException;
@@ -16,8 +16,6 @@ public class EditActivity extends AppCompatActivity {
 
     public static final String EXTRA_CODE = "com.example.jimec.javascriptshell.CODE";
     private final LineList mCodeLines = new LineList();
-    private final HtmlGenerator mHtmlGenerator = new HtmlGenerator();
-    private WebView mEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +23,12 @@ public class EditActivity extends AppCompatActivity {
         final EditActivity activity = this;
         setContentView(R.layout.activity_edit);
 
-        mEditor = (WebView) findViewById(R.id.editor);
-        mEditor.getSettings().setDomStorageEnabled(true);
-        mEditor.getSettings().setJavaScriptEnabled(true);
+        JSEditorView editor = (JSEditorView) findViewById(R.id.editor);
 
         Keyboard keyboard = (Keyboard) findViewById(R.id.keyboard);
         keyboard.setLineList(mCodeLines);
+
+        mCodeLines.addOnEditListener(editor);
 
         ((Spinner) findViewById(R.id.examples_spinner)).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -63,8 +61,7 @@ public class EditActivity extends AppCompatActivity {
                         throw new InvalidParameterException("Unknown example at position " + pos);
                 }
                 mCodeLines.write(Util.readTextFile(activity, script));
-                mCodeLines.getCursor().reset();
-                syncText();
+                mCodeLines.moveCursorToStart();
             }
 
             @Override
@@ -73,26 +70,14 @@ public class EditActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Take the text of <code>mInterText</code> transforming it into an HTML representation,
-     * considering syntax highlighting.
-     */
-    private void syncText() {
-        String html = mHtmlGenerator.generateHtml(mCodeLines);
-        System.out.println(html);
-        mEditor.loadData(html, "text/html; charset=UTF-8", null);
-        mEditor.reload();
-    }
-
-    public void clearCode(View view) {
-        mCodeLines.clear();
-        syncText();
-    }
-
     public void run(View view) {
         Intent intent = new Intent(this, RunActivity.class);
         intent.putExtra(EXTRA_CODE, mCodeLines.toStringWithoutComments());
         startActivity(intent);
+    }
+
+    public void clearCode(View view) {
+        mCodeLines.clear();
     }
 
 }

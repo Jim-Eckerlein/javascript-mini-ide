@@ -46,7 +46,7 @@
 
     </LinearLayout>
 
-    <WebView
+    <com.example.jimec.javascriptshell.js_editor_view.JSEditorView
         android:id="@+id/editor"
         android:layout_width="0dp"
         android:layout_height="0dp"

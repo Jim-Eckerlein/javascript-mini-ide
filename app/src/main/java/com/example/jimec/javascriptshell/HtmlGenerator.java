@@ -54,8 +54,9 @@ public class HtmlGenerator {
 
     public String generateHtml(LineList lines) {
         StringBuilder sb = new StringBuilder();
-        LineList.Cursor cursor = lines.getCursor();
         int currentTextType = NEUTRAL;
+        int cursorLine = lines.getCursorLine();
+        int cursorCol = lines.getCursorCol();
 
         sb.append("<!doctype html>" +
                 "<html><head>\n" +
@@ -70,7 +71,7 @@ public class HtmlGenerator {
             String codeLine = line.getCode();
 
             // Create line preface and line number
-            if (cursor.mLine == lineNumber) {
+            if (cursorLine == lineNumber) {
                 // This is the active line
                 sb.append("    <tr class='active-line'>");
             } else {
@@ -92,7 +93,7 @@ public class HtmlGenerator {
                 boolean reprocessCurrentCharacter = false;
 
                 // Cursor
-                if (cursor.mLine == lineNumber && cursor.mCol == i) {
+                if (cursorLine == lineNumber && cursorCol == i) {
                     sb.append("<span class='cursor-container'><span id='cursor'></span></span>");
                 }
 
@@ -213,7 +214,7 @@ public class HtmlGenerator {
             }
 
             // If cursor is on last position within line, append here:
-            if (cursor.mLine == lineNumber && cursor.mCol == codeLine.length()) {
+            if (cursorLine == lineNumber && cursorCol == codeLine.length()) {
                 sb.append("<span class='cursor-container'><span id='cursor'></span></span>");
             }
 

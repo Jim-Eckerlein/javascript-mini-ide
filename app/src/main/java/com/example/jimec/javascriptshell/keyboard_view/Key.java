@@ -13,7 +13,6 @@ public class Key extends LinearLayout {
     private TextView mPrimary;
     private TextView mSecondary;
     private Keyboard mKeyboard;
-    private KeyTouchListener mTouchListener;
 
     public Key(Context context) {
         super(context);
@@ -47,8 +46,7 @@ public class Key extends LinearLayout {
             a.recycle();
         }
 
-        mTouchListener = new KeyTouchListener();
-        setOnTouchListener(mTouchListener);
+        setOnTouchListener(new KeyTouchListener());
     }
 
     public String getPrimaryText() {

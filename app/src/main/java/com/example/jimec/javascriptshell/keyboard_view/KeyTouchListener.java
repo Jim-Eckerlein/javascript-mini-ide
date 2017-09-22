@@ -5,7 +5,7 @@ import android.view.View;
 
 public class KeyTouchListener implements View.OnTouchListener {
 
-    public static final long LONG_TOUCH_MILLIS = 500;
+    public static final long LONG_TOUCH_MILLIS = 200;
     public static final int TOUCH_TAP_RADIUS = 3;
 
     private boolean mTouchEnded = false;

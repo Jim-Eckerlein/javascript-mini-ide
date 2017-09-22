@@ -13,6 +13,7 @@ public class LineList {
 
     private Cursor mCursor = new Cursor();
     private ArrayList<Line> mLines = new ArrayList<>();
+    private ArrayList<OnEditListener> mEditListeners = new ArrayList<>();
 
     /**
      * Construct an empty line list.
@@ -27,12 +28,18 @@ public class LineList {
         System.out.println(lines.toStringWithoutComments());
     }
 
-    public Cursor getCursor() {
-        return mCursor;
-    }
-
     public ArrayList<Line> getLines() {
         return mLines;
+    }
+
+    public void addOnEditListener(OnEditListener listener) {
+        mEditListeners.add(listener);
+    }
+
+    private void notifyEditListeners() {
+        for (OnEditListener listener : mEditListeners) {
+            listener.onEdit(this);
+        }
     }
 
     public void clear() {
@@ -43,6 +50,16 @@ public class LineList {
         mLines.add(line);
 
         mCursor.reset();
+
+        notifyEditListeners();
+    }
+
+    public int getCursorLine() {
+        return mCursor.mLine;
+    }
+
+    public int getCursorCol() {
+        return mCursor.mCol;
     }
 
     public void backspace() {
@@ -65,6 +82,8 @@ public class LineList {
             mLines.remove(mCursor.mLine--);
             mCursor.mCol = newCol;
         }
+
+        notifyEditListeners();
     }
 
     public void writeEnter() {
@@ -91,6 +110,8 @@ public class LineList {
         mLines.add(mCursor.mLine + 1, newLine);
         mCursor.mLine++;
         moveCursorToLineStart();
+
+        notifyEditListeners();
     }
 
     /**
@@ -141,11 +162,14 @@ public class LineList {
         }
 
         mLines.get(mCursor.mLine).setCode(mLines.get(mCursor.mLine).getCode() + appendix);
+
+        notifyEditListeners();
     }
 
     public boolean moveCursorToLineStart() {
         if (mCursor.mCol != 0) {
             mCursor.mDesiredCol = mCursor.mCol = 0;
+            notifyEditListeners();
             return true;
         } else return false;
     }
@@ -153,6 +177,7 @@ public class LineList {
     public boolean moveCursorToLineEnding() {
         if (mCursor.mCol != mLines.get(mCursor.mLine).getCode().length()) {
             mCursor.mDesiredCol = mCursor.mCol = mLines.get(mCursor.mLine).getCode().length();
+            notifyEditListeners();
             return true;
         } else return false;
     }
@@ -161,6 +186,7 @@ public class LineList {
         if (mCursor.mLine != 0 || mCursor.mCol != 0) {
             mCursor.mLine = 0;
             mCursor.mDesiredCol = mCursor.mCol = 0;
+            notifyEditListeners();
             return true;
         } else return false;
     }
@@ -176,6 +202,7 @@ public class LineList {
             } else return false;
         } else {
             mCursor.mDesiredCol = --mCursor.mCol;
+            notifyEditListeners();
             return true;
         }
     }
@@ -191,6 +218,7 @@ public class LineList {
             } else return false;
         } else {
             mCursor.mDesiredCol = ++mCursor.mCol;
+            notifyEditListeners();
             return true;
         }
     }
@@ -199,6 +227,7 @@ public class LineList {
         if (mCursor.mLine > 0) {
             mCursor.mLine--;
             mCursor.mCol = Math.min(mLines.get(mCursor.mLine).getCode().length(), mCursor.mDesiredCol);
+            notifyEditListeners();
             return true;
         }
         return false;
@@ -208,6 +237,7 @@ public class LineList {
         if (mCursor.mLine < mLines.size() - 1) {
             mCursor.mLine++;
             mCursor.mCol = Math.min(mLines.get(mCursor.mLine).getCode().length(), mCursor.mDesiredCol);
+            notifyEditListeners();
             return true;
         }
         return false;
@@ -233,10 +263,16 @@ public class LineList {
                 .replaceAll("/\\*.*\\*/", "");
     }
 
+    public interface OnEditListener {
+
+        void onEdit(LineList lines);
+
+    }
+
     /**
      * Represents the cursor position within the code text.
      */
-    public static class Cursor {
+    public class Cursor {
 
         int mLine;
         int mCol;
