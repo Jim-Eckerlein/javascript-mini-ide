@@ -3,17 +3,17 @@ package com.example.jimec.javascriptshell.keyboard_view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.jimec.javascriptshell.R;
 
-public class Key extends LinearLayout implements View.OnLongClickListener, View.OnClickListener {
+public class Key extends LinearLayout {
 
     private TextView mPrimary;
     private TextView mSecondary;
     private Keyboard mKeyboard;
+    private KeyTouchListener mTouchListener;
 
     public Key(Context context) {
         super(context);
@@ -47,19 +47,8 @@ public class Key extends LinearLayout implements View.OnLongClickListener, View.
             a.recycle();
         }
 
-        setOnLongClickListener(this);
-        setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View view) {
-        mKeyboard.write(getPrimaryText());
-    }
-
-    @Override
-    public boolean onLongClick(View view) {
-        mKeyboard.write(getSecondaryText());
-        return true;
+        mTouchListener = new KeyTouchListener();
+        setOnTouchListener(mTouchListener);
     }
 
     public String getPrimaryText() {
@@ -80,6 +69,14 @@ public class Key extends LinearLayout implements View.OnLongClickListener, View.
         mSecondary.setText(text);
         invalidate();
         requestLayout();
+    }
+
+    public void writePrimaryText() {
+        mKeyboard.write(getPrimaryText());
+    }
+
+    public void writeSecondaryText() {
+        mKeyboard.write(getSecondaryText());
     }
 
     public Keyboard getKeyboard() {

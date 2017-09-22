@@ -71,4 +71,5 @@ public class Keyboard extends LinearLayout {
     public void writeEnter() {
         mLineList.writeEnter();
     }
+
 }
