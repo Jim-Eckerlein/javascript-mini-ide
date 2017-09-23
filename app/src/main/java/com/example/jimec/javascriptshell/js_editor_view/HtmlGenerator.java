@@ -144,7 +144,8 @@ public class HtmlGenerator {
                 }
 
                 // Keyword start
-                else if (Character.isLetter(c) && currentTextType == NEUTRAL && isKeyword(codeLine, i)) {
+                else if (Character.isLetter(c) && currentTextType == NEUTRAL && isKeyword(codeLine, i)
+                        && (i == 0 || !Character.isLetter(codeLine.charAt(i - 1)))) {
                     currentTextType = KEYWORD;
                     sb.append("<span class='code-highlight-keyword'>");
                 }
