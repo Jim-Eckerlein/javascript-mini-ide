@@ -93,6 +93,26 @@ public class Key extends LinearLayout implements KeyboardKeyConnection {
         public void onLongTap() {
             writeSecondaryText();
         }
+    
+        @Override
+        public void onDragRight() {
+            mKeyboard.moveCursorRight();
+        }
+    
+        @Override
+        public void onDragLeft() {
+            mKeyboard.moveCursorLeft();
+        }
+    
+        @Override
+        public void onDragUp() {
+            mKeyboard.moveCursorUp();
+        }
+    
+        @Override
+        public void onDragDown() {
+            mKeyboard.moveCursorDown();
+        }
     }
 
 }

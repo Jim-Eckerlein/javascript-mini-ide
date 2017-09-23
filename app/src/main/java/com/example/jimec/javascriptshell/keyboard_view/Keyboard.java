@@ -88,5 +88,21 @@ public class Keyboard extends LinearLayout {
     public void backspace() {
         mLineList.backspace();
     }
+    
+    public void moveCursorLeft() {
+        mLineList.moveCursorLeft();
+    }
+    
+    public void moveCursorRight() {
+        mLineList.moveCursorRight();
+    }
+    
+    public void moveCursorUp() {
+        mLineList.moveCursorUp();
+    }
+    
+    public void moveCursorDown() {
+        mLineList.moveCursorDown();
+    }
 
 }
