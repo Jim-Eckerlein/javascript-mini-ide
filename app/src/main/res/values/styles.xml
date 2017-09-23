@@ -1,44 +1,9 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="KeyboardRow">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="KeyboardButton">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:onClick">write</item>
-        <item name="android:background">@drawable/button_ripple</item>
-        <item name="android:paddingBottom">8dp</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:textColor">#222</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="KeyboardButtonSecondary">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">0.5</item>
-        <item name="android:onClick">write</item>
-        <item name="android:background">@drawable/button_ripple</item>
-        <item name="android:padding">2dp</item>
-        <item name="android:textColor">#666</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="KeyboardButtonSpacer" parent="KeyboardButton">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">0dp</item>
-        <item name="android:layout_weight">0.5</item>
     </style>
 
 </resources>

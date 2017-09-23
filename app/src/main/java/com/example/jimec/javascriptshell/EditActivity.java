@@ -3,6 +3,9 @@ package com.example.jimec.javascriptshell;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -23,6 +26,10 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         final EditActivity activity = this;
         setContentView(R.layout.activity_edit);
+    
+        // Toolbar:
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         JSEditorView editor = (JSEditorView) findViewById(R.id.editor);
 
@@ -70,7 +77,29 @@ public class EditActivity extends AppCompatActivity {
             }
         });
     }
-
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.edit_toolbar, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_run:
+                Intent intent = new Intent(this, RunActivity.class);
+                intent.putExtra(EXTRA_CODE, mCodeLines.toStringWithoutComments());
+                startActivity(intent);
+                return true;
+            case R.id.action_clear:
+                mCodeLines.clear();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    
     public void run(View view) {
         Intent intent = new Intent(this, RunActivity.class);
         intent.putExtra(EXTRA_CODE, mCodeLines.toStringWithoutComments());

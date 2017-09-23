@@ -2,7 +2,7 @@ package com.example.jimec.javascriptshell;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
 
 public class RunActivity extends AppCompatActivity {
@@ -15,6 +15,11 @@ public class RunActivity extends AppCompatActivity {
         setContentView(R.layout.activity_run);
         mConsole = (WebView) findViewById(R.id.console);
         mConsole.getSettings().setJavaScriptEnabled(true);
+    
+        // Toolbar:
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String html = "<!doctype html><html><head><style>" +
                 Util.readTextFile(getApplication(), R.raw.html_style) +
@@ -38,13 +43,7 @@ public class RunActivity extends AppCompatActivity {
                 "    }" +
                 "</script></body></html>";
 
-        System.out.println("CODE:");
-        System.out.println(html);
-
         mConsole.loadData(html, "text/html; charset=UTF-8", null);
     }
-
-    public void quit(View view) {
-        finish();
-    }
+    
 }

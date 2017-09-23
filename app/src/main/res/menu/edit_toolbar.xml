@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Clear -->
+    <item
+        android:id="@+id/action_clear"
+        android:icon="@drawable/clear"
+        android:title="Clear"
+        app:showAsAction="ifRoom"/>
+
+    <!-- Run -->
+    <item
+        android:id="@+id/action_run"
+        android:icon="@drawable/run"
+        android:title="Run"
+        app:showAsAction="always"/>
+
+</menu>
