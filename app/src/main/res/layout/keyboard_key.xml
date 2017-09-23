@@ -6,7 +6,7 @@
     android:background="@drawable/button_ripple"
     android:gravity="center"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="4dp">
 
     <TextView
         android:id="@+id/primary"
@@ -22,6 +22,7 @@
         android:id="@+id/secondary"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:fontFamily="monospace"
         android:padding="0dp"
         android:text="q"
         android:textColor="@color/keySecondary"

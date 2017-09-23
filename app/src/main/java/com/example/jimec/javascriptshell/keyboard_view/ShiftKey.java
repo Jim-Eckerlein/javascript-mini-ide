@@ -43,7 +43,7 @@ public class ShiftKey extends android.support.v7.widget.AppCompatImageView imple
         if (INACTIVE == status) {
             DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyInactive));
         } else if (SHIFT == status) {
-            DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyPrimary));
+            DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyActive));
         } else if (ALL_CAPS == status) {
             DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyAccent));
         }

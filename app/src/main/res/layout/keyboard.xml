@@ -233,10 +233,10 @@
         android:layout_height="wrap_content">
 
         <com.example.jimec.javascriptshell.keyboard_view.ShiftKey
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="0.9"
-            android:padding="2dp"/>
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
 
         <com.example.jimec.javascriptshell.keyboard_view.Key
             android:layout_width="0dp"
@@ -288,10 +288,62 @@
             app:secondary="}"/>
 
         <com.example.jimec.javascriptshell.keyboard_view.BackspaceKey
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.9"
-            android:padding="2dp"/>
+            android:layout_weight="2"
+            />
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary=","
+            app:secondary="."/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.SpaceKey
+            android:layout_width="0dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="5"/>
+
+        <com.example.jimec.javascriptshell.keyboard_view.Key
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:primary=";"/>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="4dp"
+                android:src="@drawable/circle"/>
+
+            <com.example.jimec.javascriptshell.keyboard_view.EnterKey
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                />
+
+        </FrameLayout>
 
     </LinearLayout>
 

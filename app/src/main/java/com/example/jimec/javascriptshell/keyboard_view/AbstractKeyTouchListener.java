@@ -5,8 +5,8 @@ import android.view.View;
 
 public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
 
-    public static final long LONG_TOUCH_MILLIS = 100;
-    public static final int TOUCH_TAP_RADIUS = 3;
+    private static final long LONG_TOUCH_MILLIS = 200;
+    private static final int TOUCH_TAP_RADIUS = 3;
 
     private boolean mTouchEnded = false;
     private long mStartTime;
@@ -18,16 +18,19 @@ public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
         if (action == MotionEvent.ACTION_DOWN) {
             mStartTime = System.currentTimeMillis();
             mTouchEnded = false;
+            onDown();
             return true;
         } else if (!mTouchEnded && action == MotionEvent.ACTION_UP) {
             // Initiate short touch event
             onTap();
+            onUp();
             mTouchEnded = true;
             return true;
         } else if (!mTouchEnded && action == MotionEvent.ACTION_MOVE
                 && System.currentTimeMillis() - mStartTime >= LONG_TOUCH_MILLIS) {
             // Initiate long touch event
             onLongTap();
+            onUp();
             mTouchEnded = true;
             return true;
         }
@@ -35,8 +38,16 @@ public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
         return false;
     }
 
-    public abstract void onTap();
+    public void onTap() {
+    }
 
-    public abstract void onLongTap();
+    public void onLongTap() {
+    }
+
+    public void onDown() {
+    }
+
+    public void onUp() {
+    }
 
 }

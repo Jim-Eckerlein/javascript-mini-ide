@@ -5,6 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="keyPrimary">#222</color>
     <color name="keySecondary">#555</color>
-    <color name="keyInactive">#35000000</color>
+    <color name="keyActive">#666</color>
+    <color name="keyInactive">#888</color>
     <color name="keyAccent">#FF4081</color>
+    <color name="keyEnter">#fff</color>
 </resources>
