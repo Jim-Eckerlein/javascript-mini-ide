@@ -5,9 +5,9 @@ import android.view.View;
 
 public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
     
-    private static final long LONG_TOUCH_MILLIS = 200;
-    private static final int TOUCH_TAP_RADIUS = 3;
-    private static final int DRAG_STEP = 40;
+    private static final long LONG_TOUCH_MILLIS = 150;
+    private static final int TOUCH_TAP_RADIUS = 4;
+    private static final int DRAG_STEP = 60;
     
     private boolean mLongTapped = false;
     private long mStartTime;
