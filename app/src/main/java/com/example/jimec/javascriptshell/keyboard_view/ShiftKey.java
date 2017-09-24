@@ -32,7 +32,7 @@ public class ShiftKey extends android.support.v7.widget.AppCompatImageView imple
     }
 
     private void init() {
-        setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_shift));
+        setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.shift));
         setStatus(INACTIVE);
 
         setOnTouchListener(new TouchListener());

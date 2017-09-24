@@ -28,7 +28,7 @@ public class EnterKey extends android.support.v7.widget.AppCompatImageView imple
 
     private void init() {
         setOnTouchListener(new EnterKey.TouchListener());
-        setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_enter));
+        setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.enter));
         DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyEnter));
     }
 

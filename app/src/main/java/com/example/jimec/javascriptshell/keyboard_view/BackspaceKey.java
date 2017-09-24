@@ -28,7 +28,7 @@ public class BackspaceKey extends android.support.v7.widget.AppCompatImageView i
 
     private void init() {
         setOnTouchListener(new BackspaceKey.TouchListener());
-        setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_backspace));
+        setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.backspace));
         DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyActive));
     }
 

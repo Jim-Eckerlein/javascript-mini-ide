@@ -4,9 +4,16 @@
 
     <!-- Clear -->
     <item
+        android:id="@+id/action_help"
+        android:icon="@drawable/help"
+        android:title="Help me!"
+        app:showAsAction="never"/>
+
+    <!-- Clear -->
+    <item
         android:id="@+id/action_clear"
         android:icon="@drawable/clear"
-        android:title="Clear"
+        android:title="Clear code!"
         app:showAsAction="ifRoom"/>
 
     <!-- Run -->
@@ -17,7 +24,6 @@
         app:showAsAction="always"/>
 
     <!-- Demos -->
-
     <item
         android:id="@+id/action_demo_demo"
         android:title="Demo"
@@ -25,32 +31,32 @@
 
     <item
         android:id="@+id/action_demo_print"
-        android:title="Print"
+        android:title="Demo: print()"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_demo_array"
-        android:title="Array"
+        android:title="Demo: Arrays []"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_demo_object"
-        android:title="Object"
+        android:title="Demo: Object {}"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_demo_function"
-        android:title="Function"
+        android:title="Demo: Functions"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_demo_time"
-        android:title="Time"
+        android:title="Demo: Time"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_demo_typeof"
-        android:title="Typeof"
+        android:title="Demo: typeof"
         app:showAsAction="never"/>
 
 </menu>

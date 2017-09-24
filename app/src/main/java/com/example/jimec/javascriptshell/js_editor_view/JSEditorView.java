@@ -34,6 +34,7 @@ public class JSEditorView extends WebView implements LineList.OnEditListener {
         if (!isInEditMode()) {
             getSettings().setDomStorageEnabled(true);
             getSettings().setJavaScriptEnabled(true);
+            getSettings().setSupportZoom(true);
         }
     }
     
