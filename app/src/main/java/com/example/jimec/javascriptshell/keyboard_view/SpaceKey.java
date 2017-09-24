@@ -1,15 +1,20 @@
 package com.example.jimec.javascriptshell.keyboard_view;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.example.jimec.javascriptshell.R;
 
-public class SpaceKey extends android.support.v7.widget.AppCompatImageView implements KeyboardKeyConnection {
+public class SpaceKey extends FrameLayout implements KeyboardKeyConnection {
 
     private Keyboard mKeyboard;
+    private View mSpaceKeyView;
+    private Drawable mSpaceKeyViewBackground;
 
     public SpaceKey(Context context) {
         super(context);
@@ -27,13 +32,17 @@ public class SpaceKey extends android.support.v7.widget.AppCompatImageView imple
     }
 
     private void init() {
+        inflate(getContext(), R.layout.space_key, this);
+        mSpaceKeyView = findViewById(R.id.space_key_view);
+        mSpaceKeyViewBackground = DrawableCompat.wrap(mSpaceKeyView.getBackground());
+        
         setOnTouchListener(new SpaceKey.TouchListener());
-        setBackground(ContextCompat.getDrawable(getContext(), R.drawable.round_rect));
-        DrawableCompat.setTint(DrawableCompat.wrap(getBackground()), ContextCompat.getColor(getContext(), R.color.keyInactive));
+        DrawableCompat.setTint(mSpaceKeyViewBackground, ContextCompat.getColor(getContext(), R.color.keyInactive));
     }
 
     @Override
     public void setKeyboard(Keyboard keyboard) {
+        System.out.println("SET KEYBOARD");
         mKeyboard = keyboard;
     }
 
@@ -46,12 +55,12 @@ public class SpaceKey extends android.support.v7.widget.AppCompatImageView imple
 
         @Override
         public void onDown() {
-            DrawableCompat.setTint(DrawableCompat.wrap(getBackground()), ContextCompat.getColor(getContext(), R.color.keyActive));
+            DrawableCompat.setTint(mSpaceKeyViewBackground, ContextCompat.getColor(getContext(), R.color.keyActive));
         }
 
         @Override
         public void onUp() {
-            DrawableCompat.setTint(DrawableCompat.wrap(getBackground()), ContextCompat.getColor(getContext(), R.color.keyInactive));
+            DrawableCompat.setTint(mSpaceKeyViewBackground, ContextCompat.getColor(getContext(), R.color.keyInactive));
         }
     }
 }

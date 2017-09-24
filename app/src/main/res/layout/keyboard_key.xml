@@ -5,27 +5,27 @@
     android:layout_height="wrap_content"
     android:background="@drawable/button_ripple"
     android:gravity="center"
-    android:orientation="horizontal"
-    android:padding="4dp">
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/primary"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         android:text="q"
         android:textColor="@color/keyPrimary"
-        android:textSize="18sp"/>
+        android:textSize="22sp"/>
 
     <TextView
         android:id="@+id/secondary"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:fontFamily="monospace"
-        android:padding="0dp"
         android:text="q"
         android:textColor="@color/keySecondary"
-        android:textSize="10sp"/>
+        android:textSize="11sp"/>
 
 </LinearLayout>
