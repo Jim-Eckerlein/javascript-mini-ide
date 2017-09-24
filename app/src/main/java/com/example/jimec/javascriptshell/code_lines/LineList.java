@@ -1,6 +1,7 @@
 package com.example.jimec.javascriptshell.code_lines;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * Encapsulate editing of multiple code lines.
@@ -10,7 +11,9 @@ import java.util.ArrayList;
  */
 
 public class LineList {
-
+    
+    private final Pattern mMultiLineCommentPatter = Pattern.compile("/\\*.*\\*/", Pattern.DOTALL);
+    private final Pattern mSingleLineCommentPatter = Pattern.compile("//.*$", Pattern.MULTILINE);
     private Cursor mCursor = new Cursor(this);
     private ArrayList<Line> mLines = new ArrayList<>();
     private ArrayList<OnEditListener> mEditListeners = new ArrayList<>();
@@ -215,7 +218,10 @@ public class LineList {
             notifyEditListeners();
         }
     }
-
+    
+    /**
+     * @return Code as string including comments
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -229,13 +235,22 @@ public class LineList {
 
         return sb.toString();
     }
-
+    
+    /**
+     * @return Code as string, but comments are removed
+     */
     public String toStringWithoutComments() {
-        return toString()
-                .replaceAll("(?m)^//.*$", "")
-                .replaceAll("/\\*.*\\*/", "");
+    
+        String ret = toString();
+        ret = mMultiLineCommentPatter.matcher(ret).replaceAll("");
+        ret = mSingleLineCommentPatter.matcher(ret).replaceAll("");
+    
+        return ret;
     }
-
+    
+    /**
+     * Interface to listen on code string changes, like character insertion and cursor movement
+     */
     public interface OnEditListener {
 
         void onEdit(LineList lines);
