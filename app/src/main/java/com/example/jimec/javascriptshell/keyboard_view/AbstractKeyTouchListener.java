@@ -66,45 +66,46 @@ public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
         }
     
         else if (MotionEvent.ACTION_MOVE == action) {
-        
+            
             if (!mLongTapped && !mDragging && mCurrentPoint.distance(mLastPoint) > TOUCH_TAP_RADIUS) {
                 // Initiate dragging
                 mDragging = true;
                 processed = true;
                 mLastDragPoint.set(mCurrentPoint);
             }
-        
+
             else if (mDragging) {
-            
+                
                 int direction = mCurrentPoint.getRoughDirection(mLastDragPoint);
+                int distance = (int) mCurrentPoint.distance(mLastDragPoint);
                 boolean consumed = false;
-            
-                if (Point.RIGHT == direction && mCurrentPoint.distance(mLastDragPoint) > DRAG_STEP_HORIZONTAL) {
+    
+                if (Point.RIGHT == direction && distance > DRAG_STEP_HORIZONTAL) {
                     onDragRight();
                     consumed = true;
                 }
-            
-                else if (Point.LEFT == direction && mCurrentPoint.distance(mLastDragPoint) > DRAG_STEP_HORIZONTAL) {
+    
+                else if (Point.LEFT == direction && distance > DRAG_STEP_HORIZONTAL) {
                     onDragLeft();
                     consumed = true;
                 }
-            
-                else if (Point.UP == direction && mCurrentPoint.distance(mLastDragPoint) > DRAG_STEP_VERTICAL) {
+    
+                else if (Point.UP == direction && distance > DRAG_STEP_VERTICAL) {
                     onDragUp();
                     consumed = true;
                 }
-            
-                else if (Point.DOWN == direction && mCurrentPoint.distance(mLastDragPoint) > DRAG_STEP_VERTICAL) {
+    
+                else if (Point.DOWN == direction && distance > DRAG_STEP_VERTICAL) {
                     onDragDown();
                     consumed = true;
                 }
-            
+    
                 if (consumed) {
                     mLastDragPoint.set(mCurrentPoint);
                     processed = true;
                 }
             }
-        
+
             else if (!mDragging && !mLongTapped && System.currentTimeMillis() - mStartTime >= LONG_TOUCH_MILLIS) {
                 // Initiate long touch event
                 onLongTap();
