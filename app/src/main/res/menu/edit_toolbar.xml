@@ -16,4 +16,41 @@
         android:title="Run"
         app:showAsAction="always"/>
 
+    <!-- Demos -->
+
+    <item
+        android:id="@+id/action_demo_demo"
+        android:title="Demo"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_demo_print"
+        android:title="Print"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_demo_array"
+        android:title="Array"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_demo_object"
+        android:title="Object"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_demo_function"
+        android:title="Function"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_demo_time"
+        android:title="Time"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_demo_typeof"
+        android:title="Typeof"
+        app:showAsAction="never"/>
+
 </menu>

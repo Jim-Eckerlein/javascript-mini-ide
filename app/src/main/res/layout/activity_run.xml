@@ -18,6 +18,13 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:onClick="returnToEditor"
+        android:text="Return to Editor"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

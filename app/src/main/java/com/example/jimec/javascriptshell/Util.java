@@ -1,6 +1,7 @@
 package com.example.jimec.javascriptshell;
 
 import android.content.Context;
+import android.support.annotation.RawRes;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,8 +12,8 @@ public class Util {
 
     private Util() {
     }
-
-    public static String readTextFile(Context ctx, int resId) {
+    
+    public static String readTextFile(Context ctx, @RawRes int resId) {
         InputStream inputStream = ctx.getResources().openRawResource(resId);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         String line;

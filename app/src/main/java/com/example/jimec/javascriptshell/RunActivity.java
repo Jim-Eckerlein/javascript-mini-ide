@@ -3,24 +3,21 @@ package com.example.jimec.javascriptshell;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.webkit.WebView;
 
 public class RunActivity extends AppCompatActivity {
-
-    WebView mConsole;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_run);
-        mConsole = (WebView) findViewById(R.id.console);
-        mConsole.getSettings().setJavaScriptEnabled(true);
     
         // Toolbar:
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        
+        // Retrieve code and generate the HTML, which is than displayed:
         String html = "<!doctype html><html><head><style>" +
                 Util.readTextFile(getApplication(), R.raw.html_style) +
                 "</style></head><body>" +
@@ -42,8 +39,14 @@ public class RunActivity extends AppCompatActivity {
                 "        print(err);" +
                 "    }" +
                 "</script></body></html>";
-
-        mConsole.loadData(html, "text/html; charset=UTF-8", null);
+        
+        WebView console = (WebView) findViewById(R.id.console);
+        console.getSettings().setJavaScriptEnabled(true);
+        console.loadData(html, "text/html; charset=UTF-8", null);
+    }
+    
+    public void returnToEditor(View view) {
+        finish();
     }
     
 }

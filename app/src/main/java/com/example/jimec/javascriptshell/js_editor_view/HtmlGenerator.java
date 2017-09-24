@@ -44,7 +44,7 @@ public class HtmlGenerator {
     };
     private static final char[] OPERATOR_LIST = new char[]{
             '+', '*', '/', '{', '}', '(', ')', ',', '|', '!', '?', '%', '^',
-            '.', ';', '~', '=', '[', ']', '-', '&', '<', '>', '\\'
+            '.', ';', '~', '=', '[', ']', '-', '&', '<', '>', ':', '\\'
     };
 
     private final Context mContext;
