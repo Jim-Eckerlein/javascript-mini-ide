@@ -6,10 +6,10 @@ import android.view.View;
 public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
     
     // Time of a continuous tap interpreted as a long tap
-    private static final long LONG_TOUCH_MILLIS = 150;
+    private static final long LONG_TOUCH_MILLIS = 170;
     
-    // Then the touch move  exceeds this radius, it is interpreted as a drag
-    private static final int TOUCH_TAP_RADIUS = 5;
+    // As soon as the touch move  exceeds this radius, it is interpreted as a drag
+    private static final int TOUCH_TAP_RADIUS = 8;
     
     // The move distance interpreted as a single horizontal drag step
     private static final int DRAG_STEP_HORIZONTAL = 50;
