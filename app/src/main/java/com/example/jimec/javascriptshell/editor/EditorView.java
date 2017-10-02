@@ -1,9 +1,7 @@
 package com.example.jimec.javascriptshell.editor;
 
 import android.content.Context;
-import android.text.Editable;
 import android.text.Spannable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -41,7 +39,7 @@ public class EditorView extends FrameLayout {
         mEditText.setShowSoftInputOnFocus(false);
         mEditText.requestFocus();
         
-        mEditText.addTextChangedListener(new TextWatcher() {
+        /*mEditText.addTextChangedListener(new TextWatcher() {
             private boolean mParsed = false;
             
             @Override
@@ -60,18 +58,24 @@ public class EditorView extends FrameLayout {
                     mParsed = false;
                 }
             }
-        });
+        });*/
     }
     
     public void write(String code) {
         int start = getCursorStart();
         int end = getCursorEnd();
-        
-        String newCode = mEditText.getText().replace(start, end, code, 0, code.length()).toString();
-        Spannable spannable = mHighlighter.highlight(newCode);
+        int cursorPos = start + code.length();
+    
+        StringBuilder newCode = new StringBuilder(mEditText.getText().replace(start, end, code, 0, code.length()).toString());
+        boolean beyondText = cursorPos == newCode.length();
+        cursorPos = RuntimeFormatter.format(newCode, beyondText ? cursorPos - 1 : cursorPos);
+        if (beyondText) {
+            cursorPos++;
+        }
+        Spannable spannable = mHighlighter.highlight(newCode.toString());
         
         mEditText.setText(spannable);
-        mEditText.setSelection(start + code.length());
+        mEditText.setSelection(cursorPos);
     }
     
     public void backspace() {

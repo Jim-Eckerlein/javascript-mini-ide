@@ -65,8 +65,8 @@ public class CodeFormatter {
                 writeIndent();
             }
         }
-        
-        if(input.charAt(input.length() - 1) != '\n') {
+    
+        if ((input.length() > 0) && (input.charAt(input.length() - 1) != '\n')) {
             writeIndent();
         }
         
