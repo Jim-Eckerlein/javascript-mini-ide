@@ -73,7 +73,6 @@ public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
         public void onUp() {
             super.onUp();
             if (mRepeatTimer != null) {
-                System.out.println("cancel repeater");
                 mRepeatTimer.cancel();
             }
         }
@@ -94,7 +93,6 @@ public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
-                            System.out.println("repeated tap");
                             onTap();
                         }
                     });
@@ -108,7 +106,6 @@ public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
         @Override
         public void run() {
             synchronized (AbstractKeyTouchListener.this) {
-                System.out.println("start long tap");
                 mLongTapped = true;
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
