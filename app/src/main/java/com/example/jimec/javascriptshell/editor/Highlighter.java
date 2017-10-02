@@ -11,6 +11,7 @@ import static com.example.jimec.javascriptshell.Util.strcmp;
 
 public class Highlighter {
     
+    private static final int SPACE = 100;
     private static final int NEUTRAL = 0;
     private static final int STRING = 1;
     private static final int COMMENT_SINGE_LINE = 2;
@@ -39,7 +40,7 @@ public class Highlighter {
     private final SpannableStringBuilder mSpanBuilder = new SpannableStringBuilder();
     
     public Spannable highlight(String code) {
-        int currentTextType = NEUTRAL;
+        int currentTextType = SPACE;
         
         // Re-initialize span builder:
         mSpanBuilder.clear();
@@ -60,7 +61,7 @@ public class Highlighter {
             boolean reprocessCurrentCharacter = false;
             
             // Single line comment start
-            if (strcmp(code, "//", i) && currentTextType == NEUTRAL) {
+            if (strcmp(code, "//", i) && (currentTextType == NEUTRAL || currentTextType == SPACE)) {
                 spanStart = i;
                 currentTextType = COMMENT_SINGE_LINE;
             }
@@ -68,11 +69,11 @@ public class Highlighter {
             // Single line comment end
             else if (currentTextType == COMMENT_SINGE_LINE && c == '\n') {
                 mSpanBuilder.setSpan(createCommentSpan(), spanStart, i + 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                currentTextType = NEUTRAL;
+                currentTextType = SPACE;
             }
             
             // Multi line comment start
-            else if (strcmp(code, "/*", i) && currentTextType == NEUTRAL) {
+            else if (strcmp(code, "/*", i) && (currentTextType == NEUTRAL || currentTextType == SPACE)) {
                 spanStart = i;
                 currentTextType = COMMENT_MULTI_LINE;
             }
@@ -80,11 +81,11 @@ public class Highlighter {
             // Multi line comment end
             else if (strbackcmp(code, "*/", i) && currentTextType == COMMENT_MULTI_LINE) {
                 mSpanBuilder.setSpan(createCommentSpan(), spanStart, i + 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                currentTextType = NEUTRAL;
+                currentTextType = SPACE;
             }
             
             // String starting
-            else if (strcmp(code, "'", i) && currentTextType == NEUTRAL) {
+            else if (strcmp(code, "'", i) && (currentTextType == NEUTRAL || currentTextType == SPACE)) {
                 spanStart = i;
                 currentTextType = STRING;
             }
@@ -92,11 +93,11 @@ public class Highlighter {
             // String ending
             else if (strbackcmp(code, "'", i) && currentTextType == STRING) {
                 mSpanBuilder.setSpan(createStringSpan(), spanStart, i + 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                currentTextType = NEUTRAL;
+                currentTextType = SPACE;
             }
             
             // Keyword start
-            else if (Character.isLetter(c) && currentTextType == NEUTRAL && isKeyword(code, i)
+            else if (Character.isLetter(c) && currentTextType == SPACE && isKeyword(code, i)
                     && (i == 0 || !Character.isLetter(code.charAt(i - 1)))) {
                 currentTextType = KEYWORD;
                 spanStart = i;
@@ -105,12 +106,12 @@ public class Highlighter {
             // Keyword end
             else if (!Character.isLetter(c) && currentTextType == KEYWORD) {
                 mSpanBuilder.setSpan(createKeywordSpan(), spanStart, i, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                currentTextType = NEUTRAL;
+                currentTextType = SPACE;
                 reprocessCurrentCharacter = true;
             }
             
             // Hex number start
-            else if (strcmp(code, "0x", i) && currentTextType == NEUTRAL && (i > 0 && Character.isWhitespace(code.charAt(i - 1)))) {
+            else if (strcmp(code, "0x", i) && currentTextType == SPACE && (i > 0 && Character.isWhitespace(code.charAt(i - 1)))) {
                 currentTextType = HEX_NUMBER_PREFIX;
                 spanStart = i;
             }
@@ -126,12 +127,12 @@ public class Highlighter {
                     && !(c >= 'A' && c <= 'F')
             )) {
                 mSpanBuilder.setSpan(createNumberSpan(), spanStart, i, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                currentTextType = NEUTRAL;
+                currentTextType = SPACE;
                 reprocessCurrentCharacter = true;
             }
             
             // Number start
-            else if (Character.isDigit(c) && currentTextType == NEUTRAL) {
+            else if (Character.isDigit(c) && currentTextType == SPACE) {
                 currentTextType = NUMBER;
                 spanStart = i;
             }
@@ -149,9 +150,19 @@ public class Highlighter {
             }
             
             // Operator
-            else if (!Character.isWhitespace(c) && isOperator(c) && currentTextType == NEUTRAL) {
+            else if (!Character.isWhitespace(c) && isOperator(c) && (currentTextType == NEUTRAL || currentTextType == SPACE)) {
                 mSpanBuilder.setSpan(createOperatorSpan(), i, i + 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                currentTextType = SPACE;
+            }
+    
+            // Neutral text
+            else if (currentTextType == SPACE && Character.isLetter(c)) {
                 currentTextType = NEUTRAL;
+            }
+    
+            // Space
+            else if (currentTextType == NEUTRAL && Character.isWhitespace(c)) {
+                currentTextType = SPACE;
             }
             
             if (reprocessCurrentCharacter) {

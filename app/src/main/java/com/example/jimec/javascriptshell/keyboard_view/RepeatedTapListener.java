@@ -11,7 +11,7 @@ import java.util.TimerTask;
 public abstract class RepeatedTapListener implements View.OnTouchListener {
     
     private static final long INITIAL_DELAY_MILLIS = 450;
-    private static final long REPEAT_DELAY_MILLIS = 100;
+    private static final long REPEAT_DELAY_MILLIS = 70;
     
     private Timer mRepeatTimer;
     
