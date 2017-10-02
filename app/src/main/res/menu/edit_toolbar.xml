@@ -9,6 +9,13 @@
         android:title="Help me!"
         app:showAsAction="never"/>
 
+    <!-- Format -->
+    <item
+        android:id="@+id/action_format"
+        android:icon="@drawable/format"
+        android:title="Format code"
+        app:showAsAction="ifRoom"/>
+
     <!-- Clear -->
     <item
         android:id="@+id/action_clear"

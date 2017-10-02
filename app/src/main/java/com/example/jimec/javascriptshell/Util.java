@@ -26,8 +26,15 @@ public class Util {
      * @return True if comparision succeeded.
      */
     public static boolean strcmp(String a, String b, int start) {
-        return ((start + b.length()) <= a.length())
-                && a.substring(start, start + b.length()).equals(b.substring(0, b.length()));
+        if ((start + b.length()) > a.length()) {
+            return false;
+        }
+        for (int i = 0; i < b.length(); i++) {
+            if (a.charAt(start + i) != b.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
     }
     
     /**
@@ -44,10 +51,15 @@ public class Util {
      * @return True if comparison succeeded.
      */
     public static boolean strbackcmp(String a, String b, int start) {
-        return (b.length() <= (start + 1))
-                && (start < a.length())
-                && new StringBuilder(a.substring(0, start + 1)).reverse().substring(0, b.length())
-                .equals(new StringBuilder(b).reverse().toString());
+        if (b.length() > (start + 1) || (start >= a.length())) {
+            return false;
+        }
+        for (int i = 0; i < b.length(); i++) {
+            if (a.charAt(start - i) != b.charAt(b.length() - 1 - i)) {
+                return false;
+            }
+        }
+        return true;
     }
     
     public static String readTextFile(Context ctx, @RawRes int resId) {

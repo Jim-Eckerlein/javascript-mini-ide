@@ -62,9 +62,14 @@ public class EditActivity extends AppCompatActivity {
             case R.id.action_clear:
                 mEditor.clear();
                 return true;
+    
+            case R.id.action_format:
+                mEditor.formatCode();
+                return true;
             
             case R.id.action_help:
                 mKeyboardHelper.setVisibility(View.VISIBLE);
+                return true;
     
             case R.id.action_demo_demo:
                 loadDemo(R.raw.demo_demo);
