@@ -5,7 +5,8 @@
     android:id="@+id/keyboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -235,8 +236,8 @@
         <com.example.jimec.javascriptshell.keyboard_view.ShiftKey
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"/>
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
 
         <com.example.jimec.javascriptshell.keyboard_view.Key
             android:layout_width="0dp"
@@ -290,8 +291,8 @@
         <com.example.jimec.javascriptshell.keyboard_view.BackspaceKey
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"/>
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
 
     </LinearLayout>
 
@@ -315,7 +316,7 @@
         <com.example.jimec.javascriptshell.keyboard_view.SpaceKey
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5"/>
+            android:layout_weight="8"/>
 
         <com.example.jimec.javascriptshell.keyboard_view.Key
             android:layout_width="0dp"

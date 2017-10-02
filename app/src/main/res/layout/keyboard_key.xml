@@ -5,7 +5,11 @@
     android:layout_height="wrap_content"
     android:background="@drawable/button_ripple"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingBottom="8dp"
+    android:paddingEnd="2dp"
+    android:paddingStart="2dp"
+    android:paddingTop="6dp">
 
     <TextView
         android:id="@+id/primary"
@@ -13,8 +17,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
+        android:paddingTop="3dp"
         android:text="q"
         android:textColor="@color/keyPrimary"
         android:textSize="22sp"/>

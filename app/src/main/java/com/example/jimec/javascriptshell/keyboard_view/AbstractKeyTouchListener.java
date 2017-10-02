@@ -1,7 +1,12 @@
 package com.example.jimec.javascriptshell.keyboard_view;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
     
@@ -11,8 +16,7 @@ public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
     // Becomes true as soon as tap is recognized as long tap and therefore processed already
     private boolean mLongTapped = false;
     
-    // Time point of touch down event
-    private long mStartTime;
+    private Timer mLongTapTimer;
     
     @Override
     public boolean onTouch(View view, MotionEvent event) {
@@ -20,33 +24,22 @@ public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
         int action = event.getAction();
     
         if (MotionEvent.ACTION_DOWN == action) {
-            mStartTime = System.currentTimeMillis();
+            // Put listener into initial state:
             onDown();
             processed = true;
             mLongTapped = false;
+            mLongTapTimer = new Timer();
+            mLongTapTimer.schedule(new LongTapTimer(), LONG_TOUCH_MILLIS);
         }
     
         else if (MotionEvent.ACTION_UP == action) {
             if (!mLongTapped) {
                 // Initiate short touch event
                 onTap();
-                onUp();
-                processed = true;
+                mLongTapTimer.cancel();
             }
-            else {
-                // Touch up after long touch event was initiated
-                onUp();
-                processed = true;
-            }
-        }
-    
-        else if (MotionEvent.ACTION_MOVE == action) {
-            if (System.currentTimeMillis() - mStartTime >= LONG_TOUCH_MILLIS) {
-                // Initiate long touch event
-                onLongTap();
-                mLongTapped = true;
-                processed = true;
-            }
+            onUp();
+            processed = true;
         }
     
         return processed;
@@ -62,6 +55,22 @@ public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
     }
     
     public void onUp() {
+    }
+    
+    private class LongTapTimer extends TimerTask {
+        
+        @Override
+        public void run() {
+            synchronized (AbstractKeyTouchListener.this) {
+                mLongTapped = true;
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        onLongTap();
+                    }
+                });
+            }
+        }
     }
     
 }
