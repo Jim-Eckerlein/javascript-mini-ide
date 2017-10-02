@@ -11,7 +11,7 @@ import java.util.TimerTask;
 /**
  * This class implements the logic to listen to touch events and interpreting them.
  */
-public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
+public abstract class TapListener implements View.OnTouchListener {
     
     // Time of a continuous tap interpreted as a long tap
     private static final long LONG_TOUCH_MILLIS = 150;
@@ -63,49 +63,11 @@ public abstract class AbstractKeyTouchListener implements View.OnTouchListener {
     public void onUp() {
     }
     
-    public static class Repeatable extends AbstractKeyTouchListener {
-    
-        private static final long REPEAT_DELAY_MILLIS = 100;
-    
-        private Timer mRepeatTimer;
-    
-        @Override
-        public void onUp() {
-            super.onUp();
-            if (mRepeatTimer != null) {
-                mRepeatTimer.cancel();
-            }
-        }
-    
-        @Override
-        public void onDown() {
-            super.onDown();
-            onTap();
-        }
-    
-        @Override
-        public void onLongTap() {
-            super.onLongTap();
-            mRepeatTimer = new Timer();
-            mRepeatTimer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            onTap();
-                        }
-                    });
-                }
-            }, REPEAT_DELAY_MILLIS, REPEAT_DELAY_MILLIS);
-        }
-    }
-    
     private class LongTapTimer extends TimerTask {
         
         @Override
         public void run() {
-            synchronized (AbstractKeyTouchListener.this) {
+            synchronized (TapListener.this) {
                 mLongTapped = true;
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override

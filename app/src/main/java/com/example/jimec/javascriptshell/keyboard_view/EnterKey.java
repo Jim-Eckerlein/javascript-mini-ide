@@ -36,22 +36,12 @@ public class EnterKey extends android.support.v7.widget.AppCompatImageView imple
     public void setKeyboard(Keyboard keyboard) {
         mKeyboard = keyboard;
     }
-
-    private class TouchListener extends AbstractKeyTouchListener {
+    
+    private class TouchListener extends TapListener {
 
         @Override
         public void onTap() {
             mKeyboard.writeEnter();
-        }
-
-        @Override
-        public void onDown() {
-            //DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyActive));
-        }
-
-        @Override
-        public void onUp() {
-            //DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyInactive));
         }
 
     }

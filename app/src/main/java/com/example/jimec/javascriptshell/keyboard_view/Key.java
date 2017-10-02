@@ -81,8 +81,8 @@ public class Key extends LinearLayout implements KeyboardKeyConnection {
     public void setKeyboard(Keyboard keyboard) {
         mKeyboard = keyboard;
     }
-
-    private class TouchListener extends AbstractKeyTouchListener {
+    
+    private class TouchListener extends TapListener {
 
         @Override
         public void onTap() {

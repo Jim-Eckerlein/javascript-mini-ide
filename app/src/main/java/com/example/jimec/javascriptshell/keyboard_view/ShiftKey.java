@@ -63,8 +63,8 @@ public class ShiftKey extends android.support.v7.widget.AppCompatImageView imple
         }
         return input;
     }
-
-    private class TouchListener extends AbstractKeyTouchListener {
+    
+    private class TouchListener extends TapListener {
 
         @Override
         public void onTap() {
