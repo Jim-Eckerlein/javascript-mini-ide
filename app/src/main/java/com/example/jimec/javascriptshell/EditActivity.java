@@ -10,16 +10,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.jimec.javascriptshell.code_lines.LineList;
-import com.example.jimec.javascriptshell.js_editor_view.JSEditorView;
+import com.example.jimec.javascriptshell.editor.EditorView;
 import com.example.jimec.javascriptshell.keyboard_view.Keyboard;
 
 public class EditActivity extends AppCompatActivity {
 
     public static final String EXTRA_CODE = "com.example.jimec.javascriptshell.CODE";
-    private final LineList mCodeLines = new LineList();
     private int mCurrentDemo = -1;
     private TextView mKeyboardHelper;
+    private EditorView mEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +30,12 @@ public class EditActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     
         // Editor:
-        JSEditorView JSEditorView = (com.example.jimec.javascriptshell.js_editor_view.JSEditorView) findViewById(R.id.editor);
-        mCodeLines.addOnEditListener(JSEditorView);
+        mEditor = (EditorView) findViewById(R.id.editor);
+        mEditor.write("abc5abc function add(x, y) {\nreturn /* 2 */ * x + y + 0xffa4;\n}\n\nlet string = 'hello' // comment \nno comment");
     
         // Keyboard:
         Keyboard keyboard = (Keyboard) findViewById(R.id.keyboard);
-        keyboard.setLineList(mCodeLines);
+        keyboard.setEditor(mEditor);
     
         // Load initial demo:
         loadDemo(R.raw.demo_demo);
@@ -56,12 +55,12 @@ public class EditActivity extends AppCompatActivity {
     
             case R.id.action_run:
                 Intent intent = new Intent(this, RunActivity.class);
-                intent.putExtra(EXTRA_CODE, mCodeLines.toStringWithoutComments());
+                intent.putExtra(EXTRA_CODE, mEditor.getCode(true));
                 startActivity(intent);
                 return true;
     
             case R.id.action_clear:
-                mCodeLines.clear();
+                mEditor.clear();
                 return true;
             
             case R.id.action_help:
@@ -102,9 +101,8 @@ public class EditActivity extends AppCompatActivity {
     
     private void loadDemo(@RawRes int id) {
         if (id != mCurrentDemo) {
-            mCodeLines.clear();
-            mCodeLines.write(Util.readTextFile(this, id));
-            mCodeLines.moveCursorToStart();
+            mEditor.clear();
+            mEditor.write(Util.readTextFile(this, id));
             mCurrentDemo = id;
         }
     }

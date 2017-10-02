@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.jimec.javascriptshell.code_lines.LineList;
+import com.example.jimec.javascriptshell.editor.EditorView;
 
 public class Keyboard extends LinearLayout {
     
-    private LineList mLineList;
     private ShiftKey mShiftKey;
+    private EditorView mEditor;
     
     public Keyboard(Context context) {
         super(context);
@@ -69,40 +69,19 @@ public class Keyboard extends LinearLayout {
         }
     }
     
-    public LineList getLineList() {
-        return mLineList;
-    }
-    
-    public void setLineList(LineList lineList) {
-        mLineList = lineList;
-    }
-    
     public void write(String code) {
-        mLineList.write(mShiftKey.process(code));
+        mEditor.write(mShiftKey.process(code));
     }
     
     public void writeEnter() {
-        mLineList.writeEnter();
+        mEditor.write("\n");
     }
     
     public void backspace() {
-        mLineList.backspace();
+        mEditor.backspace();
     }
     
-    public void moveCursorLeft() {
-        mLineList.moveCursorLeft();
+    public void setEditor(EditorView editor) {
+        mEditor = editor;
     }
-    
-    public void moveCursorRight() {
-        mLineList.moveCursorRight();
-    }
-    
-    public void moveCursorUp() {
-        mLineList.moveCursorUp();
-    }
-    
-    public void moveCursorDown() {
-        mLineList.moveCursorDown();
-    }
-    
 }
