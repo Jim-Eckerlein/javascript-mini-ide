@@ -45,8 +45,8 @@ public class SpaceKey extends FrameLayout implements KeyboardKeyConnection {
         System.out.println("SET KEYBOARD");
         mKeyboard = keyboard;
     }
-
-    private class TouchListener extends AbstractKeyTouchListener {
+    
+    private class TouchListener extends AbstractKeyTouchListener.Repeatable {
 
         @Override
         public void onTap() {
@@ -55,11 +55,13 @@ public class SpaceKey extends FrameLayout implements KeyboardKeyConnection {
 
         @Override
         public void onDown() {
+            super.onDown();
             DrawableCompat.setTint(mSpaceKeyViewBackground, ContextCompat.getColor(getContext(), R.color.keyActive));
         }
 
         @Override
         public void onUp() {
+            super.onUp();
             DrawableCompat.setTint(mSpaceKeyViewBackground, ContextCompat.getColor(getContext(), R.color.keyInactive));
         }
     }

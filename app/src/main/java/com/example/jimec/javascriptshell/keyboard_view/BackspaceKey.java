@@ -36,8 +36,8 @@ public class BackspaceKey extends android.support.v7.widget.AppCompatImageView i
     public void setKeyboard(Keyboard keyboard) {
         mKeyboard = keyboard;
     }
-
-    private class TouchListener extends AbstractKeyTouchListener {
+    
+    private class TouchListener extends AbstractKeyTouchListener.Repeatable {
 
         @Override
         public void onTap() {
@@ -46,11 +46,13 @@ public class BackspaceKey extends android.support.v7.widget.AppCompatImageView i
 
         @Override
         public void onDown() {
+            super.onDown();
             DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyActive));
         }
 
         @Override
         public void onUp() {
+            super.onUp();
             DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyInactive));
         }
 
