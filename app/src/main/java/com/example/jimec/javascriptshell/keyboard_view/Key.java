@@ -91,7 +91,12 @@ public class Key extends LinearLayout implements KeyboardKeyConnection {
 
         @Override
         public void onLongTap() {
-            writeSecondaryText();
+            if (getSecondaryText() != null && getSecondaryText().length() > 0) {
+                writeSecondaryText();
+            }
+            else {
+                writePrimaryText();
+            }
         }
     }
 

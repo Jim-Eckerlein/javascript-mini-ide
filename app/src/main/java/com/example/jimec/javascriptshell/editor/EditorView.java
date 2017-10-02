@@ -110,6 +110,7 @@ public class EditorView extends FrameLayout {
     public void clear() {
         mEditText.getText().clear();
         mEditText.getText().clearSpans();
+        mEditText.setSelection(0);
     }
     
     public String getCode(boolean removeComments) {

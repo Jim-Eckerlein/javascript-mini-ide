@@ -27,28 +27,24 @@ public abstract class TapListener implements View.OnTouchListener {
         int action = event.getAction();
     
         if (MotionEvent.ACTION_DOWN == action) {
-            init();
+            mLongTapped = false;
+            mLongTapTimer = new Timer();
+            mLongTapTimer.schedule(new LongTapTimer(), LONG_TOUCH_MILLIS);
             onDown();
             processed = true;
         }
     
         else if (MotionEvent.ACTION_UP == action) {
+            mLongTapTimer.cancel();
             if (!mLongTapped) {
                 // Initiate short touch event
                 onTap();
-                mLongTapTimer.cancel();
             }
             onUp();
             processed = true;
         }
     
         return processed;
-    }
-    
-    private void init() {
-        mLongTapped = false;
-        mLongTapTimer = new Timer();
-        mLongTapTimer.schedule(new LongTapTimer(), LONG_TOUCH_MILLIS);
     }
     
     public void onTap() {
