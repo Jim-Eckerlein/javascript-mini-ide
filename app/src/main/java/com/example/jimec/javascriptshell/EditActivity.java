@@ -31,7 +31,6 @@ public class EditActivity extends AppCompatActivity {
     
         // Editor:
         mEditor = (EditorView) findViewById(R.id.editor);
-        mEditor.write("abc5abc function add(x, y) {\nreturn /* 2 */ * x + y + 0xffa4;\n}\n\nlet string = 'hello' // comment \nno comment");
     
         // Keyboard:
         Keyboard keyboard = (Keyboard) findViewById(R.id.keyboard);
