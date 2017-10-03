@@ -1,6 +1,7 @@
 package com.example.jimec.javascriptshell.editor;
 
 import android.content.Context;
+import android.text.Editable;
 import android.text.Spannable;
 import android.util.AttributeSet;
 import android.widget.EditText;
@@ -80,15 +81,35 @@ public class EditorView extends FrameLayout {
     public void backspace() {
         int start = getCursorStart();
         int end = getCursorEnd();
-        
-        if(start == end && start > 0) {
+        Editable text = mEditText.getText();
+    
+        if (start == end && start > 0) {
+            // If at line start, delete all leading spaces as well:
+            boolean atLineStart = true;
+            int spaceIndex = start - 1;
+            for (; spaceIndex >= 0; spaceIndex--) {
+                if ('\n' == text.charAt(spaceIndex)) {
+                    break;
+                }
+                if (' ' != text.charAt(spaceIndex)) {
+                    atLineStart = false;
+                }
+            }
+            if (atLineStart) {
+                text.delete(spaceIndex, start);
+                highlight(text.toString());
+                mEditText.setSelection(spaceIndex);
+            }
+            
             // Delete single char
-            mEditText.getText().delete(start - 1, start);
-            highlight(mEditText.getText().toString());
-            mEditText.setSelection(start - 1);
+            else {
+                mEditText.getText().delete(start - 1, start);
+                highlight(mEditText.getText().toString());
+                mEditText.setSelection(start - 1);
+            }
         }
-        
-        else if(end > start) {
+    
+        else if (end > start) {
             // Delete range
             mEditText.getText().delete(start, end);
             highlight(mEditText.getText().toString());
@@ -129,7 +150,7 @@ public class EditorView extends FrameLayout {
         final Pattern mMultiLineCommentPatter = Pattern.compile("/\\*.*\\*/", Pattern.DOTALL);
         final Pattern mSingleLineCommentPatter = Pattern.compile("//.*$", Pattern.MULTILINE);
         String code = mEditText.getText().toString();
-        if(removeComments) {
+        if (removeComments) {
             code = mMultiLineCommentPatter.matcher(code).replaceAll("");
             code = mSingleLineCommentPatter.matcher(code).replaceAll("");
         }
