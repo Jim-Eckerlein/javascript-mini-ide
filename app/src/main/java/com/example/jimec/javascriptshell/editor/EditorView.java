@@ -3,6 +3,7 @@ package com.example.jimec.javascriptshell.editor;
 import android.content.Context;
 import android.text.Editable;
 import android.text.Spannable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -36,11 +37,11 @@ public class EditorView extends FrameLayout {
         inflate(getContext(), R.layout.editor_view, this);
         mEditText = findViewById(R.id.edit_text);
     
-        // Hide usual virtual keyboard, I use my own one:
+        // Hide usual virtual keyboard since I'm using my own one:
         mEditText.setShowSoftInputOnFocus(false);
         mEditText.requestFocus();
-        
-        /*mEditText.addTextChangedListener(new TextWatcher() {
+    
+        mEditText.addTextChangedListener(new TextWatcher() {
             private boolean mParsed = false;
             
             @Override
@@ -59,7 +60,7 @@ public class EditorView extends FrameLayout {
                     mParsed = false;
                 }
             }
-        });*/
+        });
     }
     
     public void write(String code) {
