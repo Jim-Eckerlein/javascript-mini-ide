@@ -3,7 +3,6 @@ package com.example.jimec.javascriptshell;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 import com.example.jimec.javascriptshell.run.V8Joiner;
@@ -33,10 +32,6 @@ public class RunActivity extends AppCompatActivity {
         mV8Thread.start();
         mV8Joiner = new V8Joiner(mV8Thread, (TextView) findViewById(R.id.error_viewer));
         mV8Joiner.start();
-    }
-    
-    public void returnToEditor(View view) {
-        finish();
     }
     
     @Override

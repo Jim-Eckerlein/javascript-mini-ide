@@ -11,6 +11,9 @@ import com.eclipsesource.v8.V8Array;
 import com.eclipsesource.v8.V8Object;
 import com.eclipsesource.v8.utils.V8Executor;
 
+/**
+ * A V8 engine with all predefined functions (print, sleep, ...)
+ */
 public class V8Thread extends V8Executor {
     
     private TextView mConsole;
@@ -21,11 +24,15 @@ public class V8Thread extends V8Executor {
     }
     
     @Override
-    public void setup(final V8 v8) {
+    public void setup(V8 v8) {
         v8.registerJavaMethod(new JsPrintCallback(), "print");
         v8.registerJavaMethod(new JsSleepCallback(), "sleep");
     }
     
+    /**
+     * JavaScript print() function.
+     * Prints argument to a TextView.
+     */
     private class JsPrintCallback implements JavaVoidCallback {
         
         @Override
@@ -54,6 +61,10 @@ public class V8Thread extends V8Executor {
         }
     }
     
+    /**
+     * JavaScript sleep() function.
+     * Pauses JavaScript execution, in milliseconds.
+     */
     private class JsSleepCallback implements JavaVoidCallback {
         
         @Override
