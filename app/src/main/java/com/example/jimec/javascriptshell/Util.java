@@ -1,6 +1,8 @@
 package com.example.jimec.javascriptshell;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.RawRes;
 
 import java.io.BufferedReader;
@@ -84,5 +86,9 @@ public class Util {
         } catch (IOException e) {
         }
         return sb.toString();
+    }
+    
+    public static void runOnUiThread(Runnable runnable) {
+        new Handler(Looper.getMainLooper()).post(runnable);
     }
 }
