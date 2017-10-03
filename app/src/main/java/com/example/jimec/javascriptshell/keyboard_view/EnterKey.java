@@ -40,9 +40,9 @@ public class EnterKey extends android.support.v7.widget.AppCompatImageView imple
     private class TouchListener extends TapListener {
 
         @Override
-        public void onTap() {
+        public void onDown() {
             mKeyboard.writeEnter();
         }
-
+    
     }
 }

@@ -61,12 +61,24 @@ public class Util {
         return true;
     }
     
+    /**
+     * Reads a raw text file as is.
+     * That means that line breaks are preserved and *not* automatically added.
+     * '\r' are removed.
+     *
+     * @param ctx Context
+     * @param resId Raw resource id
+     * @return File content as string
+     */
     public static String readTextFile(Context ctx, @RawRes int resId) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(ctx.getResources().openRawResource(resId)));
         StringBuilder sb = new StringBuilder();
         try {
             int i = reader.read();
             for (; i != -1; i = reader.read()) {
+                if ('\r' == i) {
+                    continue;
+                }
                 sb.append((char) i);
             }
         } catch (IOException e) {
