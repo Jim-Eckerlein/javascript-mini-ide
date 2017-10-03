@@ -6,13 +6,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.jimec.javascriptshell.run.Console;
 import com.example.jimec.javascriptshell.run.V8Joiner;
 import com.example.jimec.javascriptshell.run.V8Thread;
 
 public class RunActivity extends AppCompatActivity {
     
-    private Console mConsole;
+    private TextView mConsole;
     private String mCode;
     private V8Thread mV8Thread;
     private V8Joiner mV8Joiner;
@@ -23,7 +22,7 @@ public class RunActivity extends AppCompatActivity {
         setContentView(R.layout.activity_run);
     
         mCode = getIntent().getStringExtra(MainActivity.EXTRA_CODE);
-        mConsole = (Console) findViewById(R.id.console);
+        mConsole = (TextView) findViewById(R.id.console);
         
         // Toolbar:
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -37,8 +36,14 @@ public class RunActivity extends AppCompatActivity {
     }
     
     public void returnToEditor(View view) {
-        mV8Thread.forceTermination();
         finish();
     }
     
+    @Override
+    protected void onStop() {
+        super.onStop();
+        
+        // Terminate V8 engine:
+        mV8Thread.forceTermination();
+    }
 }

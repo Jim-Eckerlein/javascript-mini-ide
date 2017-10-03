@@ -2,6 +2,7 @@ package com.example.jimec.javascriptshell.run;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.TextView;
 
 import com.eclipsesource.v8.JavaVoidCallback;
 import com.eclipsesource.v8.Releasable;
@@ -12,9 +13,9 @@ import com.eclipsesource.v8.utils.V8Executor;
 
 public class V8Thread extends V8Executor {
     
-    private Console mConsole;
+    private TextView mConsole;
     
-    public V8Thread(Console console, String code) {
+    public V8Thread(TextView console, String code) {
         super(code);
         mConsole = console;
     }
