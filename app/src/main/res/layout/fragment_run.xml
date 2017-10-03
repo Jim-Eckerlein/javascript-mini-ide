@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView
+    android:fillViewport="true"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:padding="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/console"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:padding="8dp"
+            android:textColor="#111"
+            android:textSize="8pt"
+            android:typeface="monospace"/>
+
+        <TextView
+            android:id="@+id/error_viewer"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:padding="6dp"
+            android:textColor="#F44336"
+            android:textSize="8pt"
+            android:typeface="monospace"/>
+
+    </LinearLayout>
+
+</HorizontalScrollView>

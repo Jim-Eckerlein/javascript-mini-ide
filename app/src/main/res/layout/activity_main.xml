@@ -7,63 +7,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@android:color/white"
-        android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-        <com.example.jimec.javascriptshell.editor.EditorView
-            android:id="@+id/editor"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:background="@android:color/white"
-            android:elevation="-4dp"
-            app:layout_constraintBottom_toTopOf="@+id/keyboard_container"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <FrameLayout
-            android:id="@+id/keyboard_container"
-            android:layout_width="0dp"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#e4e4e4"
-            android:elevation="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-            <include layout="@layout/keyboard"/>
+    </android.support.design.widget.AppBarLayout>
 
-            <TextView
-                android:id="@+id/keyboard_helper"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#bc000000"
-                android:gravity="center"
-                android:onClick="closeKeyboardHelper"
-                android:text="Keyboard: \nTap for primary text \nHold for secondary text"
-                android:textColor="@android:color/white"
-                android:textSize="10pt"
-                android:visibility="gone"/>
-
-        </FrameLayout>
-
-    </android.support.constraint.ConstraintLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

@@ -34,10 +34,10 @@ public class EditorView extends FrameLayout {
     }
     
     private void init() {
-        inflate(getContext(), R.layout.editor_view, this);
+        inflate(getContext(), R.layout.view_editor, this);
         mEditText = findViewById(R.id.edit_text);
     
-        // Hide usual virtual keyboard since I'm using my own one:
+        // Hide usual virtual view_keyboard since I'm using my own one:
         mEditText.setShowSoftInputOnFocus(false);
         mEditText.requestFocus();
     

@@ -21,7 +21,7 @@ public class V8Joiner extends Thread {
         try {
             mV8Thread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            // Will be interrupted if js  execution is interrupted
         }
         if (mV8Thread.hasException()) {
             Util.runOnUiThread(new Runnable() {

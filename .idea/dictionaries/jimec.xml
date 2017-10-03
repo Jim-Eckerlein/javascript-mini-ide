@@ -12,6 +12,7 @@
       <w>strbackcmp</w>
       <w>strcmp</w>
       <w>strncmp</w>
+      <w>traverser</w>
       <w>trunc</w>
       <w>unshift</w>
       <w>yellowgreen</w>

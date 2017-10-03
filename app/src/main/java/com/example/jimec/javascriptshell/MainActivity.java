@@ -1,24 +1,19 @@
 package com.example.jimec.javascriptshell;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.RawRes;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-
-import com.example.jimec.javascriptshell.editor.EditorView;
-import com.example.jimec.javascriptshell.keyboard_view.Keyboard;
 
 public class MainActivity extends AppCompatActivity {
     
-    public static final String EXTRA_CODE = "com.example.jimec.javascriptshell.CODE";
-    private int mCurrentDemo = -1;
-    private TextView mKeyboardHelper;
-    private EditorView mEditor;
+    private ViewPager mPager;
+    private ShellPagerAdapter mAdapter;
+    private TabLayout mTabLayout;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,18 +23,14 @@ public class MainActivity extends AppCompatActivity {
         // Toolbar:
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mAdapter = new ShellPagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mAdapter);
+        mTabLayout = (TabLayout)findViewById(R.id.tab_layout);
+        mTabLayout.setupWithViewPager(mPager);
         
-        // Editor:
-        mEditor = (EditorView) findViewById(R.id.editor);
-        
-        // Keyboard:
-        Keyboard keyboard = (Keyboard) findViewById(R.id.keyboard);
-        keyboard.setEditor(mEditor);
-        
-        // Load initial demo:
-        loadDemo(R.raw.demo_demo);
-        
-        mKeyboardHelper = (TextView) findViewById(R.id.keyboard_helper);
+        mTabLayout.addOnTabSelectedListener(new ShellTabTraverser(mAdapter));
     }
     
     @Override
@@ -50,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        return false;
+        /*switch (item.getItemId()) {
     
             case R.id.action_run:
                 Intent intent = new Intent(this, RunActivity.class);
@@ -100,19 +92,6 @@ public class MainActivity extends AppCompatActivity {
             
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-    
-    private void loadDemo(@RawRes final int id) {
-        if (id != mCurrentDemo) {
-            mEditor.clear();
-            mEditor.write(Util.readTextFile(getApplicationContext(), id));
-            mEditor.setCursor(0);
-            mCurrentDemo = id;
-        }
-    }
-    
-    public void closeKeyboardHelper(View view) {
-        mKeyboardHelper.setVisibility(View.GONE);
+        }*/
     }
 }

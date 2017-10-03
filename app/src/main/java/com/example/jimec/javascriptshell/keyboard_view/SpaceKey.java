@@ -32,7 +32,7 @@ public class SpaceKey extends FrameLayout implements KeyboardKeyConnection {
     }
 
     private void init() {
-        inflate(getContext(), R.layout.space_key, this);
+        inflate(getContext(), R.layout.view_space_key, this);
         mSpaceKeyView = findViewById(R.id.space_key_view);
         mSpaceKeyViewBackground = DrawableCompat.wrap(mSpaceKeyView.getBackground());
         

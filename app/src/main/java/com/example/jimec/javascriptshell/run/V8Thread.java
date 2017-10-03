@@ -73,7 +73,7 @@ public class V8Thread extends V8Executor {
                 try {
                     Thread.sleep(parameters.getInteger(0));
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException();
                 }
             }
         }
