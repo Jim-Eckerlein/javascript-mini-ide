@@ -12,23 +12,6 @@ public class CodeFormatter {
     private int mNextIndent = 0;
     private boolean mAtLineStart = true;
     
-    public static void main(String[] args) {
-        CodeFormatter codeFormatter = new CodeFormatter();
-        String code = "{\nf";
-    
-        codeFormatter.format(code, 11);
-        String formatted = codeFormatter.getFormatted();
-        int pos = codeFormatter.getFormattedCursorPos();
-        System.out.println("@" + pos);
-        System.out.println(formatted);
-    
-        codeFormatter.format(formatted, pos);
-        formatted = codeFormatter.getFormatted();
-        pos = codeFormatter.getFormattedCursorPos();
-        System.out.println("@" + pos);
-        System.out.println(formatted);
-    }
-    
     public void format(String input, int cursorPos) {
         mSelectableText.initialize(input);
         mCursorPosition.setPos(cursorPos);

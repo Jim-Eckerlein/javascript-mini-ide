@@ -2,12 +2,6 @@ package com.example.jimec.javascriptshell.editor;
 
 public class RuntimeFormatter {
     
-    public static void main(String[] args) {
-        StringBuilder code = new StringBuilder("        function {\n  }");
-        format(code, code.length() - 1);
-        System.out.println(code);
-    }
-    
     static int format(StringBuilder code, int cursorPos) {
         
         int indent = 0;
@@ -66,9 +60,6 @@ public class RuntimeFormatter {
         
         indent += tailingOpeningBraces;
         indent += leadingSpaces / 4;
-        
-        System.out.println("LOG: indent=" + indent);
-        System.out.println("LOG: leading=" + leadingSpacesCurrentLine);
         
         // Indent cannot be negative:
         indent = Math.max(0, indent);
