@@ -9,8 +9,6 @@ import android.widget.FrameLayout;
 
 import com.example.jimec.javascriptshell.R;
 
-import java.util.regex.Pattern;
-
 import static com.example.jimec.javascriptshell.Util.clamp;
 
 public class EditorView extends FrameLayout {
@@ -147,17 +145,6 @@ public class EditorView extends FrameLayout {
         mEditText.getText().clear();
         mEditText.getText().clearSpans();
         mEditText.setSelection(0);
-    }
-    
-    public String getCode(boolean removeComments) {
-        final Pattern mMultiLineCommentPatter = Pattern.compile("/\\*.*\\*/", Pattern.DOTALL);
-        final Pattern mSingleLineCommentPatter = Pattern.compile("//.*$", Pattern.MULTILINE);
-        String code = mEditText.getText().toString();
-        if (removeComments) {
-            code = mMultiLineCommentPatter.matcher(code).replaceAll("");
-            code = mSingleLineCommentPatter.matcher(code).replaceAll("");
-        }
-        return code;
     }
     
     @Override

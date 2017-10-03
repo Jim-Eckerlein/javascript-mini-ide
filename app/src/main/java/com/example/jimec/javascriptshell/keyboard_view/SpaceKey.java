@@ -42,7 +42,6 @@ public class SpaceKey extends FrameLayout implements KeyboardKeyConnection {
 
     @Override
     public void setKeyboard(Keyboard keyboard) {
-        System.out.println("SET KEYBOARD");
         mKeyboard = keyboard;
     }
     

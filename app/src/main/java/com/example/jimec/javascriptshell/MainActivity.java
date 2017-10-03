@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     
             case R.id.action_run:
                 Intent intent = new Intent(this, RunActivity.class);
-                intent.putExtra(EXTRA_CODE, mEditor.getCode(true));
+                intent.putExtra(EXTRA_CODE, mEditor.toString());
                 startActivity(intent);
                 return true;
     
