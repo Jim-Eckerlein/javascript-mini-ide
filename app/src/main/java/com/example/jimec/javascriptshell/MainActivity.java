@@ -14,28 +14,28 @@ import com.example.jimec.javascriptshell.editor.EditorView;
 import com.example.jimec.javascriptshell.keyboard_view.Keyboard;
 
 public class MainActivity extends AppCompatActivity {
-
+    
     public static final String EXTRA_CODE = "com.example.jimec.javascriptshell.CODE";
     private int mCurrentDemo = -1;
     private TextView mKeyboardHelper;
     private EditorView mEditor;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    
+        
         // Toolbar:
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-    
+        
         // Editor:
         mEditor = (EditorView) findViewById(R.id.editor);
-    
+        
         // Keyboard:
         Keyboard keyboard = (Keyboard) findViewById(R.id.keyboard);
         keyboard.setEditor(mEditor);
-    
+        
         // Load initial demo:
         loadDemo(R.raw.demo_demo);
         
@@ -103,10 +103,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     
-    private void loadDemo(@RawRes int id) {
+    private void loadDemo(@RawRes final int id) {
         if (id != mCurrentDemo) {
             mEditor.clear();
-            mEditor.write(Util.readTextFile(this, id));
+            mEditor.write(Util.readTextFile(getApplicationContext(), id));
+            mEditor.setCursor(0);
             mCurrentDemo = id;
         }
     }

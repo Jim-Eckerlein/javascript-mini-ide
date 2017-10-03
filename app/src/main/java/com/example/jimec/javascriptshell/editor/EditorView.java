@@ -11,6 +11,8 @@ import com.example.jimec.javascriptshell.R;
 
 import java.util.regex.Pattern;
 
+import static com.example.jimec.javascriptshell.Util.clamp;
+
 public class EditorView extends FrameLayout {
     
     private final Highlighter mHighlighter = new Highlighter();
@@ -74,8 +76,9 @@ public class EditorView extends FrameLayout {
             cursorPos++;
         }
     
+        mEditText.setSelection(0);
         highlight(newCode.toString());
-        mEditText.setSelection(cursorPos);
+        mEditText.setSelection(clamp(cursorPos, 0, newCode.toString().length() - 1));
     }
     
     public void backspace() {
@@ -155,5 +158,14 @@ public class EditorView extends FrameLayout {
             code = mSingleLineCommentPatter.matcher(code).replaceAll("");
         }
         return code;
+    }
+    
+    @Override
+    public String toString() {
+        return mEditText.getText().toString();
+    }
+    
+    public void setCursor(int cursorPosition) {
+        mEditText.setSelection(cursorPosition);
     }
 }
