@@ -187,12 +187,13 @@ public class Highlighter {
     }
     
     private boolean isKeyword(String code, int position) {
-        for (int i = position; i < code.length(); i++) {
+        int i;
+        for (i = position; i < code.length(); i++) {
             if(!Character.isLetter(code.charAt(i))) {
-                code = code.substring(position, i);
                 break;
             }
         }
+        code = code.substring(position, i);
         for (String item : KEYWORD_LIST) {
             if (code.equals(item)) return true;
         }
