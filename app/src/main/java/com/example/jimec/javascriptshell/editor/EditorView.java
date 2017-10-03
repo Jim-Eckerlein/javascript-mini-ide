@@ -72,9 +72,7 @@ public class EditorView extends FrameLayout {
         if (beyondText) {
             cursorPos++;
         }
-        Spannable spannable = mHighlighter.highlight(newCode.toString());
-        
-        mEditText.setText(spannable);
+        highlight(newCode.toString());
         mEditText.setSelection(cursorPos);
     }
     
@@ -85,12 +83,21 @@ public class EditorView extends FrameLayout {
         if(start == end && start > 0) {
             // Delete single char
             mEditText.getText().delete(start - 1, start);
+            highlight(mEditText.getText().toString());
+            mEditText.setSelection(start - 1);
         }
         
         else if(end > start) {
             // Delete range
             mEditText.getText().delete(start, end);
+            highlight(mEditText.getText().toString());
+            mEditText.setSelection(start);
         }
+    }
+    
+    private void highlight(String newCode) {
+        Spannable spannable = mHighlighter.highlight(newCode);
+        mEditText.setText(spannable);
     }
     
     private int getCursorStart() {
