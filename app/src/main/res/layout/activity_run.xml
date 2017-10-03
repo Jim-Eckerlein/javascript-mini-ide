@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    tools:context="com.example.jimec.javascriptshell.EditActivity">
+    tools:context="com.example.jimec.javascriptshell.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

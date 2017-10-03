@@ -34,7 +34,7 @@ public class RunActivity extends AppCompatActivity {
                 "<script>" +
                 "    'use strict';" +
                 "    try {" +
-                "        eval(`" + getIntent().getStringExtra(EditActivity.EXTRA_CODE) + "`);" +
+                "        eval(`" + getIntent().getStringExtra(MainActivity.EXTRA_CODE) + "`);" +
                 "    } catch(err) {" +
                 "        print(err);" +
                 "    }" +

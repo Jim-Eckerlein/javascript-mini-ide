@@ -5,7 +5,6 @@ import android.support.annotation.RawRes;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class Util {
@@ -63,18 +62,15 @@ public class Util {
     }
     
     public static String readTextFile(Context ctx, @RawRes int resId) {
-        InputStream inputStream = ctx.getResources().openRawResource(resId);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        String line;
-        StringBuilder text = new StringBuilder();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(ctx.getResources().openRawResource(resId)));
+        StringBuilder sb = new StringBuilder();
         try {
-            while ((line = reader.readLine()) != null) {
-                text.append(line).append('\n');
+            int i = reader.read();
+            for (; i != -1; i = reader.read()) {
+                sb.append((char) i);
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
         }
-        return text.toString();
+        return sb.toString();
     }
 }

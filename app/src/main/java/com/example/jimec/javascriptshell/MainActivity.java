@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.jimec.javascriptshell.editor.EditorView;
 import com.example.jimec.javascriptshell.keyboard_view.Keyboard;
 
-public class EditActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_CODE = "com.example.jimec.javascriptshell.CODE";
     private int mCurrentDemo = -1;
@@ -23,7 +23,7 @@ public class EditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit);
+        setContentView(R.layout.activity_main);
     
         // Toolbar:
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
