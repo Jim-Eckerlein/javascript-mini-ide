@@ -18,30 +18,27 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:onClick="returnToEditor"
-        android:text="Return to Editor"/>
+        android:orientation="vertical"
+        android:padding="8dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:fontFamily="monospace"
-        android:text="JavaScript output:"
-        android:textColor="#8f8f8f"
-        android:textSize="10pt"
-        android:textStyle="bold"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="returnToEditor"
+            android:text="Return to Editor"/>
 
-    <WebView
-        android:id="@+id/console"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_weight="1"/>
+        <com.example.jimec.javascriptshell.run.Console
+            android:id="@+id/console"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textColor="#111"
+            android:textSize="8pt"
+            android:typeface="monospace"/>
+
+    </LinearLayout>
 
 </LinearLayout>

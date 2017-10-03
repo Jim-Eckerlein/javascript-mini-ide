@@ -4,3 +4,8 @@ function sayHello(name, age) {
 }
 
 sayHello('Jim', 19);
+
+for(let i = 0; i < 10; i++) {
+    sleep(1000);
+    print(i + 1);
+}
