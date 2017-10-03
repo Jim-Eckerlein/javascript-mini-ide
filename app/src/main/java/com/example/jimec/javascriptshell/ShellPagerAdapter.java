@@ -3,6 +3,7 @@ package com.example.jimec.javascriptshell;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 
 import java.security.InvalidParameterException;
 
@@ -14,8 +15,9 @@ public class ShellPagerAdapter extends FragmentPagerAdapter {
     private final EditorTab mEditorTab = new EditorTab();
     private final RunTab mRunTab = new RunTab();
     
-    public ShellPagerAdapter(FragmentManager fm) {
+    public ShellPagerAdapter(FragmentManager fm, ViewPager viewPager) {
         super(fm);
+        mEditorTab.setPager(viewPager);
     }
     
     @Override

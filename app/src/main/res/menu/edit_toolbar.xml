@@ -2,10 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Clear -->
+    <!-- Help -->
     <item
         android:id="@+id/action_help"
-        android:icon="@drawable/help"
         android:title="Help me!"
         app:showAsAction="never"/>
 
@@ -22,13 +21,6 @@
         android:icon="@drawable/clear"
         android:title="Clear code!"
         app:showAsAction="ifRoom"/>
-
-    <!-- Run -->
-    <item
-        android:id="@+id/action_run"
-        android:icon="@drawable/run"
-        android:title="Run"
-        app:showAsAction="always"/>
 
     <!-- Demos -->
     <item

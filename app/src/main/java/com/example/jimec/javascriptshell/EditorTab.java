@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RawRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,10 @@ public class EditorTab extends Fragment {
     private int mCurrentDemo = -1;
     private TextView mKeyboardHelper;
     private EditorView mEditor;
+    private ViewPager mViewPager;
     
-    public static EditorTab newInstance() {
-        return new EditorTab();
+    public void setPager(ViewPager viewPager) {
+        mViewPager = viewPager;
     }
     
     @Override
@@ -33,16 +35,23 @@ public class EditorTab extends Fragment {
         View view = inflater.inflate(R.layout.fragment_editor, container, false);
     
         // Editor:
-        mEditor = (EditorView) view.findViewById(R.id.editor);
+        mEditor = view.findViewById(R.id.editor);
     
         // Keyboard:
-        Keyboard keyboard = (Keyboard) view.findViewById(R.id.keyboard);
+        Keyboard keyboard = view.findViewById(R.id.keyboard);
         keyboard.setEditor(mEditor);
     
         // Load initial demo:
         loadDemo(R.raw.demo_demo);
     
-        mKeyboardHelper = (TextView) view.findViewById(R.id.keyboard_helper);
+        mKeyboardHelper = view.findViewById(R.id.keyboard_helper);
+    
+        view.findViewById(R.id.run_code_key).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewPager.setCurrentItem(ShellPagerAdapter.FRAGMENT_POSITION_RUN);
+            }
+        });
         
         return view;
     }

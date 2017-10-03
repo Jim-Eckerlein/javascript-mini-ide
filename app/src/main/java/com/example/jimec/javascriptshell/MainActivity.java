@@ -2,7 +2,6 @@ package com.example.jimec.javascriptshell;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     
         mPager = (ViewPager) findViewById(R.id.pager);
-        mAdapter = new ShellPagerAdapter(getSupportFragmentManager());
+        mAdapter = new ShellPagerAdapter(getSupportFragmentManager(), mPager);
         mPager.setAdapter(mAdapter);
         mTabLayout = (TabLayout)findViewById(R.id.tab_layout);
         mTabLayout.setupWithViewPager(mPager);
