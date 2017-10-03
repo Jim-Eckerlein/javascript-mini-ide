@@ -67,11 +67,12 @@ public class EditorView extends FrameLayout {
         int cursorPos = start + code.length();
     
         StringBuilder newCode = new StringBuilder(mEditText.getText().replace(start, end, code, 0, code.length()).toString());
-        boolean beyondText = cursorPos == newCode.length();
-        cursorPos = RuntimeFormatter.format(newCode, beyondText ? cursorPos - 1 : cursorPos);
-        if (beyondText) {
+    
+        if (code.equals("}") || code.equals("\n")) {
+            cursorPos = RuntimeFormatter.format(newCode, cursorPos - 1);
             cursorPos++;
         }
+    
         highlight(newCode.toString());
         mEditText.setSelection(cursorPos);
     }
