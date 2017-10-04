@@ -1,5 +1,6 @@
 package com.example.jimec.javascriptshell;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.MenuRes;
@@ -75,6 +76,18 @@ public class MainActivity extends AppCompatActivity {
     
             case R.id.action_undo:
                 mAdapter.getEditorTab().getEditor().undo();
+                return true;
+    
+            case R.id.action_about:
+                // Start About activity:
+                Intent intentAbout = new Intent(this, AboutActivity.class);
+                startActivity(intentAbout);
+                return true;
+    
+            case R.id.action_help:
+                // Start Help activity:
+                Intent intentHelp = new Intent(this, HelpActivity.class);
+                startActivity(intentHelp);
                 return true;
         
             default:
