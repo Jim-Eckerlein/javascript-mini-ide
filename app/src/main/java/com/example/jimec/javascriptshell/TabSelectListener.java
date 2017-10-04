@@ -5,9 +5,11 @@ import android.support.design.widget.TabLayout;
 public class TabSelectListener implements TabLayout.OnTabSelectedListener {
     
     private final TabFragmentAdapter mAdapter;
+    private final MainActivity mMainActivity;
     
-    public TabSelectListener(TabFragmentAdapter adapter) {
+    public TabSelectListener(TabFragmentAdapter adapter, MainActivity mainActivity) {
         mAdapter = adapter;
+        mMainActivity = mainActivity;
     }
     
     @Override
@@ -16,6 +18,7 @@ public class TabSelectListener implements TabLayout.OnTabSelectedListener {
             case TabFragmentAdapter.FRAGMENT_POSITION_RUN:
                 mAdapter.runCode();
         }
+        mMainActivity.invalidateOptionsMenu();
     }
     
     @Override

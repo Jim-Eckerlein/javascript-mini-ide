@@ -1,12 +1,15 @@
 package com.example.jimec.javascriptshell;
 
 import android.os.Bundle;
+import android.support.annotation.MenuRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.security.InvalidParameterException;
 
 public class MainActivity extends AppCompatActivity {
     
@@ -29,14 +32,30 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout = (TabLayout)findViewById(R.id.tab_layout);
         mTabLayout.setupWithViewPager(mPager);
     
-        mTabLayout.addOnTabSelectedListener(new TabSelectListener(mAdapter));
+        mTabLayout.addOnTabSelectedListener(new TabSelectListener(mAdapter, this));
     
         mPager.setCurrentItem(TabFragmentAdapter.FRAGMENT_POSITION_EDITOR);
     }
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.edit_toolbar, menu);
+        @MenuRes int res;
+    
+        switch (mPager.getCurrentItem()) {
+            case TabFragmentAdapter.FRAGMENT_POSITION_FILES:
+                res = R.menu.toolbar_files;
+                break;
+            case TabFragmentAdapter.FRAGMENT_POSITION_EDITOR:
+                res = R.menu.toolbar_editor;
+                break;
+            case TabFragmentAdapter.FRAGMENT_POSITION_RUN:
+                res = R.menu.toolbar_run;
+                break;
+            default:
+                throw new InvalidParameterException("No such tab");
+        }
+    
+        getMenuInflater().inflate(res, menu);
         return true;
     }
     
