@@ -70,4 +70,13 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
         mViewPager.setCurrentItem(FRAGMENT_POSITION_EDITOR);
         mEditorTab.loadExample(id);
     }
+    
+    public void runCode() {
+        mRunTab.clearOutput();
+        mRunTab.launchV8(mEditorTab.getEditor().toString());
+    }
+    
+    public void stopRunningCode() {
+        mRunTab.stopV8();
+    }
 }
