@@ -55,17 +55,21 @@
         android:padding="18dp">
 
         <Button
+            style="@style/Base.Widget.AppCompat.ButtonBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
             android:onClick="openGitHub"
-            android:text="@string/about_github_link"/>
+            android:text="@string/about_github_link"
+            android:textColor="@color/colorAccent"/>
 
         <Button
+            style="@style/Base.Widget.AppCompat.ButtonBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="openJ2V8"
-            android:text="J2V8"/>
+            android:text="@string/about_j2v8_link"
+            android:textColor="@color/colorAccent"/>
 
     </LinearLayout>
 
