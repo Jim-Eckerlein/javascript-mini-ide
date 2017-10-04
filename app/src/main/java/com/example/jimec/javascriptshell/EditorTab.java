@@ -15,7 +15,6 @@ import com.example.jimec.javascriptshell.keyboard_view.Keyboard;
 public class EditorTab extends Fragment {
     
     public static final String TITLE = "Editor";
-    private int mCurrentExample = -1;
     private EditorView mEditor;
     private ViewPager mViewPager;
     
@@ -53,12 +52,9 @@ public class EditorTab extends Fragment {
     }
     
     public void loadExample(@RawRes final int id) {
-        if (id != mCurrentExample) {
-            mEditor.clear();
-            mEditor.write(Util.readTextFile(getContext(), id));
-            mEditor.setCursor(0);
-            mCurrentExample = id;
-        }
+        mEditor.clear();
+        mEditor.write(Util.readTextFile(getContext(), id));
+        mEditor.setCursor(0);
     }
     
     public EditorView getEditor() {

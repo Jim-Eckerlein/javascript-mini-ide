@@ -1,6 +1,7 @@
 package com.example.jimec.javascriptshell;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.MenuRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mAdapter = new TabFragmentAdapter(getSupportFragmentManager(), mPager);
         mPager.setAdapter(mAdapter);
-        mTabLayout = (TabLayout)findViewById(R.id.tab_layout);
+        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         mTabLayout.setupWithViewPager(mPager);
     
         mTabLayout.addOnTabSelectedListener(new TabSelectListener(mAdapter, this));
@@ -61,6 +62,19 @@ public class MainActivity extends AppCompatActivity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return false;
+        @IdRes int id = item.getItemId();
+    
+        switch (id) {
+            case R.id.action_format_code:
+                mAdapter.getEditorTab().getEditor().formatCode();
+                return true;
+        
+            case R.id.action_clear_code:
+                mAdapter.getEditorTab().getEditor().clear();
+                return true;
+        
+            default:
+                return false;
+        }
     }
 }
