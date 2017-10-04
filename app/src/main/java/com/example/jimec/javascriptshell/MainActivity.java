@@ -80,15 +80,23 @@ public class MainActivity extends AppCompatActivity {
     
             case R.id.action_about:
                 // Start About activity:
-                Intent intentAbout = new Intent(this, AboutActivity.class);
-                startActivity(intentAbout);
+                Intent aboutIntent = new Intent(this, AboutActivity.class);
+                startActivity(aboutIntent);
                 return true;
     
             case R.id.action_help:
                 // Start Help activity:
-                Intent intentHelp = new Intent(this, HelpActivity.class);
-                startActivity(intentHelp);
+                Intent helpIntent = new Intent(this, HelpActivity.class);
+                startActivity(helpIntent);
                 return true;
+    
+            case R.id.action_share:
+                // Share code:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, mAdapter.getEditorTab().getEditor().toString());
+                sendIntent.setType("application/javascript");
+                startActivity(sendIntent);
         
             default:
                 return false;
