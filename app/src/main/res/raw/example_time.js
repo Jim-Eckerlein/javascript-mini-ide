@@ -7,4 +7,7 @@ a string when passing to print().
 (Similar to Java's toString() method)
 */
 
-print(new Date())
+while(true) {
+    print(new Date());
+    sleep(1000);
+}

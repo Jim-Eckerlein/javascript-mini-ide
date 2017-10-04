@@ -9,13 +9,6 @@
         android:title="Undo"
         app:showAsAction="ifRoom"/>
 
-    <!-- Redo -->
-    <item
-        android:id="@+id/action_redo"
-        android:icon="@drawable/redo"
-        android:title="Redo"
-        app:showAsAction="ifRoom"/>
-
     <!-- Format -->
     <item
         android:id="@+id/action_format_code"

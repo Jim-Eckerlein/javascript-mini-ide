@@ -10,13 +10,22 @@ import android.widget.FrameLayout;
 
 import com.example.jimec.javascriptshell.R;
 
+import java.util.ArrayDeque;
+
 import static com.example.jimec.javascriptshell.Util.clamp;
 
 public class EditorView extends FrameLayout {
     
+    public static final int MAX_UNDO_HISTORY = 50;
+    
     private final Highlighter mHighlighter = new Highlighter();
     private final CodeFormatter mCodeFormatter = new CodeFormatter();
+    private final ArrayDeque<String> mHistory = new ArrayDeque<>();
+    private final ArrayDeque<Integer> mCursorHistory = new ArrayDeque<>();
+    private final TextChangeListener mTextChangeListener = new TextChangeListener();
     private EditText mEditText;
+    private boolean mSkipHistoryBackup = false;
+    private int mCursorHistoryCurrentPosition;
     
     public EditorView(Context context) {
         super(context);
@@ -46,26 +55,7 @@ public class EditorView extends FrameLayout {
         mEditText.setShowSoftInputOnFocus(false);
         mEditText.requestFocus();
     
-        mEditText.addTextChangedListener(new TextWatcher() {
-            private boolean mParsed = false;
-            
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-    
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-    
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(!mParsed) {
-                    mParsed = true;
-                    write("");
-                    mParsed = false;
-                }
-            }
-        });
+        mEditText.addTextChangedListener(mTextChangeListener);
     }
     
     public void write(String code) {
@@ -80,6 +70,8 @@ public class EditorView extends FrameLayout {
             cursorPos++;
         }
     
+        mCursorHistoryCurrentPosition = start;
+        mTextChangeListener.mInternalChange = true;
         mEditText.setSelection(0);
         highlight(newCode.toString());
         mEditText.setSelection(clamp(cursorPos, 0, newCode.toString().length() - 1));
@@ -89,7 +81,9 @@ public class EditorView extends FrameLayout {
         int start = getCursorStart();
         int end = getCursorEnd();
         Editable text = mEditText.getText();
-    
+        mTextChangeListener.mInternalChange = true;
+        mCursorHistoryCurrentPosition = start;
+        
         if (start == end && start > 0) {
             // If at line start, delete all leading spaces as well:
             boolean atLineStart = true;
@@ -115,7 +109,7 @@ public class EditorView extends FrameLayout {
                 mEditText.setSelection(start - 1);
             }
         }
-    
+
         else if (end > start) {
             // Delete range
             mEditText.getText().delete(start, end);
@@ -141,7 +135,7 @@ public class EditorView extends FrameLayout {
         return Math.max(start, end);
     }
     
-    public void formatCode() {
+    public void format() {
         mCodeFormatter.format(mEditText.getText().toString(), getCursorStart());
         mEditText.setText(mHighlighter.highlight(mCodeFormatter.getFormatted()));
         mEditText.setSelection(mCodeFormatter.getFormattedCursorPos());
@@ -151,6 +145,35 @@ public class EditorView extends FrameLayout {
         mEditText.getText().clear();
         mEditText.getText().clearSpans();
         mEditText.setSelection(0);
+        if (!mSkipHistoryBackup) {
+            // We are not currently inside an undo operation => clear undo history as well
+            mHistory.clear();
+            mCursorHistory.clear();
+        }
+    }
+    
+    public void undo() {
+        if (mHistory.size() > 1) {
+            mSkipHistoryBackup = true;
+            clear();
+            mHistory.removeLast();
+            mCursorHistory.removeLast();
+            write(mHistory.getLast());
+            mEditText.setSelection(mCursorHistory.getLast());
+            mSkipHistoryBackup = false;
+        }
+    }
+    
+    private void backupToHistory() {
+        if (mSkipHistoryBackup) {
+            return;
+        }
+        String code = mEditText.getText().toString();
+        if (mHistory.size() > 0 && mHistory.getLast().equals(code)) {
+            return;
+        }
+        mHistory.addLast(code);
+        mCursorHistory.addLast(mCursorHistoryCurrentPosition);
     }
     
     @Override
@@ -160,5 +183,37 @@ public class EditorView extends FrameLayout {
     
     public void setCursor(int cursorPosition) {
         mEditText.setSelection(cursorPosition);
+    }
+    
+    private class TextChangeListener implements TextWatcher {
+        
+        private boolean mUpdated = false;
+        private boolean mInternalChange = false;
+        
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+        
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+        
+        @Override
+        public void afterTextChanged(Editable editable) {
+            if (mInternalChange) {
+                mInternalChange = false;
+                
+                backupToHistory();
+            }
+            else if (!mUpdated) {
+                mUpdated = true;
+                write("");
+                
+                backupToHistory();
+                
+                mUpdated = false;
+            }
+        }
+        
     }
 }

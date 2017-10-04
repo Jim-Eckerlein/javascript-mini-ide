@@ -66,11 +66,15 @@ public class MainActivity extends AppCompatActivity {
     
         switch (id) {
             case R.id.action_format_code:
-                mAdapter.getEditorTab().getEditor().formatCode();
+                mAdapter.getEditorTab().getEditor().format();
                 return true;
         
             case R.id.action_clear_code:
                 mAdapter.getEditorTab().getEditor().clear();
+                return true;
+    
+            case R.id.action_undo:
+                mAdapter.getEditorTab().getEditor().undo();
                 return true;
         
             default:
