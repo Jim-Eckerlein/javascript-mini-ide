@@ -36,18 +36,6 @@
 
         <include layout="@layout/view_keyboard"/>
 
-        <TextView
-            android:id="@+id/keyboard_helper"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#bc000000"
-            android:gravity="center"
-            android:onClick="closeKeyboardHelper"
-            android:text="Keyboard: \nTap for primary text \nHold for secondary text"
-            android:textColor="@android:color/white"
-            android:textSize="10pt"
-            android:visibility="gone"/>
-
     </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

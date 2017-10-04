@@ -2,12 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Help -->
-    <item
-        android:id="@+id/action_help"
-        android:title="Help me!"
-        app:showAsAction="never"/>
-
     <!-- Format -->
     <item
         android:id="@+id/action_format"
@@ -19,43 +13,33 @@
     <item
         android:id="@+id/action_clear"
         android:icon="@drawable/clear"
-        android:title="Clear code!"
+        android:title="Clear code"
         app:showAsAction="ifRoom"/>
 
-    <!-- Demos -->
+    <!-- Undo -->
     <item
-        android:id="@+id/action_demo_demo"
-        android:title="Demo"
+        android:id="@+id/action_undo"
+        android:icon="@drawable/clear"
+        android:title="Undo"
+        app:showAsAction="ifRoom"/>
+
+    <!-- Redo -->
+    <item
+        android:id="@+id/action_redo"
+        android:icon="@drawable/clear"
+        android:title="Redo"
+        app:showAsAction="ifRoom"/>
+
+    <!-- Help -->
+    <item
+        android:id="@+id/action_help"
+        android:title="Help"
         app:showAsAction="never"/>
 
+    <!-- About -->
     <item
-        android:id="@+id/action_demo_print"
-        android:title="Demo: print()"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action_demo_array"
-        android:title="Demo: Arrays []"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action_demo_object"
-        android:title="Demo: Object {}"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action_demo_function"
-        android:title="Demo: Functions"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action_demo_time"
-        android:title="Demo: Time"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action_demo_typeof"
-        android:title="Demo: typeof"
+        android:id="@+id/action_about"
+        android:title="About"
         app:showAsAction="never"/>
 
 </menu>

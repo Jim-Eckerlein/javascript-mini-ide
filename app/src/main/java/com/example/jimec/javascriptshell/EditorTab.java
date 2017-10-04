@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.jimec.javascriptshell.editor.EditorView;
 import com.example.jimec.javascriptshell.keyboard_view.Keyboard;
@@ -17,7 +16,6 @@ public class EditorTab extends Fragment {
     
     public static final String TITLE = "Editor";
     private int mCurrentDemo = -1;
-    private TextView mKeyboardHelper;
     private EditorView mEditor;
     private ViewPager mViewPager;
     
@@ -44,12 +42,10 @@ public class EditorTab extends Fragment {
         // Load initial demo:
         loadDemo(R.raw.demo_demo);
     
-        mKeyboardHelper = view.findViewById(R.id.keyboard_helper);
-    
         view.findViewById(R.id.run_code_key).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewPager.setCurrentItem(ShellPagerAdapter.FRAGMENT_POSITION_RUN);
+                mViewPager.setCurrentItem(TabFragmentAdapter.FRAGMENT_POSITION_RUN);
             }
         });
         
@@ -69,7 +65,4 @@ public class EditorTab extends Fragment {
         return mEditor;
     }
     
-    public void closeKeyboardHelper(View view) {
-        mKeyboardHelper.setVisibility(View.GONE);
-    }
 }

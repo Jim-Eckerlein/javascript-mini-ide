@@ -7,7 +7,7 @@ import android.support.v4.view.ViewPager;
 
 import java.security.InvalidParameterException;
 
-public class ShellPagerAdapter extends FragmentPagerAdapter {
+public class TabFragmentAdapter extends FragmentPagerAdapter {
     
     public static final int FRAGMENT_POSITION_EDITOR = 0;
     public static final int FRAGMENT_POSITION_RUN = 1;
@@ -15,7 +15,7 @@ public class ShellPagerAdapter extends FragmentPagerAdapter {
     private final EditorTab mEditorTab = new EditorTab();
     private final RunTab mRunTab = new RunTab();
     
-    public ShellPagerAdapter(FragmentManager fm, ViewPager viewPager) {
+    public TabFragmentAdapter(FragmentManager fm, ViewPager viewPager) {
         super(fm);
         mEditorTab.setPager(viewPager);
     }

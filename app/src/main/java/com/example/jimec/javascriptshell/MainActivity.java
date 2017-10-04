@@ -11,7 +11,7 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
     
     private ViewPager mPager;
-    private ShellPagerAdapter mAdapter;
+    private TabFragmentAdapter mAdapter;
     private TabLayout mTabLayout;
     
     @Override
@@ -24,12 +24,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     
         mPager = (ViewPager) findViewById(R.id.pager);
-        mAdapter = new ShellPagerAdapter(getSupportFragmentManager(), mPager);
+        mAdapter = new TabFragmentAdapter(getSupportFragmentManager(), mPager);
         mPager.setAdapter(mAdapter);
         mTabLayout = (TabLayout)findViewById(R.id.tab_layout);
         mTabLayout.setupWithViewPager(mPager);
-        
-        mTabLayout.addOnTabSelectedListener(new ShellTabTraverser(mAdapter));
+    
+        mTabLayout.addOnTabSelectedListener(new TabSelectListener(mAdapter));
     }
     
     @Override
