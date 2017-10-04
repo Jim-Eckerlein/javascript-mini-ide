@@ -30,6 +30,11 @@ public class AboutActivity extends AppCompatActivity {
         startActivity(intent);
     }
     
+    public void openJ2V8(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/eclipsesource/J2V8"));
+        startActivity(intent);
+    }
+    
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

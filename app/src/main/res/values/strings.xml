@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">JavaScript Shell</string>
-    <string name="about_content">By Jim Eckerlein, 2017\nProgrammed for my school work.</string>
+    <string name="about_content">By Jim Eckerlein, 2017\nProgrammed for my school work.\nThe JavaScript evaluator uses the high-performance J2V8 engine, a Java binding to Google\'s V8 engine</string>
     <string name="about_subheading">A JavaScript editor and execution suite for Android</string>
     <string name="help_title_editor">Editor</string>
     <string name="help_title_run">Run</string>
@@ -8,6 +8,7 @@
     <string name="help_files">Select an example script.</string>
     <string name="help_editor">Edit your script. Tap a key to write its primary text, hold to write the secondary one.</string>
     <string name="help_run">Run your script. Leaving the run tab will immediately stop the script execution.</string>
+    <string name="about_github_link">GitHub</string>
     <string-array name="examples_array">
         <item>Demo</item>
         <item>Print</item>
