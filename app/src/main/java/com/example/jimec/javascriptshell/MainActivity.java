@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mPager);
     
         mTabLayout.addOnTabSelectedListener(new TabSelectListener(mAdapter));
+    
+        mPager.setCurrentItem(TabFragmentAdapter.FRAGMENT_POSITION_EDITOR);
     }
     
     @Override
