@@ -30,10 +30,6 @@ class SelectableText {
         mCursorPos.add(cursorPosition);
     }
     
-    public void deleteCursorPos(CursorPosition cursorPosition) {
-        mCursorPos.remove(cursorPosition);
-    }
-    
     public void delete(int pos, int len) {
         for(CursorPosition cursorPosition : mCursorPos) {
             if (pos + len < cursorPosition.getPos()) {

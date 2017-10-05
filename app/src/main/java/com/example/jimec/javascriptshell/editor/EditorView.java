@@ -42,11 +42,6 @@ public class EditorView extends FrameLayout {
         init();
     }
     
-    public EditorView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-    
     private void init() {
         inflate(getContext(), R.layout.view_editor, this);
         mEditText = findViewById(R.id.edit_text);
@@ -174,6 +169,11 @@ public class EditorView extends FrameLayout {
         }
         mHistory.addLast(code);
         mCursorHistory.addLast(mCursorHistoryCurrentPosition);
+    
+        if (mHistory.size() > MAX_UNDO_HISTORY) {
+            mHistory.removeFirst();
+            mCursorHistory.removeFirst();
+        }
     }
     
     @Override

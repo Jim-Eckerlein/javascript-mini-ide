@@ -36,14 +36,6 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
         return mEditorTab;
     }
     
-    public RunTab getRunTab() {
-        return mRunTab;
-    }
-    
-    public FilesTab getFilesTab() {
-        return mFilesTab;
-    }
-    
     @Override
     public Fragment getItem(int position) {
         switch (position) {

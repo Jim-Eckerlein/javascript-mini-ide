@@ -28,11 +28,6 @@ public class Keyboard extends LinearLayout {
         init();
     }
     
-    public Keyboard(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-    
     private void init() {
     }
     

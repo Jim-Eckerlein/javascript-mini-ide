@@ -12,8 +12,7 @@ public class ShiftKey extends android.support.v7.widget.AppCompatImageView imple
     public static final int INACTIVE = 0;
     public static final int SHIFT = 1;
     public static final int ALL_CAPS = 2;
-
-    private Keyboard mKeyboard;
+    
     private int mStatus;
 
     public ShiftKey(Context context) {
@@ -51,7 +50,6 @@ public class ShiftKey extends android.support.v7.widget.AppCompatImageView imple
 
     @Override
     public void setKeyboard(Keyboard keyboard) {
-        mKeyboard = keyboard;
     }
 
     public String process(String input) {

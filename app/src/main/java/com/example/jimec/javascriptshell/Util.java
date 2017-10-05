@@ -83,7 +83,7 @@ public class Util {
                 }
                 sb.append((char) i);
             }
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         return sb.toString();
     }

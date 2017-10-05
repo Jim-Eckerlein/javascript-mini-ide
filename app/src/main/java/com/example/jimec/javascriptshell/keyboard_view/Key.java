@@ -27,12 +27,7 @@ public class Key extends LinearLayout implements KeyboardKeyConnection {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
-
-    public Key(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs);
-    }
-
+    
     private void init(Context context, AttributeSet attrs) {
         inflate(context, R.layout.view_keyboard_key, this);
         mPrimary = findViewById(R.id.primary);
