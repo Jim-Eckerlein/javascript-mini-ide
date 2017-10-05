@@ -18,17 +18,14 @@
         android:layout_weight="1"
         android:gravity="center"
         android:paddingTop="3dp"
-        android:text="q"
-        android:textColor="@color/keyPrimary"
         android:textSize="22sp"/>
 
     <TextView
         android:id="@+id/secondary"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:alpha="0.8"
         android:fontFamily="monospace"
-        android:text="q"
-        android:textColor="@color/keySecondary"
-        android:textSize="11sp"/>
+        android:textSize="12sp"/>
 
 </LinearLayout>

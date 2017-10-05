@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="keyPrimary">#222</color>
-    <color name="keySecondary">#555</color>
-    <color name="keyActive">#666</color>
-    <color name="keyInactive">#888</color>
-    <color name="keyAccent">#FF4081</color>
-    <color name="keyEnter">#fff</color>
-    <color name="menu_action">@android:color/white</color>
+
+    <color name="primaryColor">#424242</color>
+    <color name="primaryDarkColor">#212121</color>
+    <color name="secondaryColor">#ffc107</color>
+
+    <color name="keyColor">@android:color/primary_text_dark</color>
+    <color name="keyInverseColor">@android:color/primary_text_light</color>
+
+    <color name="textError">#EF5350</color>
 </resources>

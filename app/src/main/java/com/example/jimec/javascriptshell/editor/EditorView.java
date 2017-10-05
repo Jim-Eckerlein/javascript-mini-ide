@@ -91,6 +91,7 @@ public class EditorView extends FrameLayout {
                     atLineStart = false;
                 }
             }
+            spaceIndex = Math.max(spaceIndex, 0);
             if (atLineStart) {
                 text.delete(spaceIndex, start);
                 highlight(text.toString());

@@ -16,61 +16,72 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ImageView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="18dp"
-        android:src="@mipmap/ic_launcher"/>
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="@string/app_name"
-        android:textColor="@android:color/black"
-        android:textSize="28sp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="4dp"
-        android:text="@string/about_subheading"
-        android:textColor="#99000000"
-        android:textSize="12sp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="18dp"
-        android:text="@string/about_content"
-        android:textColor="#111"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="18dp">
-
-        <Button
-            style="@style/Base.Widget.AppCompat.ButtonBar"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            android:onClick="openGitHub"
-            android:text="@string/about_github_link"
-            android:textColor="@color/colorAccent"/>
+            android:orientation="vertical">
 
-        <Button
-            style="@style/Base.Widget.AppCompat.ButtonBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="openJ2V8"
-            android:text="@string/about_j2v8_link"
-            android:textColor="@color/colorAccent"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="16dp"
+                android:padding="18dp"
+                android:src="@mipmap/ic_launcher"/>
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/app_name"
+                android:textSize="28sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/about_subheading"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="18dp"
+                android:text="@string/about_content"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="18dp">
+
+                <Button
+                    style="@style/Base.Widget.AppCompat.ButtonBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:onClick="openGitHub"
+                    android:text="@string/about_github_link"
+                    android:textColor="@color/secondaryColor"/>
+
+                <Button
+                    style="@style/Base.Widget.AppCompat.ButtonBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="openJ2V8"
+                    android:text="@string/about_j2v8_link"
+                    android:textColor="@color/secondaryColor"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

@@ -32,16 +32,15 @@
                 android:gravity="center"
                 android:paddingBottom="18dp"
                 android:text="@string/app_name"
-                android:textColor="@android:color/black"
                 android:textSize="28sp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:alpha="0.5"
                 android:gravity="center"
                 android:paddingBottom="18dp"
                 android:text="@string/about_subheading"
-                android:textColor="#99000000"
                 android:textSize="12sp"/>
 
             <TextView
@@ -49,7 +48,6 @@
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:text="@string/help_title_files"
-                android:textColor="#111"
                 android:textSize="18sp"/>
 
             <TextView
@@ -57,15 +55,13 @@
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:paddingStart="28dp"
-                android:text="@string/help_files"
-                android:textColor="#9111"/>
+                android:text="@string/help_files"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:text="@string/help_title_editor"
-                android:textColor="#111"
                 android:textSize="18sp"/>
 
             <TextView
@@ -73,15 +69,13 @@
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:paddingStart="28dp"
-                android:text="@string/help_editor"
-                android:textColor="#9111"/>
+                android:text="@string/help_editor"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:text="@string/help_title_run"
-                android:textColor="#111"
                 android:textSize="18sp"/>
 
             <TextView
@@ -89,8 +83,7 @@
                 android:layout_height="wrap_content"
                 android:padding="4dp"
                 android:paddingStart="28dp"
-                android:text="@string/help_run"
-                android:textColor="#9111"/>
+                android:text="@string/help_run"/>
 
         </LinearLayout>
 

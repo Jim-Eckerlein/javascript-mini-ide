@@ -1,9 +1,6 @@
 package com.example.jimec.javascriptshell.keyboard_view;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -14,7 +11,6 @@ public class SpaceKey extends FrameLayout implements KeyboardKeyConnection {
 
     private Keyboard mKeyboard;
     private View mSpaceKeyView;
-    private Drawable mSpaceKeyViewBackground;
 
     public SpaceKey(Context context) {
         super(context);
@@ -32,12 +28,10 @@ public class SpaceKey extends FrameLayout implements KeyboardKeyConnection {
     }
 
     private void init() {
-        inflate(getContext(), R.layout.view_space_key, this);
+        inflate(getContext(), R.layout.view_key_space, this);
         mSpaceKeyView = findViewById(R.id.space_key_view);
-        mSpaceKeyViewBackground = DrawableCompat.wrap(mSpaceKeyView.getBackground());
-        
         setOnTouchListener(new SpaceKey.TouchListener());
-        DrawableCompat.setTint(mSpaceKeyViewBackground, ContextCompat.getColor(getContext(), R.color.keyInactive));
+        mSpaceKeyView.setAlpha(Keyboard.ALPHA_INACTIVE);
     }
 
     @Override
@@ -55,13 +49,13 @@ public class SpaceKey extends FrameLayout implements KeyboardKeyConnection {
         @Override
         public void onDown() {
             super.onDown();
-            DrawableCompat.setTint(mSpaceKeyViewBackground, ContextCompat.getColor(getContext(), R.color.keyActive));
+            mSpaceKeyView.setAlpha(Keyboard.ALPHA_ACTIVE);
         }
 
         @Override
         public void onUp() {
             super.onUp();
-            DrawableCompat.setTint(mSpaceKeyViewBackground, ContextCompat.getColor(getContext(), R.color.keyInactive));
+            mSpaceKeyView.setAlpha(Keyboard.ALPHA_INACTIVE);
         }
     }
 }

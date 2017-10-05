@@ -29,7 +29,7 @@ public class Key extends LinearLayout implements KeyboardKeyConnection {
     }
     
     private void init(Context context, AttributeSet attrs) {
-        inflate(context, R.layout.view_keyboard_key, this);
+        inflate(context, R.layout.view_key, this);
         mPrimary = findViewById(R.id.primary);
         mSecondary = findViewById(R.id.secondary);
 

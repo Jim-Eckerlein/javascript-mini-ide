@@ -16,6 +16,7 @@
     <string name="action_clear_code">Clear code</string>
     <string name="action_format_code">Format code</string>
     <string name="action_undo">Undo</string>
+    <string name="fragment_files_example_list_title">Examples</string>
     <string-array name="examples_array">
         <item>Demo</item>
         <item>Print</item>

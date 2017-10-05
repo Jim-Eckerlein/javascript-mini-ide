@@ -13,7 +13,7 @@ public class ShiftKey extends android.support.v7.widget.AppCompatImageView imple
     public static final int SHIFT = 1;
     public static final int ALL_CAPS = 2;
     
-    private int mStatus;
+    private int mStatus = INACTIVE;
 
     public ShiftKey(Context context) {
         super(context);
@@ -29,22 +29,24 @@ public class ShiftKey extends android.support.v7.widget.AppCompatImageView imple
         super(context, attrs, defStyleAttr);
         init();
     }
-
+    
     private void init() {
-        setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.shift));
-        setStatus(INACTIVE);
-
         setOnTouchListener(new TouchListener());
+        setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.shift));
+        setAlpha(Keyboard.ALPHA_INACTIVE);
     }
 
     private void setStatus(int status) {
         mStatus = status;
         if (INACTIVE == status) {
-            DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyInactive));
+            DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyColor));
+            setAlpha(Keyboard.ALPHA_INACTIVE);
         } else if (SHIFT == status) {
-            DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyActive));
+            DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyColor));
+            setAlpha(Keyboard.ALPHA_ACTIVE);
         } else if (ALL_CAPS == status) {
-            DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyAccent));
+            setAlpha(1.0f);
+            DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.secondaryColor));
         }
     }
 

@@ -2,7 +2,6 @@ package com.example.jimec.javascriptshell.keyboard_view;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 
 import com.example.jimec.javascriptshell.R;
@@ -29,7 +28,7 @@ public class BackspaceKey extends android.support.v7.widget.AppCompatImageView i
     private void init() {
         setOnTouchListener(new BackspaceKey.TouchListener());
         setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.backspace));
-        DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyActive));
+        setAlpha(Keyboard.ALPHA_INACTIVE);
     }
 
     @Override
@@ -47,13 +46,13 @@ public class BackspaceKey extends android.support.v7.widget.AppCompatImageView i
         @Override
         public void onDown() {
             super.onDown();
-            DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyActive));
+            setAlpha(Keyboard.ALPHA_ACTIVE);
         }
 
         @Override
         public void onUp() {
             super.onUp();
-            DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyInactive));
+            setAlpha(Keyboard.ALPHA_INACTIVE);
         }
 
     }

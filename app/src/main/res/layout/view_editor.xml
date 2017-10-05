@@ -14,8 +14,7 @@
         android:bufferType="spannable"
         android:cursorVisible="true"
         android:inputType="textMultiLine|textNoSuggestions"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:typeface="monospace"/>
 
 </HorizontalScrollView>

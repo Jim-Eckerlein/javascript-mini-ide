@@ -10,6 +10,9 @@ import com.example.jimec.javascriptshell.editor.EditorView;
 
 public class Keyboard extends LinearLayout {
     
+    public static float ALPHA_INACTIVE = 0.4f;
+    public static float ALPHA_ACTIVE = 0.8f;
+    
     private ShiftKey mShiftKey;
     private EditorView mEditor;
     
@@ -51,15 +54,13 @@ public class Keyboard extends LinearLayout {
     }
     
     private void findShiftKey(View view) {
+        if (view instanceof ShiftKey) {
+            mShiftKey = ((ShiftKey) view);
+        }
         if (view instanceof ViewGroup && !(view instanceof Key)) {
             ViewGroup group = ((ViewGroup) view);
             for (int i = 0; i < group.getChildCount(); i++) {
                 findShiftKey(group.getChildAt(i));
-            }
-        }
-        else {
-            if (view instanceof ShiftKey) {
-                mShiftKey = ((ShiftKey) view);
             }
         }
     }

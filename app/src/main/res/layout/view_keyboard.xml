@@ -300,28 +300,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
         <ImageView
             android:id="@+id/run_code_key"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:paddingEnd="18dp"
+            android:paddingStart="8dp"
             android:src="@drawable/run"
-            android:tint="@color/colorAccent"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="2"/>
+            android:tint="@color/secondaryColor"/>
 
         <com.example.jimec.javascriptshell.keyboard_view.Key
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             app:primary=","
             app:secondary="."/>
 
@@ -333,7 +325,7 @@
         <com.example.jimec.javascriptshell.keyboard_view.Key
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             app:primary=";"/>
 
         <FrameLayout

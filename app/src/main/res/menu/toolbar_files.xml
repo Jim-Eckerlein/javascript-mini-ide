@@ -5,13 +5,13 @@
     <!-- Help -->
     <item
         android:id="@+id/action_help"
-        android:title="Help"
+        android:title="@string/action_help"
         app:showAsAction="never"/>
 
     <!-- About -->
     <item
         android:id="@+id/action_about"
-        android:title="About"
+        android:title="@string/action_about"
         app:showAsAction="never"/>
 
 </menu>

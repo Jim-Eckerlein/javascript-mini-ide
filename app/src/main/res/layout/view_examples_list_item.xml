@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:textColor="#111"
     android:textSize="16sp">
 
 </TextView>

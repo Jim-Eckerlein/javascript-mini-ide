@@ -16,7 +16,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:textColor="#111"
             android:textSize="14sp"
             android:typeface="monospace"/>
 
@@ -25,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="6dp"
-            android:textColor="#F44336"
+            android:textColor="@color/textError"
             android:textSize="12sp"
             android:typeface="monospace"/>
 
