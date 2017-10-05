@@ -1,10 +1,13 @@
 package com.example.jimec.javascriptshell.editor;
 
-import android.graphics.Color;
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+
+import com.example.jimec.javascriptshell.R;
 
 import static com.example.jimec.javascriptshell.Util.strbackcmp;
 import static com.example.jimec.javascriptshell.Util.strcmp;
@@ -38,6 +41,11 @@ public class Highlighter {
     };
     
     private final SpannableStringBuilder mSpanBuilder = new SpannableStringBuilder();
+    private final Context mContext;
+    
+    public Highlighter(Context context) {
+        mContext = context;
+    }
     
     public Spannable highlight(String code) {
         int currentTextType = SPACE;
@@ -209,22 +217,22 @@ public class Highlighter {
     }
     
     private ForegroundColorSpan createKeywordSpan() {
-        return new ForegroundColorSpan(Color.rgb(0x46, 0x82, 0xB4));
+        return new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.highlightKeyword));
     }
     
     private ForegroundColorSpan createStringSpan() {
-        return new ForegroundColorSpan(Color.rgb(0x9A, 0xCD, 0x32));
+        return new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.highlightString));
     }
     
     private ForegroundColorSpan createOperatorSpan() {
-        return new ForegroundColorSpan(Color.rgb(0xFF, 0x14, 0x93));
+        return new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.highlightOperator));
     }
     
     private ForegroundColorSpan createCommentSpan() {
-        return new ForegroundColorSpan(Color.rgb(0x80, 0x80, 0x80));
+        return new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.highlightComment));
     }
     
     private ForegroundColorSpan createNumberSpan() {
-        return new ForegroundColorSpan(Color.rgb(0xFF, 0xA5, 0x00));
+        return new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.highlightNumber));
     }
 }

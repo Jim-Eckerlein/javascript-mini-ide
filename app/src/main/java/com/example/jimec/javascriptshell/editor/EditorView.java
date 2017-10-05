@@ -18,7 +18,7 @@ public class EditorView extends FrameLayout {
     
     public static final int MAX_UNDO_HISTORY = 50;
     
-    private final Highlighter mHighlighter = new Highlighter();
+    private final Highlighter mHighlighter = new Highlighter(getContext());
     private final CodeFormatter mCodeFormatter = new CodeFormatter();
     private final ArrayDeque<String> mHistory = new ArrayDeque<>();
     private final ArrayDeque<Integer> mCursorHistory = new ArrayDeque<>();
