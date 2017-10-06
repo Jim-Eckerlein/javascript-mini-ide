@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+
+import com.example.jimec.javascriptshell.files.ExampleView;
+import com.example.jimec.javascriptshell.files.FileView;
+import com.example.jimec.javascriptshell.files.FilesManager;
 
 public class FilesTab extends Fragment {
     
@@ -23,8 +25,10 @@ public class FilesTab extends Fragment {
             R.raw.example_typeof
     };
     
-    private ListView mExamplesListView;
+    private LinearLayout mExamplesView;
+    private LinearLayout mFilesView;
     private TabFragmentAdapter mAdapter;
+    private FilesManager mFilesManager;
     
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,13 +38,31 @@ public class FilesTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_files, container, false);
-        mExamplesListView = view.findViewById(R.id.example_list);
+    
+        // Load user files:
+        mFilesView = view.findViewById(R.id.user_file_list);
+        mFilesManager = new FilesManager(getContext());
+        for (String filename : mFilesManager.listFiles()) {
+            FileView fileView = new FileView(getContext());
         
+            fileView.setFilename(filename);
+            fileView.setAdapter(mAdapter);
+        
+            mFilesView.addView(fileView);
+        }
+    
         // Fill examples list from string array:
-        mExamplesListView.setAdapter(ArrayAdapter.createFromResource(getContext(), R.array.examples_array, R.layout.view_examples_list_item));
+        mExamplesView = view.findViewById(R.id.example_list);
+        int position = 0;
+        for (String example : getResources().getStringArray(R.array.examples_array)) {
+            ExampleView exampleView = new ExampleView(getContext());
         
-        // Load example into editor when clicked:
-        mExamplesListView.setOnItemClickListener(new OnExampleClickedListener());
+            exampleView.setText(example);
+            exampleView.setAdapter(mAdapter);
+            exampleView.setRes(EXAMPLE_ARRAY_FILE_MAP[position++]);
+        
+            mExamplesView.addView(exampleView);
+        }
         
         return view;
     }
@@ -49,11 +71,22 @@ public class FilesTab extends Fragment {
         mAdapter = adapter;
     }
     
-    private class OnExampleClickedListener implements ListView.OnItemClickListener {
+    /*private class FileItemAdapter extends ArrayAdapter<String> {
         
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            mAdapter.loadExample(EXAMPLE_ARRAY_FILE_MAP[position]);
+        private String[] mFilenames;
+        
+        FileItemAdapter(Context context, String[] filenames) {
+            super(context, R.layout.view_user_file_list_item, filenames);
+            mFilenames = filenames;
         }
-    }
+    
+        @NonNull
+        @Override
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.view_user_file_list_item, parent, false);
+            ((TextView) view.findViewById(R.id.filename)).setText(mFilenames[position]);
+            return view;
+        }
+    }*/
 }

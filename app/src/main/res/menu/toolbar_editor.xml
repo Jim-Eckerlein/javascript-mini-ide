@@ -19,7 +19,7 @@
     <!-- Clear -->
     <item
         android:id="@+id/action_clear_code"
-        android:icon="@drawable/clear"
+        android:icon="@drawable/trash"
         android:title="@string/action_clear_code"
         app:showAsAction="ifRoom"/>
 

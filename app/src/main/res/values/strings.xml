@@ -26,6 +26,8 @@
     <string name="action_undo">Undo</string>
 
     <string name="fragment_files_example_list_title">Examples</string>
+    <string name="action_delete_file">Delete file</string>
+    <string name="fragment_files_user_file_list_title">Files</string>
     <string-array name="examples_array">
         <item>Demo</item>
         <item>Print</item>

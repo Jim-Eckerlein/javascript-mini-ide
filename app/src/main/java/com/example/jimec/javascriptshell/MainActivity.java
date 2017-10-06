@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     
         mTabLayout.addOnTabSelectedListener(new TabSelectListener(mAdapter, this));
     
-        mPager.setCurrentItem(TabFragmentAdapter.FRAGMENT_POSITION_EDITOR);
+        // TODO: uncomment
+        //mPager.setCurrentItem(TabFragmentAdapter.FRAGMENT_POSITION_EDITOR);
     }
     
     @Override

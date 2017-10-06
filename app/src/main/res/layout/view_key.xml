@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/button_ripple"
@@ -18,7 +19,8 @@
         android:layout_weight="1"
         android:gravity="center"
         android:paddingTop="3dp"
-        android:textSize="22sp"/>
+        android:textSize="22sp"
+        tools:text="p"/>
 
     <TextView
         android:id="@+id/secondary"
@@ -26,6 +28,7 @@
         android:layout_height="match_parent"
         android:alpha="0.8"
         android:fontFamily="monospace"
-        android:textSize="12sp"/>
+        android:textSize="12sp"
+        tools:text="p"/>
 
 </LinearLayout>

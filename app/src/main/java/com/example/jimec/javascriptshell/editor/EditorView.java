@@ -142,7 +142,7 @@ public class EditorView extends FrameLayout {
         mEditText.getText().clearSpans();
         mEditText.setSelection(0);
         if (!mSkipHistoryBackup) {
-            // We are not currently inside an undo operation => clear undo history as well
+            // We are not currently inside an undo operation => trash undo history as well
             mHistory.clear();
             mCursorHistory.clear();
         }
