@@ -47,7 +47,7 @@ public class EditorView extends FrameLayout {
         mEditText = findViewById(R.id.edit_text);
     
         // Hide usual virtual view_keyboard since I'm using my own one:
-        mEditText.setShowSoftInputOnFocus(false);
+        //mEditText.setShowSoftInputOnFocus(false);
         mEditText.requestFocus();
     
         mEditText.addTextChangedListener(mTextChangeListener);

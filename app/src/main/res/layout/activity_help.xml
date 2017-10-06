@@ -32,22 +32,14 @@
                 android:gravity="center"
                 android:paddingBottom="18dp"
                 android:text="@string/app_name"
-                android:textSize="28sp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:alpha="0.5"
-                android:gravity="center"
-                android:paddingBottom="18dp"
-                android:text="@string/about_subheading"
-                android:textSize="12sp"/>
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:text="@string/help_title_files"
+                android:text="@string/help_files_heading"
+                android:textColor="@color/secondaryColor"
                 android:textSize="18sp"/>
 
             <TextView
@@ -61,7 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:text="@string/help_title_editor"
+                android:text="@string/help_editor_heading"
+                android:textColor="@color/secondaryColor"
                 android:textSize="18sp"/>
 
             <TextView
@@ -75,7 +68,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:text="@string/help_title_run"
+                android:text="@string/help_run_heading"
+                android:textColor="@color/secondaryColor"
                 android:textSize="18sp"/>
 
             <TextView

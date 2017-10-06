@@ -23,13 +23,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="16dp"
-                android:padding="18dp"
                 android:src="@mipmap/ic_launcher"/>
 
             <TextView
@@ -38,45 +38,139 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="@string/app_name"
-                android:textSize="28sp"/>
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="4dp"
-                android:text="@string/about_subheading"
+                android:text="@string/about_content"
                 android:textSize="12sp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="18dp"
-                android:text="@string/about_content"/>
+                android:onClick="openGitHub"
+                android:padding="16dp"
+                android:text="@string/about_github_title"
+                android:textColor="@color/secondaryColor"/>
 
-            <LinearLayout
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="18dp"
+                android:layout_marginTop="18dp"
+                android:background="@color/primaryColor"/>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="18dp">
+                android:padding="4dp"
+                android:text="@string/about_third_party_software_heading"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.SearchResult.Subtitle"/>
 
-                <Button
-                    style="@style/Base.Widget.AppCompat.ButtonBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="30dp"
-                    android:onClick="openGitHub"
-                    android:text="@string/about_github_link"
-                    android:textColor="@color/secondaryColor"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:padding="4dp"
+                android:text="@string/about_j2v8_title"
+                android:textColor="@color/secondaryColor"/>
 
-                <Button
-                    style="@style/Base.Widget.AppCompat.ButtonBar"
-                    android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:padding="4dp"
+                android:text="@string/about_j2v8_description"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:padding="4dp"
+                android:text="@string/about_keyboardless_edittext_title"
+                android:textColor="@color/secondaryColor"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:padding="4dp"
+                android:text="@string/about_keyboardless_edittext_description"
+                android:textSize="12sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="18dp"
+                android:layout_marginTop="18dp"
+                android:background="@color/primaryColor"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider_tall"
+                android:orientation="vertical"
+                android:showDividers="middle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="openJ2V8"
-                    android:text="@string/about_j2v8_link"
-                    android:textColor="@color/secondaryColor"/>
+                    android:divider="@drawable/divider_small"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_j2v8_title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autoLink="web"
+                        android:text="@string/about_j2v8_link"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/license_j2v8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@drawable/divider_small"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_keyboardless_edittext_title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autoLink="web"
+                        android:text="@string/about_keyboardless_edittext_link"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/license_keyboardless_edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 

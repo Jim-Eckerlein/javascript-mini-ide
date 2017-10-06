@@ -1,21 +1,30 @@
 <resources>
     <string name="app_name" translatable="false">JavaScript Shell</string>
-    <string name="about_content">By Jim Eckerlein, 2017\nProgrammed for my school work.\nThe JavaScript evaluator uses the high-performance J2V8 engine, a Java binding to Google\'s V8 engine</string>
-    <string name="about_subheading">A JavaScript editor and execution suite for Android</string>
-    <string name="help_title_editor">Editor</string>
-    <string name="help_title_run">Run</string>
-    <string name="help_title_files">Files</string>
-    <string name="help_files">Select an example script.</string>
+
+    <string name="help_editor_heading">Editor</string>
     <string name="help_editor">Edit your script. Tap a key to write its primary text, hold to write the secondary one.</string>
+    <string name="help_run_heading">Run</string>
     <string name="help_run">Run your script. Leaving the run tab will immediately stop the script execution.</string>
-    <string name="about_github_link">GitHub</string>
-    <string name="about_j2v8_link">J2V8</string>
+    <string name="help_files_heading">Files</string>
+    <string name="help_files">Select an example script.</string>
+
+    <string name="about_content">By Jim Eckerlein, 2017\nProgrammed for my school work.\nA JavaScript editor and execution suite for Android.</string>
+    <string name="about_github_title">GitHub Repository</string>
+    <string name="about_third_party_software_heading">3rd party software:</string>
+    <string name="about_j2v8_title">J2V8</string>
+    <string name="about_j2v8_description">The JavaScript evaluator uses the high-performance J2V8 engine, a Java binding to Google\'s V8 engine</string>
+    <string name="about_j2v8_link">https://github.com/eclipsesource/J2V8</string>
+    <string name="about_keyboardless_edittext_title">KeyboardlessEditText</string>
+    <string name="about_keyboardless_edittext_description">A wrapper around a native EditText, but without a soft keyboard, since I implemented my own one.</string>
+    <string name="about_keyboardless_edittext_link">https://github.com/danialgoodwin/android-widget-keyboardless-edittext</string>
+
     <string name="action_share">Share</string>
     <string name="action_help">Help</string>
     <string name="action_about">About</string>
     <string name="action_clear_code">Clear code</string>
     <string name="action_format_code">Format code</string>
     <string name="action_undo">Undo</string>
+
     <string name="fragment_files_example_list_title">Examples</string>
     <string-array name="examples_array">
         <item>Demo</item>

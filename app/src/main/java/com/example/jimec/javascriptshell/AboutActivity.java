@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 public class AboutActivity extends AppCompatActivity {
     
@@ -23,15 +24,14 @@ public class AboutActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }
+    
+        // Insert licenses:
+        ((TextView) findViewById(R.id.license_j2v8)).setText(Util.readTextFile(this, R.raw.license_j2v8));
+        ((TextView) findViewById(R.id.license_keyboardless_edittext)).setText(Util.readTextFile(this, R.raw.license_keyboardless_edittext));
     }
     
     public void openGitHub(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/jim-eckerlein/javascriptshell"));
-        startActivity(intent);
-    }
-    
-    public void openJ2V8(View view) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/eclipsesource/J2V8"));
         startActivity(intent);
     }
     
