@@ -59,8 +59,13 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
     }
     
     public void loadExample(@RawRes int id) {
-        mViewPager.setCurrentItem(FRAGMENT_POSITION_EDITOR);
         mEditorTab.loadExample(id);
+        mViewPager.setCurrentItem(FRAGMENT_POSITION_EDITOR);
+    }
+    
+    public void loadFile(String content) {
+        mEditorTab.loadFile(content);
+        mViewPager.setCurrentItem(FRAGMENT_POSITION_EDITOR);
     }
     
     public void runCode() {

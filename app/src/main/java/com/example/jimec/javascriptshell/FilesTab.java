@@ -43,12 +43,7 @@ public class FilesTab extends Fragment {
         mFilesView = view.findViewById(R.id.user_file_list);
         mFilesManager = new FilesManager(getContext());
         for (String filename : mFilesManager.listFiles()) {
-            FileView fileView = new FileView(getContext());
-        
-            fileView.setFilename(filename);
-            fileView.setAdapter(mAdapter);
-        
-            mFilesView.addView(fileView);
+            mFilesView.addView(FileView.create(getContext(), mAdapter, mFilesManager, filename));
         }
     
         // Fill examples list from string array:

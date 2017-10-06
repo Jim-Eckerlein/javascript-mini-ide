@@ -9,9 +9,12 @@ import android.widget.TextView;
 import com.example.jimec.javascriptshell.R;
 import com.example.jimec.javascriptshell.TabFragmentAdapter;
 
+import java.io.IOException;
+
 public class FileView extends FrameLayout implements View.OnClickListener {
     
     private TabFragmentAdapter mAdapter;
+    private FilesManager mFilesManager;
     private TextView mFilenameText;
     
     public FileView(Context context) {
@@ -29,6 +32,14 @@ public class FileView extends FrameLayout implements View.OnClickListener {
         init();
     }
     
+    public static FileView create(Context context, TabFragmentAdapter adapter, FilesManager filesManager, String filenameTitle) {
+        FileView view = new FileView(context);
+        view.mAdapter = adapter;
+        view.mFilesManager = filesManager;
+        view.mFilenameText.setText(filenameTitle);
+        return view;
+    }
+    
     private void init() {
         inflate(getContext(), R.layout.view_user_file_list_item, this);
         setOnClickListener(this);
@@ -37,13 +48,12 @@ public class FileView extends FrameLayout implements View.OnClickListener {
     
     @Override
     public void onClick(View v) {
-    }
-    
-    public void setAdapter(TabFragmentAdapter adapter) {
-        mAdapter = adapter;
-    }
-    
-    public void setFilename(String filename) {
-        mFilenameText.setText(filename);
+        try {
+            mAdapter.loadFile(mFilesManager.readFile(mFilenameText.getText().toString()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            // todo: remove?
+            throw new RuntimeException();
+        }
     }
 }

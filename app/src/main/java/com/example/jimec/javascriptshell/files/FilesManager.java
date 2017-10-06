@@ -3,6 +3,7 @@ package com.example.jimec.javascriptshell.files;
 import android.content.Context;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -50,6 +51,21 @@ public class FilesManager {
             array[i++] = key;
         }
         return array;
+    }
+    
+    public String readFile(String name) throws IOException {
+        File file = mFiles.get(name);
+        if (null == file) {
+            throw new NoSuchFileException();
+        }
+        StringBuilder buffer = new StringBuilder();
+        FileInputStream stream = new FileInputStream(file);
+        
+        while (stream.available() > 0) {
+            buffer.append((char) stream.read());
+        }
+        
+        return buffer.toString();
     }
     
     public class FileAlreadyExistsException extends IOException {

@@ -61,4 +61,9 @@ public class EditorTab extends Fragment {
         return mEditor;
     }
     
+    public void loadFile(String content) {
+        mEditor.clear();
+        mEditor.write(content);
+        mEditor.setCursor(0);
+    }
 }
