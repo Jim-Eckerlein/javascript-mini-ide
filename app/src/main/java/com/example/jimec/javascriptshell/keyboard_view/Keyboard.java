@@ -95,7 +95,10 @@ public class Keyboard extends FrameLayout {
         
         @Override
         public void onClick(View v) {
-            mInputKeyboard.animate().y(getHeight()).setDuration(700).setInterpolator(mHideShowKeyboardInterpolator);
+            if (mInputKeyboard.getAnimation() == null
+                    || (mInputKeyboard.getAnimation() != null && mInputKeyboard.getAnimation().hasEnded())) {
+                mInputKeyboard.animate().y(getHeight()).setDuration(700).setInterpolator(mHideShowKeyboardInterpolator);
+            }
         }
         
     }
@@ -104,7 +107,10 @@ public class Keyboard extends FrameLayout {
         
         @Override
         public void onClick(View v) {
-            mInputKeyboard.animate().y(0).setDuration(700).setInterpolator(mHideShowKeyboardInterpolator);
+            if (mInputKeyboard.getAnimation() == null
+                    || (mInputKeyboard.getAnimation() != null && mInputKeyboard.getAnimation().hasEnded())) {
+                mInputKeyboard.animate().y(0).setDuration(700).setInterpolator(mHideShowKeyboardInterpolator);
+            }
         }
         
     }
