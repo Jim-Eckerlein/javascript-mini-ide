@@ -10,6 +10,16 @@ Programmed for my school work.
 
 The JavaScript evaluator uses the high-performance J2V8 engine, a Java binding to Google's V8 engine.
 
+## Screenshots
+
+### Editor
+
+![Editor](screenshots/editor_0.png)
+
+### Run
+
+![Editor](screenshots/run_0.png)
+
 ## Dev Notes - Supply an SVG Logo
 
 Android Studio has a built-in functionality to import SVGs and convert them to pngs into mipmaps resource folders, but unfortuntlely, Android Studio is in-capable of many SVG features.
