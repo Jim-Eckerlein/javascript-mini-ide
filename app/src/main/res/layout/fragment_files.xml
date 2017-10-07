@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"/>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -25,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:text="@string/fragment_files_user_file_list_title"
+                android:text="@string/files_file_list_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/secondaryColor"/>
 
@@ -41,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:text="@string/fragment_files_example_list_title"
+                android:text="@string/files_example_list_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/secondaryColor"/>
 
@@ -56,5 +50,13 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/files_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/plus"/>
 
 </FrameLayout>

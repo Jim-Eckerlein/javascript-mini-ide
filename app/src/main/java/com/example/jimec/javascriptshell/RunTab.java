@@ -13,7 +13,6 @@ import com.example.jimec.javascriptshell.run.V8Thread;
 
 public class RunTab extends Fragment {
     
-    public static final String TITLE = "Run";
     private TextView mConsole;
     private V8Thread mV8Thread;
     private V8Joiner mV8Joiner;

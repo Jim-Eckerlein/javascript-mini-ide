@@ -1,5 +1,6 @@
 package com.example.jimec.javascriptshell;
 
+import android.content.Context;
 import android.support.annotation.RawRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,10 +20,12 @@ public class TabManager extends FragmentPagerAdapter {
     private final FilesTab mFilesTab = new FilesTab();
     private final EditorTab mEditorTab = new EditorTab();
     private final RunTab mRunTab = new RunTab();
+    private final Context mContext;
     
-    public TabManager(FragmentManager fm, ViewPager viewPager) {
+    public TabManager(FragmentManager fm, ViewPager viewPager, Context context) {
         super(fm);
         mViewPager = viewPager;
+        mContext = context;
         mEditorTab.setPager(viewPager);
         mFilesTab.setTabManager(this);
     }
@@ -51,9 +54,11 @@ public class TabManager extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case FRAGMENT_POSITION_FILES:
-                return FilesTab.TITLE;
-            case FRAGMENT_POSITION_EDITOR: return EditorTab.TITLE;
-            case FRAGMENT_POSITION_RUN: return RunTab.TITLE;
+                return mContext.getString(R.string.files_tab_title);
+            case FRAGMENT_POSITION_EDITOR:
+                return mContext.getString(R.string.editor_tab_title);
+            case FRAGMENT_POSITION_RUN:
+                return mContext.getString(R.string.run_tab_title);
             default: throw new InvalidParameterException();
         }
     }

@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name" translatable="false">JavaScript Shell</string>
 
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
     <string name="help_editor_heading">Editor</string>
     <string name="help_editor">Edit your script. Tap a key to write its primary text, hold to write the secondary one.</string>
     <string name="help_run_heading">Run</string>
@@ -24,10 +27,21 @@
     <string name="action_clear_code">Clear code</string>
     <string name="action_format_code">Format code</string>
     <string name="action_undo">Undo</string>
-
-    <string name="fragment_files_example_list_title">Examples</string>
     <string name="action_delete_file">Delete file</string>
-    <string name="fragment_files_user_file_list_title">Files</string>
+
+    <string name="files_tab_title">Files</string>
+    <string name="files_create_title">Create file</string>
+    <string name="files_create_name_hint">Filename …</string>
+    <string name="files_extension">.js</string>
+    <string name="files_create_error_already_exists">File already exists</string>
+    <string name="files_create_error_invalid_character">Only A–Z, a–z, 0–9, Space, Dash and Underscore are allowed</string>
+    <string name="files_example_list_title">Examples</string>
+    <string name="files_file_list_title">Files</string>
+
+    <string name="editor_tab_title">Editor</string>
+
+    <string name="run_tab_title">Run</string>
+
     <string-array name="examples_array">
         <item>Demo</item>
         <item>Print</item>

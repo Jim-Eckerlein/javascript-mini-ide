@@ -15,7 +15,6 @@ import com.example.jimec.javascriptshell.keyboard_view.Keyboard;
 
 public class EditorTab extends Fragment {
     
-    public static final String TITLE = "Editor";
     private EditorView mEditor;
     private ViewPager mViewPager;
     private TextView mCurrentFileName;
