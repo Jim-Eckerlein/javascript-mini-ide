@@ -30,7 +30,6 @@ import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -48,21 +47,13 @@ import java.lang.reflect.Method;
 public class EditTextNoKeyboard extends android.support.v7.widget.AppCompatEditText {
     
     private static final Method mShowSoftInputOnFocus = getMethod(
-            EditText.class, "setShowSoftInputOnFocus", boolean.class);
+            EditText.class, boolean.class);
     
-    private OnClickListener mOnClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            setCursorVisible(true);
-        }
-    };
+    private OnClickListener mOnClickListener = v -> setCursorVisible(true);
     
-    private OnLongClickListener mOnLongClickListener = new OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
-            setCursorVisible(true);
-            return false;
-        }
+    private OnLongClickListener mOnLongClickListener = v -> {
+        setCursorVisible(true);
+        return false;
     };
     
     public EditTextNoKeyboard(Context context) {
@@ -84,11 +75,11 @@ public class EditTextNoKeyboard extends android.support.v7.widget.AppCompatEditT
      * Returns method if available in class or superclass (recursively),
      * otherwise returns null.
      */
-    public static Method getMethod(Class<?> cls, String methodName, Class<?>... parametersType) {
+    public static Method getMethod(Class<?> cls, Class<?>... parametersType) {
         Class<?> sCls = cls.getSuperclass();
         while (sCls != Object.class) {
             try {
-                return sCls.getDeclaredMethod(methodName, parametersType);
+                return sCls.getDeclaredMethod("setShowSoftInputOnFocus", parametersType);
             } catch (NoSuchMethodException e) {
                 // Just super it again
             }
@@ -101,9 +92,9 @@ public class EditTextNoKeyboard extends android.support.v7.widget.AppCompatEditT
     /**
      * Returns results if available, otherwise returns null.
      */
-    public static Object invokeMethod(Method method, Object receiver, Object... args) {
+    public static Object invokeMethod(Object receiver, Object... args) {
         try {
-            return method.invoke(receiver, args);
+            return EditTextNoKeyboard.mShowSoftInputOnFocus.invoke(receiver, args);
         } catch (IllegalArgumentException e) {
             Log.e("Safe invoke fail", "Invalid args", e);
         } catch (IllegalAccessException e) {
@@ -127,7 +118,7 @@ public class EditTextNoKeyboard extends android.support.v7.widget.AppCompatEditT
         setOnLongClickListener(mOnLongClickListener);
 
 //      setShowSoftInputOnFocus(false); // This is a hidden method in TextView.
-        reflexSetShowSoftInputOnFocus(false); // Workaround.
+        reflexSetShowSoftInputOnFocus(); // Workaround.
         
         // Ensure that cursor is at the end of the input box when initialized. Without this, the
         // cursor may be at index 0 when there is text added via layout XML.
@@ -156,9 +147,9 @@ public class EditTextNoKeyboard extends android.support.v7.widget.AppCompatEditT
         }
     }
     
-    private void reflexSetShowSoftInputOnFocus(boolean show) {
+    private void reflexSetShowSoftInputOnFocus() {
         if (mShowSoftInputOnFocus != null) {
-            invokeMethod(mShowSoftInputOnFocus, this, show);
+            invokeMethod(this, false);
         }
         else {
             // Use fallback method. Not tested.

@@ -25,12 +25,7 @@ public abstract class RepeatedTapListener implements View.OnTouchListener {
             mRepeatTimer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            onTap();
-                        }
-                    });
+                    new Handler(Looper.getMainLooper()).post(() -> onTap());
                 }
             }, INITIAL_DELAY_MILLIS, REPEAT_DELAY_MILLIS);
             onDown();

@@ -82,12 +82,7 @@ public abstract class TapListener implements View.OnTouchListener {
         public void run() {
             synchronized (TapListener.this) {
                 mLongTapped = true;
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        onLongTap();
-                    }
-                });
+                new Handler(Looper.getMainLooper()).post(TapListener.this::onLongTap);
             }
         }
     }

@@ -178,8 +178,8 @@ public class EditorView extends FrameLayout {
         return mEditText.getText().toString();
     }
     
-    public void setCursor(int cursorPosition) {
-        mEditText.setSelection(cursorPosition);
+    public void moveCursorToStart() {
+        mEditText.setSelection(0);
     }
     
     private class TextChangeListener implements TextWatcher {

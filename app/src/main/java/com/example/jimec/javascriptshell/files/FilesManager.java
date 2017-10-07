@@ -66,23 +66,30 @@ public class FilesManager {
         while (stream.available() > 0) {
             buffer.append((char) stream.read());
         }
-        
+    
+        stream.close();
         return buffer.toString();
     }
     
     public class FileAlreadyExistsException extends IOException {
+        private static final long serialVersionUID = 6207807659709679937L;
+    
         FileAlreadyExistsException(String filename) {
             super("File already exists: " + filename);
         }
     }
     
     public class CannotDeleteFileException extends IOException {
+        private static final long serialVersionUID = -6641564767073976105L;
+    
         CannotDeleteFileException(String filename) {
             super("Cannot delete file: " + filename);
         }
     }
     
     public class NoSuchFileException extends IOException {
+        private static final long serialVersionUID = 8512223856488578532L;
+    
         NoSuchFileException(String filename) {
             super("No such file: " + filename);
         }

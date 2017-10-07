@@ -43,12 +43,7 @@ public class EditorTab extends Fragment {
         // Load initial demo:
         loadExample(R.raw.example_demo);
     
-        view.findViewById(R.id.run_code_key).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewPager.setCurrentItem(TabManager.FRAGMENT_POSITION_RUN);
-            }
-        });
+        view.findViewById(R.id.run_code_key).setOnClickListener(v -> mViewPager.setCurrentItem(TabManager.FRAGMENT_POSITION_RUN));
         
         return view;
     }
@@ -56,7 +51,7 @@ public class EditorTab extends Fragment {
     public void loadExample(@RawRes final int id) {
         mEditor.clear();
         mEditor.write(Util.readTextFile(getContext(), id));
-        mEditor.setCursor(0);
+        mEditor.moveCursorToStart();
     }
     
     public EditorView getEditor() {
@@ -66,7 +61,7 @@ public class EditorTab extends Fragment {
     public void loadFile(String content) {
         mEditor.clear();
         mEditor.write(content);
-        mEditor.setCursor(0);
+        mEditor.moveCursorToStart();
     }
     
     public void setCurrentFileName(String filename) {

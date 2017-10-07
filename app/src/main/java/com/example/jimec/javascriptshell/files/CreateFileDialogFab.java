@@ -2,7 +2,6 @@ package com.example.jimec.javascriptshell.files;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -12,7 +11,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.jimec.javascriptshell.FilesTab;
 import com.example.jimec.javascriptshell.R;
 
 
@@ -28,13 +26,11 @@ public abstract class CreateFileDialogFab implements FloatingActionButton.OnClic
     public static final int FILE_NAME_ERROR_INVALID_CHARACTER = 2;
     private final Context mContext;
     private final FilesManager mFilesManager;
-    private final FilesTab mFilesTab;
     private final Activity mActivity;
     
-    public CreateFileDialogFab(Context context, FilesManager filesManager, FilesTab filesTab, Activity activity) {
+    public CreateFileDialogFab(Context context, FilesManager filesManager, Activity activity) {
         mContext = context;
         mFilesManager = filesManager;
-        mFilesTab = filesTab;
         mActivity = activity;
     }
     
@@ -59,7 +55,6 @@ public abstract class CreateFileDialogFab implements FloatingActionButton.OnClic
     
     @Override
     public void onClick(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         final View view = View.inflate(mContext, R.layout.view_file_create_dialog, null);
         final EditText filenameInput = view.findViewById(R.id.file_create_name);
         final TextView errorAlreadyExists = view.findViewById(R.id.file_create_error_already_exists);
@@ -92,39 +87,24 @@ public abstract class CreateFileDialogFab implements FloatingActionButton.OnClic
                 }
             }
         });
-        
-        builder.setView(view);
-        builder.setTitle(R.string.files_create_title);
-        
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Ok clicked => create file
-                if (errorAlreadyExists.getVisibility() != View.INVISIBLE
-                        || errorInvalidCharacter.getVisibility() != View.INVISIBLE) {
-                    // Current file name is erroneous => ignore
-                    return;
-                }
-                onOk(filenameInput.getText().toString() + mContext.getString(R.string.files_extension));
-            }
-        });
-        
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                // Dialog closed => close soft keyboard
-                mActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-            }
-        });
-        
-        AlertDialog dialog = builder.create();
-        dialog.show();
+    
+        new AlertDialog.Builder(mContext)
+                .setView(view)
+                .setTitle(R.string.files_create_title)
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    if (errorAlreadyExists.getVisibility() == View.INVISIBLE && errorInvalidCharacter.getVisibility() == View.INVISIBLE
+                            && filenameInput.getText().length() > 0) {
+                        // Ok clicked => create file
+                        onOk(filenameInput.getText().toString() + mContext.getString(R.string.files_extension));
+                    }
+                })
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
+                })
+                .setOnDismissListener(dialog -> {
+                    // Dialog closed => close soft keyboard
+                    mActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                })
+                .show();
     }
     
     public abstract void onOk(String filename);

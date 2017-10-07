@@ -18,11 +18,7 @@ class SelectableText {
     }
     
     public void write(String s, int pos) {
-        for (CursorPosition cursorPosition : mCursorPos) {
-            if (pos <= cursorPosition.getPos()) {
-                cursorPosition.mPos += s.length();
-            }
-        }
+        mCursorPos.stream().filter(cursorPosition -> pos <= cursorPosition.getPos()).forEach(cursorPosition -> cursorPosition.mPos += s.length());
         mText.insert(pos, s);
     }
     

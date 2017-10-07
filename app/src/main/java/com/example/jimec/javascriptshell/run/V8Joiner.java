@@ -24,12 +24,7 @@ public class V8Joiner extends Thread {
             // Will be interrupted if js  execution is interrupted
         }
         if (mV8Thread.hasException()) {
-            Util.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mErrorViewer.setText("Error on running JavaScript:\n" + mV8Thread.getException().toString());
-                }
-            });
+            Util.runOnUiThread(() -> mErrorViewer.setText("Error on running JavaScript:\n" + mV8Thread.getException().toString()));
         }
     }
 }

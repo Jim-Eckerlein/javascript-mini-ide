@@ -3,20 +3,18 @@ package com.example.jimec.javascriptshell.files;
 import android.content.Context;
 import android.support.annotation.RawRes;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.jimec.javascriptshell.R;
 import com.example.jimec.javascriptshell.TabManager;
 
-public class ExampleView extends FrameLayout implements View.OnClickListener {
+public class ExampleView extends FrameLayout {
     
-    private TabManager mTabManager;
-    private
     @RawRes
-    int mRes;
-    private TextView mText;
+    private int mResId;
+    private TabManager mTabManager;
+    private TextView mExampleName;
     
     public ExampleView(Context context) {
         super(context);
@@ -33,26 +31,18 @@ public class ExampleView extends FrameLayout implements View.OnClickListener {
         init();
     }
     
+    public static ExampleView create(Context context, TabManager tabManager, @RawRes int resId, String exampleName) {
+        ExampleView exampleView = new ExampleView(context);
+        exampleView.mTabManager = tabManager;
+        exampleView.mResId = resId;
+        exampleView.mExampleName.setText(exampleName);
+        return exampleView;
+    }
+    
     private void init() {
         inflate(getContext(), R.layout.view_example, this);
-        setOnClickListener(this);
-        mText = findViewById(R.id.example_list_item_title);
+        setOnClickListener((View) -> mTabManager.loadExample(mResId));
+        mExampleName = findViewById(R.id.example_list_item_title);
     }
     
-    @Override
-    public void onClick(View v) {
-        mTabManager.loadExample(mRes);
-    }
-    
-    public void setTabManager(TabManager tabManager) {
-        mTabManager = tabManager;
-    }
-    
-    public void setRes(@RawRes int res) {
-        mRes = res;
-    }
-    
-    public void setText(String text) {
-        mText.setText(text);
-    }
 }

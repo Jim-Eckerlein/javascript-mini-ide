@@ -4,6 +4,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="error">Error</string>
+    <string name="delete">Delete</string>
 
     <string name="help_editor_heading">Editor</string>
     <string name="help_editor">Edit your script. Tap a key to write its primary text, hold to write the secondary one.</string>
@@ -41,6 +42,8 @@
     <string name="files_error_cannot_create_file">Cannot create file.</string>
     <string name="files_error_cannot_delete_file">Cannot delete file.</string>
     <string name="files_error_cannot_open_file">Cannot open file.</string>
+    <string name="files_are_you_sure_to_delete_single_file">Are you sure to delete %1$s?</string>
+    <string name="files_are_you_sure_to_delete_multiple_files">Are you sure to delete %1$d files?</string>
 
     <string name="editor_tab_title">Editor</string>
 

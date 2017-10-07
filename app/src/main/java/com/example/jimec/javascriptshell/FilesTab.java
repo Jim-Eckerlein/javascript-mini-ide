@@ -1,6 +1,5 @@
 package com.example.jimec.javascriptshell;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -50,14 +49,8 @@ public class FilesTab extends Fragment {
         // Fill examples list from string array:
         mExamplesView = view.findViewById(R.id.example_list);
         int position = 0;
-        for (String example : getResources().getStringArray(R.array.examples_array)) {
-            ExampleView exampleView = new ExampleView(getContext());
-        
-            exampleView.setText(example);
-            exampleView.setTabManager(mTabManager);
-            exampleView.setRes(EXAMPLE_ARRAY_FILE_MAP[position++]);
-        
-            mExamplesView.addView(exampleView);
+        for (String exampleName : getResources().getStringArray(R.array.examples_array)) {
+            mExamplesView.addView(ExampleView.create(getContext(), mTabManager, EXAMPLE_ARRAY_FILE_MAP[position++], exampleName));
         }
     
         // Load user files:
@@ -70,7 +63,7 @@ public class FilesTab extends Fragment {
         }
     
         // Initialize fab:
-        mCreateFileDialog = new CreateFileDialogFab(getContext(), mFilesManager, this, getActivity()) {
+        mCreateFileDialog = new CreateFileDialogFab(getContext(), mFilesManager, getActivity()) {
             @Override
             public void onOk(String filename) {
                 createFile(filename);
@@ -93,14 +86,12 @@ public class FilesTab extends Fragment {
             e.printStackTrace();
     
             // Create error notifier dialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle(R.string.error);
-            builder.setMessage(R.string.files_error_cannot_open_file);
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            });
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.error)
+                    .setMessage(R.string.files_error_cannot_open_file)
+                    .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    })
+                    .show();
         }
     }
     
@@ -120,14 +111,12 @@ public class FilesTab extends Fragment {
             e.printStackTrace();
     
             // Create error notifier dialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle(R.string.error);
-            builder.setMessage(R.string.files_error_cannot_create_file);
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            });
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.error)
+                    .setMessage(R.string.files_error_cannot_create_file)
+                    .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    })
+                    .show();
         }
     }
     
@@ -139,14 +128,12 @@ public class FilesTab extends Fragment {
             e.printStackTrace();
             
             // Create error notifier dialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle(R.string.error);
-            builder.setMessage(R.string.files_error_cannot_delete_file);
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            });
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.error)
+                    .setMessage(R.string.files_error_cannot_delete_file)
+                    .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    })
+                    .show();
         }
     }
 }

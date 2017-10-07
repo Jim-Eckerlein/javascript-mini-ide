@@ -5,8 +5,8 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.TransitionDrawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -53,30 +53,44 @@ public class FileView extends FrameLayout {
         mFileViewRow = findViewById(R.id.file_row);
         mFileViewSettings = findViewById(R.id.file_settings);
     
-        findViewById(R.id.file_settings_opener).setOnClickListener(new FileSettingsOpener());
-        findViewById(R.id.file_settings_closer).setOnClickListener(new FileSettingsCloser());
-        mFileViewRow.setOnClickListener(new FileOpener());
-        mFileViewRow.setOnLongClickListener(new FileSettingsLongClickOpener());
+        findViewById(R.id.file_settings_opener).setOnClickListener(v -> openFileSettings());
+        findViewById(R.id.file_settings_closer).setOnClickListener(v -> closeFileSettings());
     
-        findViewById(R.id.file_delete).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Delete file
-                mFilesTab.deleteFile(mFilenameText.getText().toString());
+        // Listen when user clicks the file name to open that file:
+        mFileViewRow.setOnClickListener(v -> {
+            if (!mFileSettingsOpened) {
+                // File settings are not opened currently, so open file:
+                mFilesTab.openFile(mFilenameText.getText().toString());
+            }
+            else {
+                // File settings are opened currently, so close the settings:
+                closeFileSettings();
             }
         });
     
+        // Long click on file opens file settings:
+        mFileViewRow.setOnLongClickListener(v -> {
+            openFileSettings();
+            return true;
+        });
+    
+        findViewById(R.id.file_delete).setOnClickListener(v -> {
+            // Delete file, open "are you sure" dialog:
+            new AlertDialog.Builder(getContext()).setTitle(R.string.delete)
+                    .setMessage(getContext().getString(R.string.files_are_you_sure_to_delete_single_file, mFilenameText.getText().toString()))
+                    .setPositiveButton(R.string.ok, (dialog, which) -> mFilesTab.deleteFile(mFilenameText.getText().toString()))
+                    .setNegativeButton(R.string.cancel, ((dialog, which) -> closeFileSettings()))
+                    .show();
+        });
+        
         mFilenameTextAnimation = ObjectAnimator.ofInt(mFilenameText, "textColor",
                 mFilenameText.getCurrentTextColor(),
                 ContextCompat.getColor(getContext(), R.color.keyInverseColor));
         mFilenameTextAnimation.setEvaluator(new ArgbEvaluator());
     
-        post(new Runnable() {
-            @Override
-            public void run() {
-                // Hide file settings initially:
-                mFileViewSettings.setX(mFileViewRow.getWidth());
-            }
+        post(() -> {
+            // Hide file settings initially:
+            mFileViewSettings.setX(mFileViewRow.getWidth());
         });
     }
     
@@ -98,53 +112,4 @@ public class FileView extends FrameLayout {
         }
     }
     
-    /**
-     * Listen when user clicks the file name to open that file.
-     */
-    private class FileOpener implements OnClickListener {
-        
-        @Override
-        public void onClick(View v) {
-            if (!mFileSettingsOpened) {
-                // File settings are not opened currently, so open file:
-                mFilesTab.openFile(mFilenameText.getText().toString());
-            }
-            else {
-                // File settings are opened currently, so close the settings:
-                closeFileSettings();
-            }
-        }
-        
-    }
-    
-    /**
-     * Listen when user opens the file settings.
-     */
-    private class FileSettingsOpener implements OnClickListener {
-        @Override
-        public void onClick(View v) {
-            openFileSettings();
-        }
-    }
-    
-    /**
-     * Listen when user closes the file settings.
-     */
-    private class FileSettingsCloser implements OnClickListener {
-        @Override
-        public void onClick(View v) {
-            closeFileSettings();
-        }
-    }
-    
-    /**
-     * User opens file settings using long click.
-     */
-    private class FileSettingsLongClickOpener implements OnLongClickListener {
-        @Override
-        public boolean onLongClick(View v) {
-            openFileSettings();
-            return true;
-        }
-    }
 }
