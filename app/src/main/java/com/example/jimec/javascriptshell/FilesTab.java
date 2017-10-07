@@ -34,12 +34,10 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     };
     private final HashMap<String, FileView> mFileViews = new HashMap<>();
     private final ArrayList<FileView> mSelectedFileViews = new ArrayList<>();
-    private LinearLayout mExamplesView;
     private LinearLayout mFilesView;
     private TabManager mTabManager;
     private FilesManager mFilesManager;
     private FloatingActionButton mFab;
-    private CreateFileDialogFab mCreateFileDialog;
     private boolean mActiveMultipleFileDeletion = false;
     private ViewGroup mMultipleFileDeletionBar;
     private TextView mMultipleFileDeletionCounter;
@@ -56,10 +54,10 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
         mScroller = view.findViewById(R.id.files_scroller);
         
         // Fill examples list from string array:
-        mExamplesView = view.findViewById(R.id.example_list);
+        LinearLayout examplesView = view.findViewById(R.id.example_list);
         int position = 0;
         for (String exampleName : getResources().getStringArray(R.array.examples_array)) {
-            mExamplesView.addView(ExampleView.create(getContext(), mTabManager, EXAMPLE_ARRAY_FILE_MAP[position++], exampleName));
+            examplesView.addView(ExampleView.create(getContext(), mTabManager, EXAMPLE_ARRAY_FILE_MAP[position++], exampleName));
         }
     
         // Load user files:
@@ -72,15 +70,14 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
         }
     
         // Initialize fab:
-        mCreateFileDialog = new CreateFileDialogFab(getContext(), mFilesManager, getActivity()) {
+        mFab = view.findViewById(R.id.files_fab);
+        mFab.setOnClickListener(new CreateFileDialogFab(getContext(), mFilesManager, getActivity()) {
             @Override
             public void onOk(String filename) {
                 createFile(filename);
             }
-        };
-        mFab = view.findViewById(R.id.files_fab);
-        mFab.setOnClickListener(mCreateFileDialog);
-    
+        });
+        
         // Multiple file deletion:
         mMultipleFileDeletionBar = view.findViewById(R.id.files_multiple_file_deletion_bar);
         mMultipleFileDeletionCounter = view.findViewById(R.id.files_multiple_file_deletion_counter);
