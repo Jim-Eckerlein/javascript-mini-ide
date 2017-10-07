@@ -23,7 +23,6 @@ public class FileView extends FrameLayout {
     private ViewGroup mFileViewSettings;
     private ViewGroup mFileViewRow;
     private ObjectAnimator mFilenameTextAnimation;
-    private ObjectAnimator mFileElevationAnimation;
     private boolean mFileSettingsOpened = false;
     
     public FileView(Context context) {
@@ -59,12 +58,18 @@ public class FileView extends FrameLayout {
         mFileViewRow.setOnClickListener(new FileOpener());
         mFileViewRow.setOnLongClickListener(new FileSettingsLongClickOpener());
     
+        findViewById(R.id.file_delete).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Delete file
+                mFilesTab.deleteFile(mFilenameText.getText().toString());
+            }
+        });
+    
         mFilenameTextAnimation = ObjectAnimator.ofInt(mFilenameText, "textColor",
                 mFilenameText.getCurrentTextColor(),
                 ContextCompat.getColor(getContext(), R.color.keyInverseColor));
         mFilenameTextAnimation.setEvaluator(new ArgbEvaluator());
-    
-        mFileElevationAnimation = ObjectAnimator.ofFloat(mFileViewRow, "elevation", 0, 400);
     
         post(new Runnable() {
             @Override
@@ -80,7 +85,6 @@ public class FileView extends FrameLayout {
             mFileViewSettings.animate().setDuration(OPEN_FILE_SETTINGS_ANIMATION_DURATION).x(mFileViewRow.getWidth() - mFileViewSettings.getWidth());
             ((TransitionDrawable) mFileViewRow.getBackground()).startTransition(OPEN_FILE_SETTINGS_ANIMATION_DURATION);
             mFilenameTextAnimation.start();
-            mFileElevationAnimation.start();
             mFileSettingsOpened = true;
         }
     }
@@ -90,7 +94,6 @@ public class FileView extends FrameLayout {
             mFileViewSettings.animate().setDuration(OPEN_FILE_SETTINGS_ANIMATION_DURATION).x(mFileViewRow.getWidth());
             ((TransitionDrawable) mFileViewRow.getBackground()).reverseTransition(OPEN_FILE_SETTINGS_ANIMATION_DURATION);
             mFilenameTextAnimation.reverse();
-            mFileElevationAnimation.reverse();
             mFileSettingsOpened = false;
         }
     }

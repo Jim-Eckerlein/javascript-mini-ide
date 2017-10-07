@@ -47,12 +47,14 @@
         tools:visibility="visible">
 
         <ImageView
+            android:id="@+id/file_rename"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="16dp"
             android:src="@drawable/rename"/>
 
         <ImageView
+            android:id="@+id/file_delete"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="16dp"

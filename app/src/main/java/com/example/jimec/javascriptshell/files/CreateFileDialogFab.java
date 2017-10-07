@@ -17,7 +17,9 @@ import com.example.jimec.javascriptshell.R;
 
 
 /**
- * Floating action button click listener, opens dialog to create a new file
+ * Floating action button click listener, opens dialog to create a new file.
+ * Calls onOk() with chosen file and with appended .js extension.
+ * Ensures that filename is valid.
  */
 public abstract class CreateFileDialogFab implements FloatingActionButton.OnClickListener {
     
@@ -42,7 +44,7 @@ public abstract class CreateFileDialogFab implements FloatingActionButton.OnClic
      *
      * @param filename Name of file to be created
      */
-    public int isValidFilename(String filename) {
+    private int isValidFilename(String filename) {
         if (!filename.matches("[a-zA-Z0-9 _-]*")) {
             return FILE_NAME_ERROR_INVALID_CHARACTER;
         }
@@ -103,7 +105,7 @@ public abstract class CreateFileDialogFab implements FloatingActionButton.OnClic
                     // Current file name is erroneous => ignore
                     return;
                 }
-                onOk(filenameInput.getText().toString());
+                onOk(filenameInput.getText().toString() + mContext.getString(R.string.files_extension));
             }
         });
         

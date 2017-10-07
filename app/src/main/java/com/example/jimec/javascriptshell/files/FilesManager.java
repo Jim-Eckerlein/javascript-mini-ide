@@ -30,18 +30,20 @@ public class FilesManager {
     public void createFile(String name) throws IOException {
         File newFile = new File(mDir, name);
         if (!newFile.createNewFile()) {
-            throw new FileAlreadyExistsException();
+            throw new FileAlreadyExistsException(name);
         }
+        mFiles.put(name, newFile);
     }
     
     public void deleteFile(String name) throws IOException {
         File file = mFiles.get(name);
         if (file == null) {
-            throw new NoSuchFileException();
+            throw new NoSuchFileException(name);
         }
         if (!file.delete()) {
-            throw new CannotDeleteFileException();
+            throw new CannotDeleteFileException(name);
         }
+        mFiles.remove(name);
     }
     
     public String[] listFiles() {
@@ -56,7 +58,7 @@ public class FilesManager {
     public String readFile(String name) throws IOException {
         File file = mFiles.get(name);
         if (null == file) {
-            throw new NoSuchFileException();
+            throw new NoSuchFileException(name);
         }
         StringBuilder buffer = new StringBuilder();
         FileInputStream stream = new FileInputStream(file);
@@ -69,12 +71,21 @@ public class FilesManager {
     }
     
     public class FileAlreadyExistsException extends IOException {
+        FileAlreadyExistsException(String filename) {
+            super("File already exists: " + filename);
+        }
     }
     
     public class CannotDeleteFileException extends IOException {
+        CannotDeleteFileException(String filename) {
+            super("Cannot delete file: " + filename);
+        }
     }
     
     public class NoSuchFileException extends IOException {
+        NoSuchFileException(String filename) {
+            super("No such file: " + filename);
+        }
     }
     
 }

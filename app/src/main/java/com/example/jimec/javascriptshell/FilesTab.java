@@ -1,9 +1,11 @@
 package com.example.jimec.javascriptshell;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,7 @@ import com.example.jimec.javascriptshell.files.FileView;
 import com.example.jimec.javascriptshell.files.FilesManager;
 
 import java.io.IOException;
-import java.security.InvalidParameterException;
+import java.util.HashMap;
 
 public class FilesTab extends Fragment {
     
@@ -28,7 +30,7 @@ public class FilesTab extends Fragment {
             R.raw.example_time,
             R.raw.example_typeof
     };
-    
+    private final HashMap<String, FileView> mFileViews = new HashMap<>();
     private LinearLayout mExamplesView;
     private LinearLayout mFilesView;
     private TabManager mTabManager;
@@ -59,7 +61,13 @@ public class FilesTab extends Fragment {
         }
     
         // Load user files:
-        updateFileList(view);
+        mFilesView = view.findViewById(R.id.user_file_list);
+        mFilesManager = new FilesManager(getContext());
+        for (String filename : mFilesManager.listFiles()) {
+            FileView fileView = FileView.create(getContext(), this, filename);
+            mFileViews.put(filename, fileView);
+            mFilesView.addView(fileView);
+        }
     
         // Initialize fab:
         mCreateFileDialog = new CreateFileDialogFab(getContext(), mFilesManager, this, getActivity()) {
@@ -83,17 +91,16 @@ public class FilesTab extends Fragment {
             mTabManager.loadFile(filename, mFilesManager.readFile(filename));
         } catch (IOException e) {
             e.printStackTrace();
-            // todo: replace with user popup
-            throw new RuntimeException();
-        }
-    }
     
-    private void updateFileList(View rootView) {
-        mFilesView = rootView.findViewById(R.id.user_file_list);
-        mFilesView.removeAllViews();
-        mFilesManager = new FilesManager(getContext());
-        for (String filename : mFilesManager.listFiles()) {
-            mFilesView.addView(FileView.create(getContext(), this, filename));
+            // Create error notifier dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle(R.string.error);
+            builder.setMessage(R.string.files_error_cannot_open_file);
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
         }
     }
     
@@ -104,18 +111,42 @@ public class FilesTab extends Fragment {
      * @param filename Name of file to be created
      */
     private void createFile(String filename) {
-        if (mCreateFileDialog.isValidFilename(filename) != CreateFileDialogFab.FILE_NAME_NO_ERROR) {
-            throw new InvalidParameterException("Not a valid filename: " + filename);
-        }
         try {
-            mFilesManager.createFile(filename + getString(R.string.files_extension));
+            mFilesManager.createFile(filename);
+            FileView fileView = FileView.create(getContext(), this, filename);
+            mFileViews.put(filename, fileView);
+            mFilesView.addView(fileView);
         } catch (IOException e) {
             e.printStackTrace();
-            // todo: replace with user popup
-            throw new RuntimeException();
+    
+            // Create error notifier dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle(R.string.error);
+            builder.setMessage(R.string.files_error_cannot_create_file);
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
         }
-        
-        updateFileList(getView());
     }
     
+    public void deleteFile(String filename) {
+        try {
+            mFilesManager.deleteFile(filename);
+            mFilesView.removeView(mFileViews.get(filename));
+        } catch (IOException e) {
+            e.printStackTrace();
+            
+            // Create error notifier dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle(R.string.error);
+            builder.setMessage(R.string.files_error_cannot_delete_file);
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+        }
+    }
 }
