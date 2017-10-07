@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 
 public class Util {
     
+    public static final int ANIMATION_DURATION = 140;
+    
     public static int clamp(int val, int min, int max) {
         return Math.max(min, Math.min(max, val));
     }
@@ -68,7 +70,7 @@ public class Util {
      * That means that line breaks are preserved and *not* automatically added.
      * '\r' are removed.
      *
-     * @param ctx Context
+     * @param ctx   Context
      * @param resId Raw resource id
      * @return File content as string
      */

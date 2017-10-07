@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.example.jimec.javascriptshell.files.CreateFileDialogFab;
 import com.example.jimec.javascriptshell.files.ExampleView;
@@ -16,9 +18,10 @@ import com.example.jimec.javascriptshell.files.FileView;
 import com.example.jimec.javascriptshell.files.FilesManager;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class FilesTab extends Fragment {
+public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     
     private static final int[] EXAMPLE_ARRAY_FILE_MAP = new int[]{
             R.raw.example_demo,
@@ -30,12 +33,17 @@ public class FilesTab extends Fragment {
             R.raw.example_typeof
     };
     private final HashMap<String, FileView> mFileViews = new HashMap<>();
+    private final ArrayList<FileView> mSelectedFileViews = new ArrayList<>();
     private LinearLayout mExamplesView;
     private LinearLayout mFilesView;
     private TabManager mTabManager;
     private FilesManager mFilesManager;
     private FloatingActionButton mFab;
     private CreateFileDialogFab mCreateFileDialog;
+    private boolean mActiveMultipleFileDeletion = false;
+    private ViewGroup mMultipleFileDeletionBar;
+    private TextView mMultipleFileDeletionCounter;
+    private ScrollView mScroller;
     
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +53,8 @@ public class FilesTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_files, container, false);
-    
+        mScroller = view.findViewById(R.id.files_scroller);
+        
         // Fill examples list from string array:
         mExamplesView = view.findViewById(R.id.example_list);
         int position = 0;
@@ -57,7 +66,7 @@ public class FilesTab extends Fragment {
         mFilesView = view.findViewById(R.id.user_file_list);
         mFilesManager = new FilesManager(getContext());
         for (String filename : mFilesManager.listFiles()) {
-            FileView fileView = FileView.create(getContext(), this, filename);
+            FileView fileView = FileView.create(getContext(), this, filename, this);
             mFileViews.put(filename, fileView);
             mFilesView.addView(fileView);
         }
@@ -71,6 +80,22 @@ public class FilesTab extends Fragment {
         };
         mFab = view.findViewById(R.id.files_fab);
         mFab.setOnClickListener(mCreateFileDialog);
+    
+        // Multiple file deletion:
+        mMultipleFileDeletionBar = view.findViewById(R.id.files_multiple_file_deletion_bar);
+        mMultipleFileDeletionCounter = view.findViewById(R.id.files_multiple_file_deletion_counter);
+        view.findViewById(R.id.files_multiple_file_deletion_cancel_button).setOnClickListener(v -> endMultipleFileDeletion());
+        view.findViewById(R.id.files_multiple_file_deletion_delete_button).setOnClickListener(v -> {
+            for (FileView fileView : mSelectedFileViews) {
+                deleteFile(fileView.getFilename());
+            }
+            endMultipleFileDeletion();
+        });
+    
+        view.post(() -> {
+            // Hide multiple file selection bar initially:
+            mMultipleFileDeletionBar.setY(mScroller.getHeight());
+        });
         
         return view;
     }
@@ -104,7 +129,7 @@ public class FilesTab extends Fragment {
     private void createFile(String filename) {
         try {
             mFilesManager.createFile(filename);
-            FileView fileView = FileView.create(getContext(), this, filename);
+            FileView fileView = FileView.create(getContext(), this, filename, this);
             mFileViews.put(filename, fileView);
             mFilesView.addView(fileView);
         } catch (IOException e) {
@@ -135,5 +160,72 @@ public class FilesTab extends Fragment {
                     })
                     .show();
         }
+    }
+    
+    public void startMultipleFileDeletion() {
+        if (mActiveMultipleFileDeletion) {
+            return;
+        }
+        mActiveMultipleFileDeletion = true;
+        
+        // Hide fab:
+        mFab.animate().setDuration(Util.ANIMATION_DURATION)
+                .x(mScroller.getWidth())
+                .withStartAction(() -> mFab.setEnabled(false));
+        
+        // Show selection bar:
+        mMultipleFileDeletionBar.animate().setDuration(Util.ANIMATION_DURATION)
+                .y(mScroller.getHeight() - mMultipleFileDeletionBar.getHeight());
+        
+        // Show selection box for each file view:
+        for (FileView view : mFileViews.values()) {
+            view.showFileSelectBox();
+        }
+        
+        // Initialize counter text to 0:
+        updateMultipleFileDeletionCounterText();
+    }
+    
+    private void endMultipleFileDeletion() {
+        if (!mActiveMultipleFileDeletion) {
+            return;
+        }
+        mActiveMultipleFileDeletion = false;
+        
+        // Show fab:
+        mFab.animate().setDuration(Util.ANIMATION_DURATION)
+                .x(mScroller.getWidth() - mFab.getWidth() - ((ViewGroup.MarginLayoutParams) mFab.getLayoutParams()).rightMargin)
+                .withEndAction(() -> mFab.setEnabled(true));
+        
+        // Hide selection bar:
+        mMultipleFileDeletionBar.animate().setDuration(Util.ANIMATION_DURATION)
+                .y(mScroller.getHeight());
+        
+        // Hide selection box for each file view:
+        for (FileView view : mFileViews.values()) {
+            view.hideFileSelectBox();
+        }
+        
+        // Cleanup:
+        mSelectedFileViews.clear();
+    }
+    
+    private void updateMultipleFileDeletionCounterText() {
+        int count = mSelectedFileViews.size();
+        mMultipleFileDeletionCounter.setText(getResources().getQuantityString(R.plurals.files_multiple_files_selected, count, count));
+    }
+    
+    @Override
+    public void onFileViewSelected(FileView fileView) {
+        // File view selected during multiple file deletion:
+        mSelectedFileViews.add(fileView);
+        updateMultipleFileDeletionCounterText();
+    }
+    
+    @Override
+    public void onFileViewDeselected(FileView fileView) {
+        // File view deselected during multiple file deletion:
+        mSelectedFileViews.remove(fileView);
+        updateMultipleFileDeletionCounterText();
     }
 }

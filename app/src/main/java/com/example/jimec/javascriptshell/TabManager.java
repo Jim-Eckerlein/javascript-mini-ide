@@ -44,9 +44,12 @@ public class TabManager extends FragmentPagerAdapter {
         switch (position) {
             case FRAGMENT_POSITION_FILES:
                 return mFilesTab;
-            case FRAGMENT_POSITION_EDITOR: return mEditorTab;
-            case FRAGMENT_POSITION_RUN: return mRunTab;
-            default: throw new InvalidParameterException();
+            case FRAGMENT_POSITION_EDITOR:
+                return mEditorTab;
+            case FRAGMENT_POSITION_RUN:
+                return mRunTab;
+            default:
+                throw new InvalidParameterException();
         }
     }
     
@@ -59,7 +62,8 @@ public class TabManager extends FragmentPagerAdapter {
                 return mContext.getString(R.string.editor_tab_title);
             case FRAGMENT_POSITION_RUN:
                 return mContext.getString(R.string.run_tab_title);
-            default: throw new InvalidParameterException();
+            default:
+                throw new InvalidParameterException();
         }
     }
     
@@ -83,4 +87,7 @@ public class TabManager extends FragmentPagerAdapter {
         mRunTab.stopV8();
     }
     
+    public FilesTab getFilesTab() {
+        return mFilesTab;
+    }
 }

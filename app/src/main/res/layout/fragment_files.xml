@@ -2,13 +2,20 @@
 
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <ScrollView
+        android:id="@+id/files_scroller"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,12 +58,53 @@
 
     </ScrollView>
 
+    <FrameLayout
+        android:id="@+id/files_multiple_file_deletion_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/primaryColor">
+
+        <TextView
+            android:id="@+id/files_multiple_file_deletion_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            tools:text="12 files selected"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end">
+
+            <Button
+                android:id="@+id/files_multiple_file_deletion_cancel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="@string/cancel"
+                android:textColor="@color/secondaryColor"/>
+
+            <Button
+                android:id="@+id/files_multiple_file_deletion_delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="@string/delete"
+                android:textColor="@color/secondaryColor"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/files_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/plus"/>
+        android:src="@drawable/plus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </FrameLayout>

@@ -43,7 +43,14 @@
     <string name="files_error_cannot_delete_file">Cannot delete file.</string>
     <string name="files_error_cannot_open_file">Cannot open file.</string>
     <string name="files_are_you_sure_to_delete_single_file">Are you sure to delete %1$s?</string>
-    <string name="files_are_you_sure_to_delete_multiple_files">Are you sure to delete %1$d files?</string>
+    <plurals name="files_are_you_sure_to_delete_multiple_files">
+        <item quantity="one">Are you sure to delete one file?</item>
+        <item quantity="other">Are you sure to delete %1$d files?</item>
+    </plurals>
+    <plurals name="files_multiple_files_selected">
+        <item quantity="one">1 file selected</item>
+        <item quantity="other">%1$d files selected</item>
+    </plurals>
 
     <string name="editor_tab_title">Editor</string>
 

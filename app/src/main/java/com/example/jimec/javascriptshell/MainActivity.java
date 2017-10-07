@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
     
     private ViewPager mPager;
     private TabManager mTabManager;
-    private TabLayout mTabLayout;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +30,11 @@ public class MainActivity extends AppCompatActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mTabManager = new TabManager(getSupportFragmentManager(), mPager, this);
         mPager.setAdapter(mTabManager);
-        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        mTabLayout.setupWithViewPager(mPager);
     
-        mTabLayout.addOnTabSelectedListener(new TabSelectListener(mTabManager, this));
-    
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(mPager);
+        tabLayout.addOnTabSelectedListener(new TabSelectListener(mTabManager, this));
+        
         // TODO: uncomment
         //mPager.setCurrentItem(TabManager.FRAGMENT_POSITION_EDITOR);
     }
@@ -74,23 +73,23 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_clear_code:
                 mTabManager.getEditorTab().getEditor().clear();
                 return true;
-    
+        
             case R.id.action_undo:
                 mTabManager.getEditorTab().getEditor().undo();
                 return true;
-    
+        
             case R.id.action_about:
                 // Start About activity:
                 Intent aboutIntent = new Intent(this, AboutActivity.class);
                 startActivity(aboutIntent);
                 return true;
-    
+        
             case R.id.action_help:
                 // Start Help activity:
                 Intent helpIntent = new Intent(this, HelpActivity.class);
                 startActivity(helpIntent);
                 return true;
-    
+        
             case R.id.action_share:
                 // Share code:
                 Intent sendIntent = new Intent();
@@ -98,7 +97,13 @@ public class MainActivity extends AppCompatActivity {
                 sendIntent.putExtra(Intent.EXTRA_TEXT, mTabManager.getEditorTab().getEditor().toString());
                 sendIntent.setType("application/javascript");
                 startActivity(sendIntent);
+                return true;
         
+            case R.id.action_delete_multiple_files:
+                // Delete multiple files from file tab
+                mTabManager.getFilesTab().startMultipleFileDeletion();
+                return true;
+            
             default:
                 return false;
         }

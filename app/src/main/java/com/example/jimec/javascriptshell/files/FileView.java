@@ -8,22 +8,26 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.jimec.javascriptshell.FilesTab;
 import com.example.jimec.javascriptshell.R;
+import com.example.jimec.javascriptshell.Util;
 
 public class FileView extends FrameLayout {
     
-    private static final int OPEN_FILE_SETTINGS_ANIMATION_DURATION = 140;
-    
     private FilesTab mFilesTab;
     private TextView mFilenameText;
-    private ViewGroup mFileViewSettings;
-    private ViewGroup mFileViewRow;
+    private CheckBox mFileSelectBox;
+    private ViewGroup mFileSettings;
+    private ViewGroup mRoot;
     private ObjectAnimator mFilenameTextAnimation;
-    private boolean mFileSettingsOpened = false;
+    private boolean mFileSettingsShown = false;
+    private boolean mFileSelectBoxShown = false;
+    private OnSelectedListener mOnSelectedListener;
     
     public FileView(Context context) {
         super(context);
@@ -40,76 +44,127 @@ public class FileView extends FrameLayout {
         init();
     }
     
-    public static FileView create(Context context, FilesTab filesTab, String filenameTitle) {
+    public static FileView create(Context context, FilesTab filesTab, String filenameTitle, OnSelectedListener selectedListener) {
         FileView view = new FileView(context);
         view.mFilenameText.setText(filenameTitle);
         view.mFilesTab = filesTab;
+        view.mOnSelectedListener = selectedListener;
         return view;
     }
     
     private void init() {
         inflate(getContext(), R.layout.view_file, this);
+        mRoot = findViewById(R.id.file_row);
         mFilenameText = findViewById(R.id.file_name);
-        mFileViewRow = findViewById(R.id.file_row);
-        mFileViewSettings = findViewById(R.id.file_settings);
+        mFileSettings = findViewById(R.id.file_settings);
+        mFileSelectBox = findViewById(R.id.file_select_box);
     
-        findViewById(R.id.file_settings_opener).setOnClickListener(v -> openFileSettings());
-        findViewById(R.id.file_settings_closer).setOnClickListener(v -> closeFileSettings());
-    
+        findViewById(R.id.file_settings_opener).setOnClickListener(v -> showFileSettings());
+        findViewById(R.id.file_settings_closer).setOnClickListener(v -> hideFileSettings());
+        
         // Listen when user clicks the file name to open that file:
-        mFileViewRow.setOnClickListener(v -> {
-            if (!mFileSettingsOpened) {
+        mRoot.setOnClickListener(v -> {
+            if (!mFileSettingsShown) {
                 // File settings are not opened currently, so open file:
-                mFilesTab.openFile(mFilenameText.getText().toString());
+                mFilesTab.openFile(getFilename());
             }
             else {
                 // File settings are opened currently, so close the settings:
-                closeFileSettings();
+                hideFileSettings();
             }
         });
     
         // Long click on file opens file settings:
-        mFileViewRow.setOnLongClickListener(v -> {
-            openFileSettings();
+        mRoot.setOnLongClickListener(v -> {
+            showFileSettings();
             return true;
         });
     
         findViewById(R.id.file_delete).setOnClickListener(v -> {
             // Delete file, open "are you sure" dialog:
             new AlertDialog.Builder(getContext()).setTitle(R.string.delete)
-                    .setMessage(getContext().getString(R.string.files_are_you_sure_to_delete_single_file, mFilenameText.getText().toString()))
-                    .setPositiveButton(R.string.ok, (dialog, which) -> mFilesTab.deleteFile(mFilenameText.getText().toString()))
-                    .setNegativeButton(R.string.cancel, ((dialog, which) -> closeFileSettings()))
+                    .setMessage(getContext().getString(R.string.files_are_you_sure_to_delete_single_file, getFilename()))
+                    .setPositiveButton(R.string.ok, (dialog, which) -> mFilesTab.deleteFile(getFilename()))
+                    .setNegativeButton(R.string.cancel, ((dialog, which) -> hideFileSettings()))
                     .show();
         });
-        
+    
+        // Pre-baked animations:
         mFilenameTextAnimation = ObjectAnimator.ofInt(mFilenameText, "textColor",
                 mFilenameText.getCurrentTextColor(),
                 ContextCompat.getColor(getContext(), R.color.keyInverseColor));
         mFilenameTextAnimation.setEvaluator(new ArgbEvaluator());
     
+        // Select listeners:
+        mFileSelectBox.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
+            if (isChecked) {
+                mOnSelectedListener.onFileViewSelected(this);
+            }
+            else {
+                mOnSelectedListener.onFileViewDeselected(this);
+            }
+        });
+        
         post(() -> {
-            // Hide file settings initially:
-            mFileViewSettings.setX(mFileViewRow.getWidth());
+            // Hide file settings and select box initially:
+            mFileSettings.setX(mRoot.getWidth());
+            mFileSelectBox.setX(-mFileSelectBox.getWidth());
         });
     }
     
-    private void openFileSettings() {
-        if (!mFileSettingsOpened) {
-            mFileViewSettings.animate().setDuration(OPEN_FILE_SETTINGS_ANIMATION_DURATION).x(mFileViewRow.getWidth() - mFileViewSettings.getWidth());
-            ((TransitionDrawable) mFileViewRow.getBackground()).startTransition(OPEN_FILE_SETTINGS_ANIMATION_DURATION);
+    private void showFileSettings() {
+        if (!mFileSelectBoxShown && !mFileSettingsShown) {
+            mFileSettings.animate().setDuration(Util.ANIMATION_DURATION).x(mRoot.getWidth() - mFileSettings.getWidth());
+            ((TransitionDrawable) mRoot.getBackground()).startTransition(Util.ANIMATION_DURATION);
             mFilenameTextAnimation.start();
-            mFileSettingsOpened = true;
+            mFileSettingsShown = true;
         }
     }
     
-    public void closeFileSettings() {
-        if (mFileSettingsOpened) {
-            mFileViewSettings.animate().setDuration(OPEN_FILE_SETTINGS_ANIMATION_DURATION).x(mFileViewRow.getWidth());
-            ((TransitionDrawable) mFileViewRow.getBackground()).reverseTransition(OPEN_FILE_SETTINGS_ANIMATION_DURATION);
+    public void hideFileSettings() {
+        if (!mFileSelectBoxShown && mFileSettingsShown) {
+            mFileSettings.animate().setDuration(Util.ANIMATION_DURATION).x(mRoot.getWidth());
+            ((TransitionDrawable) mRoot.getBackground()).reverseTransition(Util.ANIMATION_DURATION);
             mFilenameTextAnimation.reverse();
-            mFileSettingsOpened = false;
+            mFileSettingsShown = false;
         }
+    }
+    
+    public void showFileSelectBox() {
+        if (mFileSettingsShown) {
+            hideFileSettings();
+        }
+        
+        // Show select box:
+        mFileSelectBox.animate().setDuration(Util.ANIMATION_DURATION).x(0);
+        
+        // Push filename text:
+        mFilenameText.animate().setDuration(Util.ANIMATION_DURATION).x(mFileSelectBox.getWidth());
+        
+        mFileSelectBoxShown = true;
+    }
+    
+    public void hideFileSelectBox() {
+        // Hide select box:
+        mFileSelectBox.animate().setDuration(Util.ANIMATION_DURATION).x(-mFileSelectBox.getWidth());
+        mFileSelectBox.setChecked(false);
+        
+        // Pull filename text:
+        mFilenameText.animate().setDuration(Util.ANIMATION_DURATION).x(0);
+        
+        mFileSelectBoxShown = false;
+    }
+    
+    public String getFilename() {
+        return mFilenameText.getText().toString();
+    }
+    
+    public interface OnSelectedListener {
+        
+        void onFileViewSelected(FileView fileView);
+        
+        void onFileViewDeselected(FileView fileView);
+        
     }
     
 }

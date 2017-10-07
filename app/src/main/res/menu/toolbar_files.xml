@@ -4,7 +4,7 @@
 
     <!-- Delete -->
     <item
-        android:id="@+id/action_delete_file"
+        android:id="@+id/action_delete_multiple_files"
         android:icon="@drawable/trash"
         android:title="@string/action_delete_file"
         app:showAsAction="ifRoom"/>
