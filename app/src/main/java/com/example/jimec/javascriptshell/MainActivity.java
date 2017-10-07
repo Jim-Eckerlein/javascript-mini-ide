@@ -16,7 +16,7 @@ import java.security.InvalidParameterException;
 public class MainActivity extends AppCompatActivity {
     
     private ViewPager mPager;
-    private TabFragmentAdapter mAdapter;
+    private TabManager mTabManager;
     private TabLayout mTabLayout;
     
     @Override
@@ -29,15 +29,15 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     
         mPager = (ViewPager) findViewById(R.id.pager);
-        mAdapter = new TabFragmentAdapter(getSupportFragmentManager(), mPager);
-        mPager.setAdapter(mAdapter);
+        mTabManager = new TabManager(getSupportFragmentManager(), mPager);
+        mPager.setAdapter(mTabManager);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         mTabLayout.setupWithViewPager(mPager);
     
-        mTabLayout.addOnTabSelectedListener(new TabSelectListener(mAdapter, this));
+        mTabLayout.addOnTabSelectedListener(new TabSelectListener(mTabManager, this));
     
         // TODO: uncomment
-        //mPager.setCurrentItem(TabFragmentAdapter.FRAGMENT_POSITION_EDITOR);
+        //mPager.setCurrentItem(TabManager.FRAGMENT_POSITION_EDITOR);
     }
     
     @Override
@@ -45,13 +45,13 @@ public class MainActivity extends AppCompatActivity {
         @MenuRes int res;
     
         switch (mPager.getCurrentItem()) {
-            case TabFragmentAdapter.FRAGMENT_POSITION_FILES:
+            case TabManager.FRAGMENT_POSITION_FILES:
                 res = R.menu.toolbar_files;
                 break;
-            case TabFragmentAdapter.FRAGMENT_POSITION_EDITOR:
+            case TabManager.FRAGMENT_POSITION_EDITOR:
                 res = R.menu.toolbar_editor;
                 break;
-            case TabFragmentAdapter.FRAGMENT_POSITION_RUN:
+            case TabManager.FRAGMENT_POSITION_RUN:
                 res = R.menu.toolbar_run;
                 break;
             default:
@@ -68,15 +68,15 @@ public class MainActivity extends AppCompatActivity {
     
         switch (id) {
             case R.id.action_format_code:
-                mAdapter.getEditorTab().getEditor().format();
+                mTabManager.getEditorTab().getEditor().format();
                 return true;
         
             case R.id.action_clear_code:
-                mAdapter.getEditorTab().getEditor().clear();
+                mTabManager.getEditorTab().getEditor().clear();
                 return true;
     
             case R.id.action_undo:
-                mAdapter.getEditorTab().getEditor().undo();
+                mTabManager.getEditorTab().getEditor().undo();
                 return true;
     
             case R.id.action_about:
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 // Share code:
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, mAdapter.getEditorTab().getEditor().toString());
+                sendIntent.putExtra(Intent.EXTRA_TEXT, mTabManager.getEditorTab().getEditor().toString());
                 sendIntent.setType("application/javascript");
                 startActivity(sendIntent);
         

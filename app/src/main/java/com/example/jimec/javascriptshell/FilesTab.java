@@ -12,6 +12,8 @@ import com.example.jimec.javascriptshell.files.ExampleView;
 import com.example.jimec.javascriptshell.files.FileView;
 import com.example.jimec.javascriptshell.files.FilesManager;
 
+import java.io.IOException;
+
 public class FilesTab extends Fragment {
     
     public static final String TITLE = "Files";
@@ -27,7 +29,7 @@ public class FilesTab extends Fragment {
     
     private LinearLayout mExamplesView;
     private LinearLayout mFilesView;
-    private TabFragmentAdapter mAdapter;
+    private TabManager mTabManager;
     private FilesManager mFilesManager;
     
     @Override
@@ -43,7 +45,7 @@ public class FilesTab extends Fragment {
         mFilesView = view.findViewById(R.id.user_file_list);
         mFilesManager = new FilesManager(getContext());
         for (String filename : mFilesManager.listFiles()) {
-            mFilesView.addView(FileView.create(getContext(), mAdapter, mFilesManager, filename));
+            mFilesView.addView(FileView.create(getContext(), this, filename));
         }
     
         // Fill examples list from string array:
@@ -53,7 +55,7 @@ public class FilesTab extends Fragment {
             ExampleView exampleView = new ExampleView(getContext());
         
             exampleView.setText(example);
-            exampleView.setAdapter(mAdapter);
+            exampleView.setTabManager(mTabManager);
             exampleView.setRes(EXAMPLE_ARRAY_FILE_MAP[position++]);
         
             mExamplesView.addView(exampleView);
@@ -62,26 +64,17 @@ public class FilesTab extends Fragment {
         return view;
     }
     
-    public void setAdapter(TabFragmentAdapter adapter) {
-        mAdapter = adapter;
+    public void setTabManager(TabManager tabManager) {
+        mTabManager = tabManager;
     }
     
-    /*private class FileItemAdapter extends ArrayAdapter<String> {
-        
-        private String[] mFilenames;
-        
-        FileItemAdapter(Context context, String[] filenames) {
-            super(context, R.layout.view_user_file_list_item, filenames);
-            mFilenames = filenames;
+    public void openFile(String filename) {
+        try {
+            mTabManager.loadFile(filename, mFilesManager.readFile(filename));
+        } catch (IOException e) {
+            e.printStackTrace();
+            // todo: replace with user popup
+            throw new RuntimeException();
         }
-    
-        @NonNull
-        @Override
-        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.view_user_file_list_item, parent, false);
-            ((TextView) view.findViewById(R.id.filename)).setText(mFilenames[position]);
-            return view;
-        }
-    }*/
+    }
 }

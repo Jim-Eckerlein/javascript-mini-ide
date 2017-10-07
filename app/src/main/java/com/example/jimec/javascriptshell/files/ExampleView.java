@@ -8,11 +8,11 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.jimec.javascriptshell.R;
-import com.example.jimec.javascriptshell.TabFragmentAdapter;
+import com.example.jimec.javascriptshell.TabManager;
 
 public class ExampleView extends FrameLayout implements View.OnClickListener {
     
-    private TabFragmentAdapter mAdapter;
+    private TabManager mTabManager;
     private
     @RawRes
     int mRes;
@@ -34,18 +34,18 @@ public class ExampleView extends FrameLayout implements View.OnClickListener {
     }
     
     private void init() {
-        inflate(getContext(), R.layout.view_examples_list_item, this);
+        inflate(getContext(), R.layout.view_example, this);
         setOnClickListener(this);
         mText = findViewById(R.id.example_list_item_title);
     }
     
     @Override
     public void onClick(View v) {
-        mAdapter.loadExample(mRes);
+        mTabManager.loadExample(mRes);
     }
     
-    public void setAdapter(TabFragmentAdapter adapter) {
-        mAdapter = adapter;
+    public void setTabManager(TabManager tabManager) {
+        mTabManager = tabManager;
     }
     
     public void setRes(@RawRes int res) {

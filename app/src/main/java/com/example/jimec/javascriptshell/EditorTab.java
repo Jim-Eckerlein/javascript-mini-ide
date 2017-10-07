@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.jimec.javascriptshell.editor.EditorView;
 import com.example.jimec.javascriptshell.keyboard_view.Keyboard;
@@ -17,6 +18,7 @@ public class EditorTab extends Fragment {
     public static final String TITLE = "Editor";
     private EditorView mEditor;
     private ViewPager mViewPager;
+    private TextView mCurrentFileName;
     
     public void setPager(ViewPager viewPager) {
         mViewPager = viewPager;
@@ -33,6 +35,7 @@ public class EditorTab extends Fragment {
     
         // Editor:
         mEditor = view.findViewById(R.id.editor);
+        mCurrentFileName = view.findViewById(R.id.current_file_name);
     
         // Keyboard:
         Keyboard keyboard = view.findViewById(R.id.keyboard);
@@ -44,7 +47,7 @@ public class EditorTab extends Fragment {
         view.findViewById(R.id.run_code_key).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewPager.setCurrentItem(TabFragmentAdapter.FRAGMENT_POSITION_RUN);
+                mViewPager.setCurrentItem(TabManager.FRAGMENT_POSITION_RUN);
             }
         });
         
@@ -65,5 +68,9 @@ public class EditorTab extends Fragment {
         mEditor.clear();
         mEditor.write(content);
         mEditor.setCursor(0);
+    }
+    
+    public void setCurrentFileName(String filename) {
+        mCurrentFileName.setText(filename);
     }
 }

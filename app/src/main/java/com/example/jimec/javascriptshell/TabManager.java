@@ -8,7 +8,7 @@ import android.support.v4.view.ViewPager;
 
 import java.security.InvalidParameterException;
 
-public class TabFragmentAdapter extends FragmentPagerAdapter {
+public class TabManager extends FragmentPagerAdapter {
     
     public static final int FRAGMENT_POSITION_FILES = 0;
     public static final int FRAGMENT_POSITION_EDITOR = 1;
@@ -20,11 +20,11 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
     private final EditorTab mEditorTab = new EditorTab();
     private final RunTab mRunTab = new RunTab();
     
-    public TabFragmentAdapter(FragmentManager fm, ViewPager viewPager) {
+    public TabManager(FragmentManager fm, ViewPager viewPager) {
         super(fm);
         mViewPager = viewPager;
         mEditorTab.setPager(viewPager);
-        mFilesTab.setAdapter(this);
+        mFilesTab.setTabManager(this);
     }
     
     @Override
@@ -63,8 +63,9 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
         mViewPager.setCurrentItem(FRAGMENT_POSITION_EDITOR);
     }
     
-    public void loadFile(String content) {
+    public void loadFile(String filename, String content) {
         mEditorTab.loadFile(content);
+        mEditorTab.setCurrentFileName(filename);
         mViewPager.setCurrentItem(FRAGMENT_POSITION_EDITOR);
     }
     
