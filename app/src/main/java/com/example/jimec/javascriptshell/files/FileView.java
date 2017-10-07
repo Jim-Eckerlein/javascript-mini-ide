@@ -16,12 +16,14 @@ import com.example.jimec.javascriptshell.R;
 
 public class FileView extends FrameLayout {
     
+    private static final int OPEN_FILE_SETTINGS_ANIMATION_DURATION = 140;
+    
     private FilesTab mFilesTab;
     private TextView mFilenameText;
     private ViewGroup mFileViewSettings;
-    private ViewGroup mFileViewRoot;
     private ViewGroup mFileViewRow;
     private ObjectAnimator mFilenameTextAnimation;
+    private boolean mFileSettingsOpened = false;
     
     public FileView(Context context) {
         super(context);
@@ -47,14 +49,13 @@ public class FileView extends FrameLayout {
     
     private void init() {
         inflate(getContext(), R.layout.view_file, this);
-        setOnClickListener(new FileOpener());
-        mFileViewRoot = findViewById(R.id.file_root);
         mFilenameText = findViewById(R.id.file_name);
         mFileViewRow = findViewById(R.id.file_row);
         mFileViewSettings = findViewById(R.id.file_settings);
     
         findViewById(R.id.file_settings_opener).setOnClickListener(new FileSettingsOpener());
         findViewById(R.id.file_settings_closer).setOnClickListener(new FileSettingsCloser());
+        mFileViewRow.setOnClickListener(new FileOpener());
         mFileViewRow.setOnLongClickListener(new FileSettingsLongClickOpener());
     
         mFilenameTextAnimation = ObjectAnimator.ofInt(mFilenameText, "textColor",
@@ -66,9 +67,27 @@ public class FileView extends FrameLayout {
             @Override
             public void run() {
                 // Hide file settings initially:
-                mFileViewSettings.setX(mFileViewRoot.getWidth());
+                mFileViewSettings.setX(mFileViewRow.getWidth());
             }
         });
+    }
+    
+    private void openFileSettings() {
+        if (!mFileSettingsOpened) {
+            mFileViewSettings.animate().setDuration(OPEN_FILE_SETTINGS_ANIMATION_DURATION).x(mFileViewRow.getWidth() - mFileViewSettings.getWidth());
+            ((TransitionDrawable) mFileViewRow.getBackground()).startTransition(OPEN_FILE_SETTINGS_ANIMATION_DURATION);
+            mFilenameTextAnimation.start();
+            mFileSettingsOpened = true;
+        }
+    }
+    
+    public void closeFileSettings() {
+        if (mFileSettingsOpened) {
+            mFileViewSettings.animate().setDuration(OPEN_FILE_SETTINGS_ANIMATION_DURATION).x(mFileViewRow.getWidth());
+            ((TransitionDrawable) mFileViewRow.getBackground()).reverseTransition(OPEN_FILE_SETTINGS_ANIMATION_DURATION);
+            mFilenameTextAnimation.reverse();
+            mFileSettingsOpened = false;
+        }
     }
     
     /**
@@ -78,7 +97,14 @@ public class FileView extends FrameLayout {
         
         @Override
         public void onClick(View v) {
-            mFilesTab.openFile(mFilenameText.getText().toString());
+            if (!mFileSettingsOpened) {
+                // File settings are not opened currently, so open file:
+                mFilesTab.openFile(mFilenameText.getText().toString());
+            }
+            else {
+                // File settings are opened currently, so close the settings:
+                closeFileSettings();
+            }
         }
         
     }
@@ -89,9 +115,7 @@ public class FileView extends FrameLayout {
     private class FileSettingsOpener implements OnClickListener {
         @Override
         public void onClick(View v) {
-            mFileViewSettings.animate().setDuration(200).x(mFileViewRoot.getWidth() - mFileViewSettings.getWidth());
-            ((TransitionDrawable) mFileViewRow.getBackground()).startTransition(200);
-            mFilenameTextAnimation.start();
+            openFileSettings();
         }
     }
     
@@ -101,9 +125,7 @@ public class FileView extends FrameLayout {
     private class FileSettingsCloser implements OnClickListener {
         @Override
         public void onClick(View v) {
-            mFileViewSettings.animate().setDuration(200).x(mFileViewRoot.getWidth());
-            ((TransitionDrawable) mFileViewRow.getBackground()).reverseTransition(200);
-            mFilenameTextAnimation.reverse();
+            closeFileSettings();
         }
     }
     
@@ -113,9 +135,7 @@ public class FileView extends FrameLayout {
     private class FileSettingsLongClickOpener implements OnLongClickListener {
         @Override
         public boolean onLongClick(View v) {
-            mFileViewSettings.animate().setDuration(200).x(mFileViewRoot.getWidth() - mFileViewSettings.getWidth());
-            ((TransitionDrawable) mFileViewRow.getBackground()).startTransition(200);
-            mFilenameTextAnimation.start();
+            openFileSettings();
             return true;
         }
     }
