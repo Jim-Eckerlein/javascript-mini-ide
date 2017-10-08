@@ -57,15 +57,14 @@ public class EditorView extends FrameLayout {
         StringBuilder newCode = new StringBuilder(mEditText.getText().replace(start, end, code, 0, code.length()).toString());
     
         if (code.equals("}") || code.equals("\n")) {
-            cursorPos = RuntimeFormatter.format(newCode, cursorPos - 1);
-            cursorPos++;
+            cursorPos = RuntimeFormatter.format(newCode, cursorPos - 1) + 1;
         }
     
         mCursorHistoryCurrentPosition = start;
         mTextChangeListener.mInternalChange = true;
         mEditText.setSelection(0);
         highlight(newCode.toString());
-        mEditText.setSelection(clamp(cursorPos, 0, newCode.toString().length() - 1));
+        mEditText.setSelection(clamp(cursorPos, 0, newCode.toString().length()));
     }
     
     public void backspace() {
