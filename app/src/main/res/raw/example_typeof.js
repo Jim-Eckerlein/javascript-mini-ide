@@ -1,6 +1,7 @@
 
 /*
-The type of a variable is determined when assigned to a value:
+The type of a variable is determined
+when assigned to a value:
 */
 
 var x;
@@ -13,7 +14,7 @@ print('Now, it is a number:');
 print('type=' + typeof(x));
 print();
 
-x = "jim";
+x = 'jim';
 print('Type can change at any time:');
 print('type=' + typeof(x));
 print();

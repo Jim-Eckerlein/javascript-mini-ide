@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 
 public class Util {
     
-    public static final int ANIMATION_DURATION = 140;
+    public static final int ANIMATION_DURATION = 200;
     
     public static int clamp(int val, int min, int max) {
         return Math.max(min, Math.min(max, val));
