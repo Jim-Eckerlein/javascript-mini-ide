@@ -1,14 +1,13 @@
 package com.example.jimec.javascriptshell.keyboard_view;
 
-import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 
 import com.example.jimec.javascriptshell.R;
+import com.example.jimec.javascriptshell.Util;
 import com.example.jimec.javascriptshell.editor.EditorView;
 
 public class Keyboard extends FrameLayout {
@@ -17,27 +16,20 @@ public class Keyboard extends FrameLayout {
     public static float ALPHA_ACTIVE = 0.8f;
     private final HideKey mHideKey = new HideKey();
     private final ShowKey mShowKey = new ShowKey();
-    private final TimeInterpolator mHideShowKeyboardInterpolator = new DecelerateInterpolator(2);
     private ShiftKey mShiftKey;
     private EditorView mEditor;
     private ViewGroup mInputKeyboard;
     
     public Keyboard(Context context) {
         super(context);
-        init();
     }
     
     public Keyboard(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
     
     public Keyboard(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
-    }
-    
-    private void init() {
     }
     
     @Override
@@ -97,7 +89,7 @@ public class Keyboard extends FrameLayout {
         public void onClick(View v) {
             if (mInputKeyboard.getAnimation() == null
                     || (mInputKeyboard.getAnimation() != null && mInputKeyboard.getAnimation().hasEnded())) {
-                mInputKeyboard.animate().y(getHeight()).setDuration(700).setInterpolator(mHideShowKeyboardInterpolator);
+                mInputKeyboard.animate().y(getHeight()).setDuration(Util.ANIMATION_DURATION);
             }
         }
         
@@ -109,7 +101,7 @@ public class Keyboard extends FrameLayout {
         public void onClick(View v) {
             if (mInputKeyboard.getAnimation() == null
                     || (mInputKeyboard.getAnimation() != null && mInputKeyboard.getAnimation().hasEnded())) {
-                mInputKeyboard.animate().y(0).setDuration(700).setInterpolator(mHideShowKeyboardInterpolator);
+                mInputKeyboard.animate().y(0).setDuration(Util.ANIMATION_DURATION);
             }
         }
         
