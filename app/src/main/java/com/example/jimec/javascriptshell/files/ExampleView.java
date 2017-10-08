@@ -41,7 +41,7 @@ public class ExampleView extends FrameLayout {
     
     private void init() {
         inflate(getContext(), R.layout.view_example, this);
-        setOnClickListener((View) -> mTabManager.loadExample(mResId));
+        setOnClickListener((View) -> mTabManager.loadExample(mExampleName.getText().toString(), mResId));
         mExampleName = findViewById(R.id.example_list_item_title);
     }
     

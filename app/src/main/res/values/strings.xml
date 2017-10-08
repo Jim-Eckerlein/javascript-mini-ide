@@ -51,6 +51,7 @@
         <item quantity="one">1 file selected</item>
         <item quantity="other">%1$d files selected</item>
     </plurals>
+    <string name="files_example_title">Example – %1$s</string>
 
     <string name="editor_tab_title">Editor</string>
 

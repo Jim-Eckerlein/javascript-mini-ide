@@ -68,8 +68,9 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
         }
     }
     
-    public void loadExample(@RawRes int id) {
+    public void loadExample(String exampleName, @RawRes int id) {
         mEditorTab.loadExample(id);
+        mEditorTab.setCurrentFileName(mActivity.getString(R.string.files_example_title, exampleName));
         mViewPager.setCurrentItem(FRAGMENT_POSITION_EDITOR);
     }
     
