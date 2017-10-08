@@ -1,6 +1,5 @@
 package com.example.jimec.javascriptshell.files;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -24,14 +23,10 @@ public class CreateFileDialogFab implements FloatingActionButton.OnClickListener
     public static final int FILE_NAME_ERROR_ALREADY_EXISTS = 1;
     public static final int FILE_NAME_ERROR_INVALID_CHARACTER = 2;
     private final Context mContext;
-    private final FilesManager mFilesManager;
-    private final Activity mActivity;
     private OnOkListener mOnOkListener;
     
-    public CreateFileDialogFab(Context context, FilesManager filesManager, Activity activity) {
+    public CreateFileDialogFab(Context context) {
         mContext = context;
-        mFilesManager = filesManager;
-        mActivity = activity;
     }
     
     /**
@@ -45,7 +40,7 @@ public class CreateFileDialogFab implements FloatingActionButton.OnClickListener
             return FILE_NAME_ERROR_INVALID_CHARACTER;
         }
         filename = filename + mContext.getString(R.string.files_extension);
-        for (String existingFilename : mFilesManager.listFiles()) {
+        for (String existingFilename : FilesManager.getInstance().listFiles()) {
             if (existingFilename.equals(filename)) {
                 return FILE_NAME_ERROR_ALREADY_EXISTS;
             }
@@ -101,9 +96,7 @@ public class CreateFileDialogFab implements FloatingActionButton.OnClickListener
                     }
                     dialog.dismiss();
                 })
-                .setNegativeButton(R.string.cancel, (dialog, which) -> {
-                    dialog.cancel();
-                })
+                .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel())
                 .show();
     }
     

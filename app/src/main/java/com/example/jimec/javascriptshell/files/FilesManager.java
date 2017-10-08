@@ -7,24 +7,41 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
-// TODO: implement read->string, write(string), rename()
+/**
+ * Singleton class managing files in internal memory.
+ * Since the file manager relies on a context object,
+ * you need to call the static initialize function once.
+ * <p>
+ * TODO: implement read->string, write(string), rename()
+ */
 public class FilesManager {
     
     private static final String TOP_DIR = "javascript_user_files";
-    
-    private final Context mContext;
+    private static FilesManager INSTANCE;
     private final File mDir;
     private final HashMap<String, File> mFiles = new HashMap<>();
     
-    public FilesManager(Context context) {
-        mContext = context;
-        
-        mDir = mContext.getDir(TOP_DIR, Context.MODE_PRIVATE);
+    private FilesManager(Context context) {
+        mDir = context.getDir(TOP_DIR, Context.MODE_PRIVATE);
         
         // Populate file list:
         for (File file : mDir.listFiles()) {
             mFiles.put(file.getName(), file);
         }
+    }
+    
+    public static FilesManager getInstance() {
+        if (null == INSTANCE) {
+            throw new IllegalStateException("Files manager has not been initialized yet");
+        }
+        return INSTANCE;
+    }
+    
+    public static void initialize(Context context) {
+        if (null != INSTANCE) {
+            throw new IllegalStateException("Files manager has been already initialized");
+        }
+        INSTANCE = new FilesManager(context);
     }
     
     public void createFile(String name) throws IOException {

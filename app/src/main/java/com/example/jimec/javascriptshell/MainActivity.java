@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.jimec.javascriptshell.files.FilesManager;
+
 import java.security.InvalidParameterException;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    
+        // Initialize files manager:
+        FilesManager.initialize(this);
         
         // Toolbar:
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

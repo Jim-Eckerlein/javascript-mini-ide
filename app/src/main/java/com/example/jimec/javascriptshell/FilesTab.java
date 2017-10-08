@@ -36,7 +36,6 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     private final ArrayList<FileView> mSelectedFileViews = new ArrayList<>();
     private LinearLayout mFilesView;
     private TabManager mTabManager;
-    private FilesManager mFilesManager;
     private FloatingActionButton mFab;
     private boolean mActiveMultipleFileDeletion = false;
     private ViewGroup mMultipleFileDeletionBar;
@@ -62,8 +61,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     
         // Load user files:
         mFilesView = view.findViewById(R.id.user_file_list);
-        mFilesManager = new FilesManager(getContext());
-        for (String filename : mFilesManager.listFiles()) {
+        for (String filename : FilesManager.getInstance().listFiles()) {
             FileView fileView = FileView.create(getContext(), this, filename, this);
             mFileViews.put(filename, fileView);
             mFilesView.addView(fileView);
@@ -71,7 +69,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     
         // Initialize fab:
         mFab = view.findViewById(R.id.files_fab);
-        mFab.setOnClickListener(new CreateFileDialogFab(getContext(), mFilesManager, getActivity())
+        mFab.setOnClickListener(new CreateFileDialogFab(getContext())
                 .setOnOkListener(this::createFile)
         );
         
@@ -100,7 +98,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     
     public void openFile(String filename) {
         try {
-            mTabManager.loadFile(filename, mFilesManager.readFile(filename));
+            mTabManager.loadFile(filename, FilesManager.getInstance().readFile(filename));
         } catch (IOException e) {
             e.printStackTrace();
     
@@ -122,7 +120,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
      */
     private void createFile(String filename) {
         try {
-            mFilesManager.createFile(filename);
+            FilesManager.getInstance().createFile(filename);
             FileView fileView = FileView.create(getContext(), this, filename, this);
             mFileViews.put(filename, fileView);
             mFilesView.addView(fileView);
@@ -141,7 +139,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     
     public void deleteFile(String filename) {
         try {
-            mFilesManager.deleteFile(filename);
+            FilesManager.getInstance().deleteFile(filename);
             mFilesView.removeView(mFileViews.get(filename));
         } catch (IOException e) {
             e.printStackTrace();
