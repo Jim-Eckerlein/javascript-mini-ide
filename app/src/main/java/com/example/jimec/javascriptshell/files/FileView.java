@@ -136,10 +136,12 @@ public class FileView extends FrameLayout {
         }
         
         // Show select box:
-        mFileSelectBox.animate().setDuration(Util.ANIMATION_DURATION).x(0);
+        mFileSelectBox.animate().setDuration(Util.ANIMATION_DURATION)
+                .x(((MarginLayoutParams) mFileSelectBox.getLayoutParams()).leftMargin);
         
         // Push filename text:
-        mFilenameText.animate().setDuration(Util.ANIMATION_DURATION).x(mFileSelectBox.getWidth());
+        mFilenameText.animate().setDuration(Util.ANIMATION_DURATION)
+                .x(mFileSelectBox.getWidth() + ((MarginLayoutParams) mFileSelectBox.getLayoutParams()).leftMargin);
         
         mFileSelectBoxShown = true;
     }

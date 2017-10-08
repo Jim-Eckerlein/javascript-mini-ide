@@ -7,7 +7,6 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,7 +18,7 @@ import com.example.jimec.javascriptshell.R;
  * Calls onOk() with chosen file and with appended .js extension.
  * Ensures that filename is valid.
  */
-public abstract class CreateFileDialogFab implements FloatingActionButton.OnClickListener {
+public class CreateFileDialogFab implements FloatingActionButton.OnClickListener {
     
     public static final int FILE_NAME_NO_ERROR = 0;
     public static final int FILE_NAME_ERROR_ALREADY_EXISTS = 1;
@@ -27,6 +26,7 @@ public abstract class CreateFileDialogFab implements FloatingActionButton.OnClic
     private final Context mContext;
     private final FilesManager mFilesManager;
     private final Activity mActivity;
+    private OnOkListener mOnOkListener;
     
     public CreateFileDialogFab(Context context, FilesManager filesManager, Activity activity) {
         mContext = context;
@@ -95,18 +95,25 @@ public abstract class CreateFileDialogFab implements FloatingActionButton.OnClic
                     if (errorAlreadyExists.getVisibility() == View.INVISIBLE && errorInvalidCharacter.getVisibility() == View.INVISIBLE
                             && filenameInput.getText().length() > 0) {
                         // Ok clicked => create file
-                        onOk(filenameInput.getText().toString() + mContext.getString(R.string.files_extension));
+                        if (null != mOnOkListener) {
+                            mOnOkListener.onOk(filenameInput.getText().toString() + mContext.getString(R.string.files_extension));
+                        }
                     }
+                    dialog.dismiss();
                 })
                 .setNegativeButton(R.string.cancel, (dialog, which) -> {
-                })
-                .setOnDismissListener(dialog -> {
-                    // Dialog closed => close soft keyboard
-                    mActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                    dialog.cancel();
                 })
                 .show();
     }
     
-    public abstract void onOk(String filename);
+    public CreateFileDialogFab setOnOkListener(OnOkListener onOkListener) {
+        mOnOkListener = onOkListener;
+        return this;
+    }
+    
+    public interface OnOkListener {
+        void onOk(String filename);
+    }
     
 }
