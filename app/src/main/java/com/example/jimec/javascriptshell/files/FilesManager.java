@@ -12,8 +12,6 @@ import java.util.HashMap;
  * Singleton class managing files in internal memory.
  * Since the file manager relies on a context object,
  * you need to call the static initialize function once.
- * <p>
- * TODO: implement rename()
  */
 public class FilesManager {
     
@@ -89,17 +87,9 @@ public class FilesManager {
     }
     
     public void rename(String oldFilename, String newFilename) throws IOException {
-        File file = mFiles.get(oldFilename);
-        if (file == null) {
-            throw new NoSuchFileException(oldFilename);
-        }
-        mFiles.remove(oldFilename);
-        
-        if (!file.renameTo(new File(mDir, newFilename))) {
-            throw new CannotRenameFile(oldFilename, newFilename);
-        }
-        
-        mFiles.put(newFilename, file);
+        create(newFilename);
+        write(newFilename, read(oldFilename));
+        delete(oldFilename);
     }
     
     /**
@@ -180,14 +170,6 @@ public class FilesManager {
     
         NoSuchFileException(String filename) {
             super("No such file: " + filename);
-        }
-    }
-    
-    public class CannotRenameFile extends IOException {
-        private static final long serialVersionUID = 6151929530981175107L;
-        
-        CannotRenameFile(String oldFilename, String newFilename) {
-            super("Cannot rename file: " + oldFilename + " to: " + newFilename);
         }
     }
     
