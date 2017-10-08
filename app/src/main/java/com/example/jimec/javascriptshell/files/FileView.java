@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -95,8 +94,10 @@ public class FileView extends FrameLayout {
         findViewById(R.id.file_rename).setOnClickListener(v -> {
             // Rename file:
             FileNameDialog.show(getContext(), filename -> {
-                // todo: rename file
-                
+                //FilesManager.getInstance().rename(getFilename(), filename);
+                mFilesTab.renameFile(getFilename(), filename);
+                mFilenameText.setText(filename);
+                hideFileSettings();
             }, this::hideFileSettings);
         });
     

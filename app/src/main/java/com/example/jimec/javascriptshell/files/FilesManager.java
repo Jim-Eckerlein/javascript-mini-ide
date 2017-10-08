@@ -88,6 +88,20 @@ public class FilesManager {
         mFiles.remove(filename);
     }
     
+    public void rename(String oldFilename, String newFilename) throws IOException {
+        File file = mFiles.get(oldFilename);
+        if (file == null) {
+            throw new NoSuchFileException(oldFilename);
+        }
+        mFiles.remove(oldFilename);
+        
+        if (!file.renameTo(new File(mDir, newFilename))) {
+            throw new CannotRenameFile(oldFilename, newFilename);
+        }
+        
+        mFiles.put(newFilename, file);
+    }
+    
     /**
      * List all file names without preceding path.
      *
@@ -166,6 +180,14 @@ public class FilesManager {
     
         NoSuchFileException(String filename) {
             super("No such file: " + filename);
+        }
+    }
+    
+    public class CannotRenameFile extends IOException {
+        private static final long serialVersionUID = 6151929530981175107L;
+        
+        CannotRenameFile(String oldFilename, String newFilename) {
+            super("Cannot rename file: " + oldFilename + " to: " + newFilename);
         }
     }
     

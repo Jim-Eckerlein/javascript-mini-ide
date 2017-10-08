@@ -154,6 +154,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     public void deleteFile(String filename) {
         try {
             FilesManager.getInstance().delete(filename);
+            mFileViews.remove(filename);
             mFilesView.removeView(mFileViews.get(filename));
         } catch (IOException e) {
             e.printStackTrace();
@@ -162,6 +163,26 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
             new AlertDialog.Builder(getContext())
                     .setTitle(R.string.error)
                     .setMessage(R.string.files_error_cannot_delete_file)
+                    .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    })
+                    .show();
+        }
+    }
+    
+    public void renameFile(String oldFilename, String newFilename) {
+        FileView fileView = mFileViews.get(oldFilename);
+        mFileViews.remove(oldFilename);
+        mFileViews.put(newFilename, fileView);
+        
+        try {
+            FilesManager.getInstance().rename(oldFilename, newFilename);
+        } catch (IOException e) {
+            e.printStackTrace();
+            
+            // Create error notifier dialog
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.error)
+                    .setMessage(R.string.files_error_cannot_rename_file)
                     .setPositiveButton(R.string.ok, (dialog, which) -> {
                     })
                     .show();
