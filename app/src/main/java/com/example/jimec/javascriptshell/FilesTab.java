@@ -12,8 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.example.jimec.javascriptshell.files.CreateFileDialogFab;
 import com.example.jimec.javascriptshell.files.ExampleView;
+import com.example.jimec.javascriptshell.files.FileNameDialog;
 import com.example.jimec.javascriptshell.files.FileView;
 import com.example.jimec.javascriptshell.files.FilesManager;
 
@@ -69,9 +69,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     
         // Initialize fab:
         mFab = view.findViewById(R.id.files_fab);
-        mFab.setOnClickListener(new CreateFileDialogFab(getContext())
-                .setOnOkListener(this::createFile)
-        );
+        mFab.setOnClickListener(v -> FileNameDialog.show(getContext(), this::createFile, () -> {}));
         
         // Multiple file deletion:
         mMultipleFileDeletionBar = view.findViewById(R.id.files_multiple_file_deletion_bar);

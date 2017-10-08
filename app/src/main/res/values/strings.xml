@@ -5,6 +5,7 @@
     <string name="cancel">Cancel</string>
     <string name="error">Error</string>
     <string name="delete">Delete</string>
+    <string name="rename">Rename</string>
 
     <string name="help_editor_heading">Editor</string>
     <string name="help_editor">Edit your script. Tap a key to write its primary text, hold to write the secondary one.</string>

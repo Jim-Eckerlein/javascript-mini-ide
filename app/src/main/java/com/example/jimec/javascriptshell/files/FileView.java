@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -80,6 +81,7 @@ public class FileView extends FrameLayout {
             return true;
         });
     
+        // Delete button:
         findViewById(R.id.file_delete).setOnClickListener(v -> {
             // Delete file, open "are you sure" dialog:
             new AlertDialog.Builder(getContext()).setTitle(R.string.delete)
@@ -87,6 +89,15 @@ public class FileView extends FrameLayout {
                     .setPositiveButton(R.string.ok, (dialog, which) -> mFilesTab.deleteFile(getFilename()))
                     .setNegativeButton(R.string.cancel, ((dialog, which) -> hideFileSettings()))
                     .show();
+        });
+        
+        // Rename button:
+        findViewById(R.id.file_rename).setOnClickListener(v -> {
+            // Rename file:
+            FileNameDialog.show(getContext(), filename -> {
+                // todo: rename file
+                
+            }, this::hideFileSettings);
         });
     
         // Pre-baked animations:
