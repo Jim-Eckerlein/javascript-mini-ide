@@ -85,6 +85,9 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
         view.post(() -> {
             // Hide multiple file selection bar initially:
             mMultipleFileDeletionBar.setY(mScroller.getHeight());
+            
+            // Load session file:
+            mTabManager.loadSession();
         });
         
         return view;
@@ -108,6 +111,10 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
                     })
                     .show();
         }
+    }
+    
+    public void openDefaultExample() {
+        mTabManager.loadExample(getResources().getStringArray(R.array.files_examples_array)[0], R.raw.example_demo);
     }
     
     public void writeFile(String filename, String editorCode) {

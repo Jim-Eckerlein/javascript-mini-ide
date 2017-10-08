@@ -1,6 +1,8 @@
 package com.example.jimec.javascriptshell;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.RawRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -127,5 +129,26 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
             default:
                 throw new InvalidParameterException();
         }
+    }
+    
+    public void loadSession() {
+        String sessionFile = mActivity.getPreferences(Context.MODE_PRIVATE).getString(mActivity.getString(R.string.pref_session_file), null);
+        if(sessionFile != null) {
+            mFilesTab.openFile(sessionFile);
+        }
+        else {
+            mFilesTab.openDefaultExample();
+        }
+    }
+    
+    public void saveSession() {
+        SharedPreferences.Editor edit = mActivity.getPreferences(Context.MODE_PRIVATE).edit();
+        if(!mEditorTab.currentFileIsExample()) {
+            edit.putString(mActivity.getString(R.string.pref_session_file), mEditorTab.getCurrentFileName());
+        }
+        else {
+            edit.putString(mActivity.getString(R.string.pref_session_file), null);
+        }
+        edit.apply();
     }
 }
