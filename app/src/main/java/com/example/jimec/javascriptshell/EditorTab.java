@@ -18,6 +18,7 @@ public class EditorTab extends Fragment {
     private EditorView mEditor;
     private ViewPager mViewPager;
     private TextView mCurrentFileName;
+    private boolean mCurrentFileIsExample = false;
     
     public void setPager(ViewPager viewPager) {
         mViewPager = viewPager;
@@ -40,15 +41,14 @@ public class EditorTab extends Fragment {
         Keyboard keyboard = view.findViewById(R.id.keyboard);
         keyboard.setEditor(mEditor);
     
-        // Load initial demo:
-        loadExample(R.raw.example_demo);
-    
         view.findViewById(R.id.run_code_key).setOnClickListener(v -> mViewPager.setCurrentItem(TabManager.FRAGMENT_POSITION_RUN));
         
         return view;
     }
     
-    public void loadExample(@RawRes final int id) {
+    public void loadExample(String exampleTitle, @RawRes final int id) {
+        mCurrentFileName.setText(exampleTitle);
+        mCurrentFileIsExample = true;
         mEditor.clear();
         mEditor.write(Util.readTextFile(getContext(), id));
         mEditor.moveCursorToStart();
@@ -58,13 +58,19 @@ public class EditorTab extends Fragment {
         return mEditor;
     }
     
-    public void loadFile(String content) {
+    public void loadFile(String filename, String content) {
+        mCurrentFileName.setText(filename);
+        mCurrentFileIsExample = false;
         mEditor.clear();
         mEditor.write(content);
         mEditor.moveCursorToStart();
     }
     
-    public void setCurrentFileName(String filename) {
-        mCurrentFileName.setText(filename);
+    public String getCurrentFileName() {
+        return mCurrentFileName.getText().toString();
+    }
+    
+    public boolean currentFileIsExample() {
+        return mCurrentFileIsExample;
     }
 }

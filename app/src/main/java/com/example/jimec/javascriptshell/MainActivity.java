@@ -72,15 +72,15 @@ public class MainActivity extends AppCompatActivity {
     
         switch (id) {
             case R.id.action_format_code:
-                mTabManager.getEditorTab().getEditor().format();
+                mTabManager.editorFormat();
                 return true;
         
             case R.id.action_clear_code:
-                mTabManager.getEditorTab().getEditor().clear();
+                mTabManager.editorClear();
                 return true;
         
             case R.id.action_undo:
-                mTabManager.getEditorTab().getEditor().undo();
+                mTabManager.editorUndo();
                 return true;
         
             case R.id.action_about:
@@ -99,14 +99,14 @@ public class MainActivity extends AppCompatActivity {
                 // Share code:
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, mTabManager.getEditorTab().getEditor().toString());
+                sendIntent.putExtra(Intent.EXTRA_TEXT, mTabManager.getEditorCode());
                 sendIntent.setType("application/javascript");
                 startActivity(sendIntent);
                 return true;
         
             case R.id.action_delete_multiple_files:
                 // Delete multiple files from file tab
-                mTabManager.getFilesTab().startMultipleFileDeletion();
+                mTabManager.startMultipleFileDeletion();
                 return true;
             
             default:

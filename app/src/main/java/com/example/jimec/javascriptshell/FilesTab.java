@@ -112,6 +112,22 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
         }
     }
     
+    public void writeFile(String filename, String editorCode) {
+        try {
+            FilesManager.getInstance().write(filename, editorCode);
+        } catch (IOException e) {
+            e.printStackTrace();
+            
+            // Create error notifier dialog
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.error)
+                    .setMessage(R.string.files_error_cannot_save_file)
+                    .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    })
+                    .show();
+        }
+    }
+    
     /**
      * Creates a new file.
      * Appends the .js extension.

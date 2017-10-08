@@ -31,13 +31,70 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
         mFilesTab.setTabManager(this);
     }
     
+    public void loadExample(String exampleName, @RawRes int id) {
+        mEditorTab.loadExample(mActivity.getString(R.string.files_example_title, exampleName), id);
+        mViewPager.setCurrentItem(FRAGMENT_POSITION_EDITOR);
+    }
+    
+    public void loadFile(String filename, String content) {
+        mEditorTab.loadFile(filename, content);
+        mViewPager.setCurrentItem(FRAGMENT_POSITION_EDITOR);
+    }
+    
+    public void startMultipleFileDeletion() {
+        mFilesTab.startMultipleFileDeletion();
+    }
+    
+    public void editorFormat() {
+        mEditorTab.getEditor().format();
+    }
+    
+    public void editorClear() {
+        mEditorTab.getEditor().clear();
+    }
+    
+    public void editorUndo() {
+        mEditorTab.getEditor().undo();
+    }
+    
+    public String getEditorCode() {
+        return mEditorTab.getEditor().toString();
+    }
+    
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        switch (tab.getPosition()) {
+            case TabManager.FRAGMENT_POSITION_RUN:
+                mRunTab.clearOutput();
+                mRunTab.launchV8(mEditorTab.getEditor().toString());
+        }
+        mActivity.invalidateOptionsMenu();
+    }
+    
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+        switch (tab.getPosition()) {
+            
+            // Break execution:
+            case TabManager.FRAGMENT_POSITION_RUN:
+                mRunTab.stopV8();
+                break;
+            
+            // Quit editor -> save file:
+            case TabManager.FRAGMENT_POSITION_EDITOR:
+                if (!mEditorTab.currentFileIsExample()) {
+                    mFilesTab.writeFile(mEditorTab.getCurrentFileName(), getEditorCode());
+                }
+        }
+    }
+    
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+    }
+    
     @Override
     public int getCount() {
         return NUM_FRAGMENTS;
-    }
-    
-    public EditorTab getEditorTab() {
-        return mEditorTab;
     }
     
     @Override
@@ -66,51 +123,5 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
             default:
                 throw new InvalidParameterException();
         }
-    }
-    
-    public void loadExample(String exampleName, @RawRes int id) {
-        mEditorTab.loadExample(id);
-        mEditorTab.setCurrentFileName(mActivity.getString(R.string.files_example_title, exampleName));
-        mViewPager.setCurrentItem(FRAGMENT_POSITION_EDITOR);
-    }
-    
-    public void loadFile(String filename, String content) {
-        mEditorTab.loadFile(content);
-        mEditorTab.setCurrentFileName(filename);
-        mViewPager.setCurrentItem(FRAGMENT_POSITION_EDITOR);
-    }
-    
-    public void runCode() {
-        mRunTab.clearOutput();
-        mRunTab.launchV8(mEditorTab.getEditor().toString());
-    }
-    
-    public void stopRunningCode() {
-        mRunTab.stopV8();
-    }
-    
-    public FilesTab getFilesTab() {
-        return mFilesTab;
-    }
-    
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        switch (tab.getPosition()) {
-            case TabManager.FRAGMENT_POSITION_RUN:
-                runCode();
-        }
-        mActivity.invalidateOptionsMenu();
-    }
-    
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-        switch (tab.getPosition()) {
-            case TabManager.FRAGMENT_POSITION_RUN:
-                stopRunningCode();
-        }
-    }
-    
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
     }
 }
