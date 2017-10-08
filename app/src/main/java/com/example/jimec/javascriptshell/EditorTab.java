@@ -19,6 +19,7 @@ public class EditorTab extends Fragment {
     private ViewPager mViewPager;
     private TextView mCurrentFileName;
     private boolean mCurrentFileIsExample = false;
+    private boolean mHasOpenedFile = false;
     
     public void setPager(ViewPager viewPager) {
         mViewPager = viewPager;
@@ -49,6 +50,7 @@ public class EditorTab extends Fragment {
     public void loadExample(String exampleTitle, @RawRes final int id) {
         mCurrentFileName.setText(exampleTitle);
         mCurrentFileIsExample = true;
+        mHasOpenedFile = true;
         mEditor.clear();
         mEditor.write(Util.readTextFile(getContext(), id));
         mEditor.moveCursorToStart();
@@ -61,6 +63,7 @@ public class EditorTab extends Fragment {
     public void loadFile(String filename, String content) {
         mCurrentFileName.setText(filename);
         mCurrentFileIsExample = false;
+        mHasOpenedFile = true;
         mEditor.clear();
         mEditor.write(content);
         mEditor.moveCursorToStart();
@@ -72,5 +75,9 @@ public class EditorTab extends Fragment {
     
     public boolean currentFileIsExample() {
         return mCurrentFileIsExample;
+    }
+    
+    public boolean hasOpenedFile() {
+        return mHasOpenedFile;
     }
 }

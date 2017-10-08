@@ -61,6 +61,12 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
         return mEditorTab.getEditor().toString();
     }
     
+    public void saveEditorFile() {
+        if (!mEditorTab.currentFileIsExample() && mEditorTab.hasOpenedFile()) {
+            mFilesTab.writeFile(mEditorTab.getCurrentFileName(), getEditorCode());
+        }
+    }
+    
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         switch (tab.getPosition()) {
@@ -82,9 +88,7 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
             
             // Quit editor -> save file:
             case TabManager.FRAGMENT_POSITION_EDITOR:
-                if (!mEditorTab.currentFileIsExample()) {
-                    mFilesTab.writeFile(mEditorTab.getCurrentFileName(), getEditorCode());
-                }
+                saveEditorFile();
         }
     }
     

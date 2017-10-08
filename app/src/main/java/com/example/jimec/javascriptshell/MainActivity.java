@@ -67,6 +67,14 @@ public class MainActivity extends AppCompatActivity {
     }
     
     @Override
+    protected void onStop() {
+        super.onStop();
+    
+        // Save file:
+        mTabManager.saveEditorFile();
+    }
+    
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         @IdRes int id = item.getItemId();
     
