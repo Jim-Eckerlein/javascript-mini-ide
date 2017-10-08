@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -12,7 +13,7 @@ import java.util.HashMap;
  * Since the file manager relies on a context object,
  * you need to call the static initialize function once.
  * <p>
- * TODO: implement read->string, write(string), rename()
+ * TODO: implement rename()
  */
 public class FilesManager {
     
@@ -46,6 +47,7 @@ public class FilesManager {
     /**
      * Initialize the static files manager object with the given context.
      * Throws if already initialized.
+     *
      * @param context Context of files manager. Usually the activity itself.
      */
     public static void initialize(Context context) {
@@ -88,6 +90,7 @@ public class FilesManager {
     
     /**
      * List all file names without preceding path.
+     *
      * @return String array containing all file names.
      */
     public String[] listFiles() {
@@ -121,6 +124,25 @@ public class FilesManager {
     
         stream.close();
         return buffer.toString();
+    }
+    
+    /**
+     * Write file content.
+     * Preserves white-space.
+     * Replaces whole old file content.
+     *
+     * @param filename Name of file
+     * @param content  Content to be written into file.
+     * @throws IOException If file cannot be written.
+     */
+    public void write(String filename, String content) throws IOException {
+        File file = mFiles.get(filename);
+        if (null == file) {
+            throw new NoSuchFileException(filename);
+        }
+        FileOutputStream stream = new FileOutputStream(file);
+        stream.write(content.getBytes());
+        stream.close();
     }
     
     public class FileAlreadyExistsException extends IOException {
