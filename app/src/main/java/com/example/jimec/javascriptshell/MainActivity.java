@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mPager);
-        tabLayout.addOnTabSelectedListener(new TabSelectListener(mTabManager, this));
+        tabLayout.addOnTabSelectedListener(mTabManager);
         
         // TODO: uncomment
         //mPager.setCurrentItem(TabManager.FRAGMENT_POSITION_EDITOR);
