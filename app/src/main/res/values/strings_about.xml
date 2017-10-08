@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_content">By Jim Eckerlein, 2017\nProgrammed for my school work.\nA JavaScript editor and execution suite for Android.</string>
+    <string name="about_github_title">GitHub Repository</string>
+    <string name="about_third_party_software_heading">3rd party software:</string>
+    <string name="about_j2v8_title">J2V8</string>
+    <string name="about_j2v8_description">The JavaScript evaluator uses the high-performance J2V8 engine, a Java binding to Google\'s V8 engine</string>
+    <string name="about_j2v8_link">https://github.com/eclipsesource/J2V8</string>
+    <string name="about_keyboardless_edittext_title">KeyboardlessEditText</string>
+    <string name="about_keyboardless_edittext_description">A wrapper around a native EditText, but without a soft keyboard, since I implemented my own one.</string>
+    <string name="about_keyboardless_edittext_link">https://github.com/danialgoodwin/android-widget-keyboardless-edittext</string>
+</resources>

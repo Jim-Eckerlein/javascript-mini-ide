@@ -55,7 +55,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
         // Fill examples list from string array:
         LinearLayout examplesView = view.findViewById(R.id.example_list);
         int position = 0;
-        for (String exampleName : getResources().getStringArray(R.array.examples_array)) {
+        for (String exampleName : getResources().getStringArray(R.array.files_examples_array)) {
             examplesView.addView(ExampleView.create(getContext(), mTabManager, EXAMPLE_ARRAY_FILE_MAP[position++], exampleName));
         }
     

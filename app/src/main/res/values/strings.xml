@@ -7,66 +7,7 @@
     <string name="delete">Delete</string>
     <string name="rename">Rename</string>
 
-    <string name="help_editor_heading">Editor</string>
-    <string name="help_editor">Edit your script. Tap a key to write its primary text, hold to write the secondary one.</string>
-    <string name="help_run_heading">Run</string>
-    <string name="help_run">Run your script. Leaving the run tab will immediately stop the script execution.</string>
-    <string name="help_files_heading">Files</string>
-    <string name="help_files">Select an example script.</string>
-
-    <string name="about_content">By Jim Eckerlein, 2017\nProgrammed for my school work.\nA JavaScript editor and execution suite for Android.</string>
-    <string name="about_github_title">GitHub Repository</string>
-    <string name="about_third_party_software_heading">3rd party software:</string>
-    <string name="about_j2v8_title">J2V8</string>
-    <string name="about_j2v8_description">The JavaScript evaluator uses the high-performance J2V8 engine, a Java binding to Google\'s V8 engine</string>
-    <string name="about_j2v8_link">https://github.com/eclipsesource/J2V8</string>
-    <string name="about_keyboardless_edittext_title">KeyboardlessEditText</string>
-    <string name="about_keyboardless_edittext_description">A wrapper around a native EditText, but without a soft keyboard, since I implemented my own one.</string>
-    <string name="about_keyboardless_edittext_link">https://github.com/danialgoodwin/android-widget-keyboardless-edittext</string>
-
-    <string name="action_share">Share</string>
-    <string name="action_help">Help</string>
-    <string name="action_about">About</string>
-    <string name="action_clear_code">Clear code</string>
-    <string name="action_format_code">Format code</string>
-    <string name="action_undo">Undo</string>
-    <string name="action_delete_file">Delete file</string>
-
-    <string name="files_tab_title">Files</string>
-    <string name="files_create_title">Create file</string>
-    <string name="files_create_name_hint">Filename …</string>
-    <string name="files_extension">.js</string>
-    <string name="files_create_error_already_exists">File already exists</string>
-    <string name="files_create_error_invalid_character">Only A–Z, a–z, 0–9, Space, Dash and Underscore are allowed</string>
-    <string name="files_example_list_title">Examples</string>
-    <string name="files_file_list_title">Files</string>
-    <string name="files_error_cannot_create_file">Cannot create file.</string>
-    <string name="files_error_cannot_delete_file">Cannot delete file.</string>
-    <string name="files_error_cannot_open_file">Cannot open file.</string>
-    <string name="files_error_cannot_save_file">Cannot save file.</string>
-    <string name="files_error_cannot_rename_file">Cannot rename file.</string>
-    <string name="files_are_you_sure_to_delete_single_file">Are you sure to delete %1$s?</string>
-    <plurals name="files_are_you_sure_to_delete_multiple_files">
-        <item quantity="one">Are you sure to delete one file?</item>
-        <item quantity="other">Are you sure to delete %1$d files?</item>
-    </plurals>
-    <plurals name="files_multiple_files_selected">
-        <item quantity="one">1 file selected</item>
-        <item quantity="other">%1$d files selected</item>
-    </plurals>
-    <string name="files_example_title">Example – %1$s</string>
-
     <string name="editor_tab_title">Editor</string>
 
     <string name="run_tab_title">Run</string>
-
-    <string-array name="examples_array">
-        <item>Demo</item>
-        <item>Print</item>
-        <item>Array</item>
-        <item>Object</item>
-        <item>Function</item>
-        <item>Time</item>
-        <item>Typeof</item>
-    </string-array>
 </resources>
