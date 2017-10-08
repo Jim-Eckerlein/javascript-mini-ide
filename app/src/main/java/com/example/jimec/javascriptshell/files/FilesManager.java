@@ -30,6 +30,12 @@ public class FilesManager {
         }
     }
     
+    /**
+     * Get the static files manager.
+     * Throws if no call to initialize has occurred yet.
+     *
+     * @return Static files manager object.
+     */
     public static FilesManager getInstance() {
         if (null == INSTANCE) {
             throw new IllegalStateException("Files manager has not been initialized yet");
@@ -37,6 +43,11 @@ public class FilesManager {
         return INSTANCE;
     }
     
+    /**
+     * Initialize the static files manager object with the given context.
+     * Throws if already initialized.
+     * @param context Context of files manager. Usually the activity itself.
+     */
     public static void initialize(Context context) {
         if (null != INSTANCE) {
             throw new IllegalStateException("Files manager has been already initialized");
@@ -44,25 +55,41 @@ public class FilesManager {
         INSTANCE = new FilesManager(context);
     }
     
-    public void createFile(String name) throws IOException {
-        File newFile = new File(mDir, name);
+    /**
+     * Create a new file.
+     *
+     * @param filename Name of new file.
+     * @throws IOException If file cannot be created, e.g. if that file already exists.
+     */
+    public void create(String filename) throws IOException {
+        File newFile = new File(mDir, filename);
         if (!newFile.createNewFile()) {
-            throw new FileAlreadyExistsException(name);
+            throw new FileAlreadyExistsException(filename);
         }
-        mFiles.put(name, newFile);
+        mFiles.put(filename, newFile);
     }
     
-    public void deleteFile(String name) throws IOException {
-        File file = mFiles.get(name);
+    /**
+     * Delete a file.
+     *
+     * @param filename Name of file.
+     * @throws IOException If file cannot be deleted, e.g. if that file does not exist.
+     */
+    public void delete(String filename) throws IOException {
+        File file = mFiles.get(filename);
         if (file == null) {
-            throw new NoSuchFileException(name);
+            throw new NoSuchFileException(filename);
         }
         if (!file.delete()) {
-            throw new CannotDeleteFileException(name);
+            throw new CannotDeleteFileException(filename);
         }
-        mFiles.remove(name);
+        mFiles.remove(filename);
     }
     
+    /**
+     * List all file names without preceding path.
+     * @return String array containing all file names.
+     */
     public String[] listFiles() {
         String[] array = new String[mFiles.size()];
         int i = 0;
@@ -72,10 +99,18 @@ public class FilesManager {
         return array;
     }
     
-    public String readFile(String name) throws IOException {
-        File file = mFiles.get(name);
+    /**
+     * Read file content.
+     * Preserves white-space.
+     *
+     * @param filename Name of file.
+     * @return File content as string.
+     * @throws IOException If file cannot be read.
+     */
+    public String read(String filename) throws IOException {
+        File file = mFiles.get(filename);
         if (null == file) {
-            throw new NoSuchFileException(name);
+            throw new NoSuchFileException(filename);
         }
         StringBuilder buffer = new StringBuilder();
         FileInputStream stream = new FileInputStream(file);

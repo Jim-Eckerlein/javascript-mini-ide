@@ -98,7 +98,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     
     public void openFile(String filename) {
         try {
-            mTabManager.loadFile(filename, FilesManager.getInstance().readFile(filename));
+            mTabManager.loadFile(filename, FilesManager.getInstance().read(filename));
         } catch (IOException e) {
             e.printStackTrace();
     
@@ -120,7 +120,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
      */
     private void createFile(String filename) {
         try {
-            FilesManager.getInstance().createFile(filename);
+            FilesManager.getInstance().create(filename);
             FileView fileView = FileView.create(getContext(), this, filename, this);
             mFileViews.put(filename, fileView);
             mFilesView.addView(fileView);
@@ -139,7 +139,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     
     public void deleteFile(String filename) {
         try {
-            FilesManager.getInstance().deleteFile(filename);
+            FilesManager.getInstance().delete(filename);
             mFilesView.removeView(mFileViews.get(filename));
         } catch (IOException e) {
             e.printStackTrace();
