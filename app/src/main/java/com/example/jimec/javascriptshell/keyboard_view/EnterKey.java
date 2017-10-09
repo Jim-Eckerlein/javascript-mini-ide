@@ -7,8 +7,8 @@ import android.util.AttributeSet;
 import com.example.jimec.javascriptshell.R;
 
 public class EnterKey extends android.support.v7.widget.AppCompatImageView implements KeyboardKeyConnection {
-
-    private Keyboard mKeyboard;
+    
+    private KeyboardView mKeyboard;
 
     public EnterKey(Context context) {
         super(context);
@@ -31,7 +31,7 @@ public class EnterKey extends android.support.v7.widget.AppCompatImageView imple
     }
 
     @Override
-    public void setKeyboard(Keyboard keyboard) {
+    public void setKeyboard(KeyboardView keyboard) {
         mKeyboard = keyboard;
     }
     

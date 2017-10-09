@@ -23,6 +23,9 @@
         android:layout_weight="1"
         android:padding="8dp"/>
 
-    <include layout="@layout/view_keyboard"/>
+    <com.example.jimec.javascriptshell.keyboard_view.KeyboardView
+        android:id="@+id/keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

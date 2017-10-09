@@ -8,8 +8,8 @@ import android.widget.FrameLayout;
 import com.example.jimec.javascriptshell.R;
 
 public class SpaceKey extends FrameLayout implements KeyboardKeyConnection {
-
-    private Keyboard mKeyboard;
+    
+    private KeyboardView mKeyboard;
     private View mSpaceKeyView;
 
     public SpaceKey(Context context) {
@@ -31,11 +31,11 @@ public class SpaceKey extends FrameLayout implements KeyboardKeyConnection {
         inflate(getContext(), R.layout.view_key_space, this);
         mSpaceKeyView = findViewById(R.id.space_key_view);
         setOnTouchListener(new SpaceKey.TouchListener());
-        mSpaceKeyView.setAlpha(Keyboard.ALPHA_INACTIVE);
+        mSpaceKeyView.setAlpha(KeyboardView.ALPHA_INACTIVE);
     }
 
     @Override
-    public void setKeyboard(Keyboard keyboard) {
+    public void setKeyboard(KeyboardView keyboard) {
         mKeyboard = keyboard;
     }
     
@@ -49,13 +49,13 @@ public class SpaceKey extends FrameLayout implements KeyboardKeyConnection {
         @Override
         public void onDown() {
             super.onDown();
-            mSpaceKeyView.setAlpha(Keyboard.ALPHA_ACTIVE);
+            mSpaceKeyView.setAlpha(KeyboardView.ALPHA_ACTIVE);
         }
 
         @Override
         public void onUp() {
             super.onUp();
-            mSpaceKeyView.setAlpha(Keyboard.ALPHA_INACTIVE);
+            mSpaceKeyView.setAlpha(KeyboardView.ALPHA_INACTIVE);
         }
     }
 }

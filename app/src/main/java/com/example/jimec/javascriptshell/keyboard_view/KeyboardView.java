@@ -10,7 +10,7 @@ import com.example.jimec.javascriptshell.R;
 import com.example.jimec.javascriptshell.Util;
 import com.example.jimec.javascriptshell.editor.EditorView;
 
-public class Keyboard extends FrameLayout {
+public class KeyboardView extends FrameLayout {
     
     public static float ALPHA_INACTIVE = 0.4f;
     public static float ALPHA_ACTIVE = 0.8f;
@@ -20,22 +20,23 @@ public class Keyboard extends FrameLayout {
     private EditorView mEditor;
     private ViewGroup mInputKeyboard;
     
-    public Keyboard(Context context) {
+    public KeyboardView(Context context) {
         super(context);
+        init();
     }
     
-    public Keyboard(Context context, AttributeSet attrs) {
+    public KeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
     
-    public Keyboard(Context context, AttributeSet attrs, int defStyleAttr) {
+    public KeyboardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
     }
     
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-    
+    private void init() {
+        inflate(getContext(), R.layout.view_keyboard, this);
         setKeyboardToChildKeys(this);
         findShiftKey(this);
         mInputKeyboard = findViewById(R.id.input_keyboard);

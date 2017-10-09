@@ -33,17 +33,17 @@ public class ShiftKey extends android.support.v7.widget.AppCompatImageView imple
     private void init() {
         setOnTouchListener(new TouchListener());
         setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.shift));
-        setAlpha(Keyboard.ALPHA_INACTIVE);
+        setAlpha(KeyboardView.ALPHA_INACTIVE);
     }
 
     private void setStatus(int status) {
         mStatus = status;
         if (INACTIVE == status) {
             DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyColor));
-            setAlpha(Keyboard.ALPHA_INACTIVE);
+            setAlpha(KeyboardView.ALPHA_INACTIVE);
         } else if (SHIFT == status) {
             DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.keyColor));
-            setAlpha(Keyboard.ALPHA_ACTIVE);
+            setAlpha(KeyboardView.ALPHA_ACTIVE);
         } else if (ALL_CAPS == status) {
             setAlpha(1.0f);
             DrawableCompat.setTint(DrawableCompat.wrap(getDrawable()), ContextCompat.getColor(getContext(), R.color.secondaryColor));
@@ -51,7 +51,7 @@ public class ShiftKey extends android.support.v7.widget.AppCompatImageView imple
     }
 
     @Override
-    public void setKeyboard(Keyboard keyboard) {
+    public void setKeyboard(KeyboardView keyboard) {
     }
 
     public String process(String input) {

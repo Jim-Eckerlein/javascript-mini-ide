@@ -12,7 +12,7 @@ public class Key extends LinearLayout implements KeyboardKeyConnection {
 
     private TextView mPrimary;
     private TextView mSecondary;
-    private Keyboard mKeyboard;
+    private KeyboardView mKeyboard;
 
     public Key(Context context) {
         super(context);
@@ -73,7 +73,7 @@ public class Key extends LinearLayout implements KeyboardKeyConnection {
     }
 
     @Override
-    public void setKeyboard(Keyboard keyboard) {
+    public void setKeyboard(KeyboardView keyboard) {
         mKeyboard = keyboard;
     }
     

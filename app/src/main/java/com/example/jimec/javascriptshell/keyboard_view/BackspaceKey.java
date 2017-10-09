@@ -7,8 +7,8 @@ import android.util.AttributeSet;
 import com.example.jimec.javascriptshell.R;
 
 public class BackspaceKey extends android.support.v7.widget.AppCompatImageView implements KeyboardKeyConnection {
-
-    private Keyboard mKeyboard;
+    
+    private KeyboardView mKeyboard;
 
     public BackspaceKey(Context context) {
         super(context);
@@ -28,11 +28,11 @@ public class BackspaceKey extends android.support.v7.widget.AppCompatImageView i
     private void init() {
         setOnTouchListener(new BackspaceKey.TouchListener());
         setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.backspace));
-        setAlpha(Keyboard.ALPHA_INACTIVE);
+        setAlpha(KeyboardView.ALPHA_INACTIVE);
     }
 
     @Override
-    public void setKeyboard(Keyboard keyboard) {
+    public void setKeyboard(KeyboardView keyboard) {
         mKeyboard = keyboard;
     }
     
@@ -46,13 +46,13 @@ public class BackspaceKey extends android.support.v7.widget.AppCompatImageView i
         @Override
         public void onDown() {
             super.onDown();
-            setAlpha(Keyboard.ALPHA_ACTIVE);
+            setAlpha(KeyboardView.ALPHA_ACTIVE);
         }
 
         @Override
         public void onUp() {
             super.onUp();
-            setAlpha(Keyboard.ALPHA_INACTIVE);
+            setAlpha(KeyboardView.ALPHA_INACTIVE);
         }
 
     }

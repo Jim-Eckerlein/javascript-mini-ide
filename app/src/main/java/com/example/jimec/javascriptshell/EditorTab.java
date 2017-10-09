@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.jimec.javascriptshell.editor.EditorView;
-import com.example.jimec.javascriptshell.keyboard_view.Keyboard;
+import com.example.jimec.javascriptshell.keyboard_view.KeyboardView;
 
 public class EditorTab extends Fragment {
     
@@ -39,7 +39,7 @@ public class EditorTab extends Fragment {
         mCurrentFileName = view.findViewById(R.id.current_file_name);
     
         // Keyboard:
-        Keyboard keyboard = view.findViewById(R.id.keyboard);
+        KeyboardView keyboard = view.findViewById(R.id.keyboard);
         keyboard.setEditor(mEditor);
     
         view.findViewById(R.id.run_code_key).setOnClickListener(v -> mViewPager.setCurrentItem(TabManager.FRAGMENT_POSITION_RUN));
