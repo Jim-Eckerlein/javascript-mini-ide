@@ -12,10 +12,9 @@ import com.example.jimec.javascriptshell.R;
 
 public class V8View extends FrameLayout {
     
-    private TextView mConsole;
+    private TextView mConsole, mErrorViewer, mStatsViewer;
     private V8Thread mV8Thread;
     private V8Joiner mV8Joiner;
-    private TextView mErrorViewer;
     
     public V8View(@NonNull Context context) {
         super(context);
@@ -36,13 +35,14 @@ public class V8View extends FrameLayout {
         inflate(getContext(), R.layout.view_v8, this);
         mConsole = findViewById(R.id.console);
         mErrorViewer = findViewById(R.id.error_viewer);
+        mStatsViewer = findViewById(R.id.stats_viewer);
     }
     
     public void launchV8(String code) {
         stopV8();
         mV8Thread = new V8Thread(mConsole, code);
         mV8Thread.start();
-        mV8Joiner = new V8Joiner(mV8Thread, mErrorViewer);
+        mV8Joiner = new V8Joiner(mV8Thread, mErrorViewer, mStatsViewer, getContext());
         mV8Joiner.start();
     }
     
@@ -65,5 +65,6 @@ public class V8View extends FrameLayout {
     public void clearOutput() {
         mConsole.setText("");
         mErrorViewer.setText("");
+        mStatsViewer.setText("");
     }
 }

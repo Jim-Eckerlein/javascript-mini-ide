@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <HorizontalScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true"
@@ -17,7 +18,8 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:textSize="14sp"
-            android:typeface="monospace"/>
+            android:typeface="monospace"
+            tools:text="Hello world"/>
 
         <TextView
             android:id="@+id/error_viewer"
@@ -26,7 +28,18 @@
             android:padding="6dp"
             android:textColor="@color/textError"
             android:textSize="12sp"
-            android:typeface="monospace"/>
+            android:typeface="monospace"
+            tools:text="Error"/>
+
+        <TextView
+            android:id="@+id/stats_viewer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.5"
+            android:padding="6dp"
+            android:textSize="12sp"
+            android:typeface="monospace"
+            tools:text="Stats"/>
 
     </LinearLayout>
 
