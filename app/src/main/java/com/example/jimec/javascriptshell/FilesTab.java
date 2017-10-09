@@ -41,6 +41,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     private ViewGroup mMultipleFileDeletionBar;
     private TextView mMultipleFileDeletionCounter;
     private ScrollView mScroller;
+    private boolean mSessionLoaded = false;
     
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,7 +89,10 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
             mMultipleFileDeletionBar.setY(mScroller.getHeight());
             
             // Load session file:
-            mTabManager.loadSession();
+            if (!mSessionLoaded) {
+                mTabManager.loadSession();
+                mSessionLoaded = true;
+            }
         });
         
         return view;
