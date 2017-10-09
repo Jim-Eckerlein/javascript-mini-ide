@@ -8,7 +8,7 @@ import android.widget.FrameLayout;
 
 import com.example.jimec.javascriptshell.R;
 import com.example.jimec.javascriptshell.Util;
-import com.example.jimec.javascriptshell.editor.EditorView;
+import com.example.jimec.javascriptshell.editor.HighlighterEditText;
 
 public class KeyboardView extends FrameLayout {
     
@@ -17,7 +17,7 @@ public class KeyboardView extends FrameLayout {
     private final HideKey mHideKey = new HideKey();
     private final ShowKey mShowKey = new ShowKey();
     private ShiftKey mShiftKey;
-    private EditorView mEditor;
+    private HighlighterEditText mEditor;
     private ViewGroup mInputKeyboard;
     
     public KeyboardView(Context context) {
@@ -80,7 +80,7 @@ public class KeyboardView extends FrameLayout {
         mEditor.backspace();
     }
     
-    public void setEditor(EditorView editor) {
+    public void setEditor(HighlighterEditText editor) {
         mEditor = editor;
     }
     

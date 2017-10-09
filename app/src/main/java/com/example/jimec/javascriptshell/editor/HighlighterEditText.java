@@ -14,7 +14,7 @@ import java.util.ArrayDeque;
 
 import static com.example.jimec.javascriptshell.Util.clamp;
 
-public class EditorView extends FrameLayout {
+public class HighlighterEditText extends FrameLayout {
     
     public static final int MAX_UNDO_HISTORY = 50;
     
@@ -27,17 +27,17 @@ public class EditorView extends FrameLayout {
     private boolean mSkipHistoryBackup = false;
     private int mCursorHistoryCurrentPosition;
     
-    public EditorView(Context context) {
+    public HighlighterEditText(Context context) {
         super(context);
         init();
     }
     
-    public EditorView(Context context, AttributeSet attrs) {
+    public HighlighterEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
     
-    public EditorView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public HighlighterEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
