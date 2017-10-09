@@ -44,15 +44,13 @@ public class FilesManager {
     
     /**
      * Initialize the static files manager object with the given context.
-     * Throws if already initialized.
      *
      * @param context Context of files manager. Usually the activity itself.
      */
     public static void initialize(Context context) {
-        if (null != INSTANCE) {
-            throw new IllegalStateException("Files manager has been already initialized");
+        if (null == INSTANCE) {
+            INSTANCE = new FilesManager(context);
         }
-        INSTANCE = new FilesManager(context);
     }
     
     /**
