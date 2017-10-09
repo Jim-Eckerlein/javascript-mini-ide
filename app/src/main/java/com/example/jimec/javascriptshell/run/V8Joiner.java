@@ -22,21 +22,20 @@ public class V8Joiner extends Thread {
     
     @Override
     public void run() {
-        long start = System.currentTimeMillis();
-        
         try {
             // Wait till V8 thread is finished:
             mV8Thread.join();
-    
-            // Print execution stats:
-            long time = System.currentTimeMillis() - start;
-            Util.runOnUiThread(() -> mStatsViewer.setText(mContext.getString(R.string.run_stats, ((double) time) / 1000.0)));
             
-        } catch (InterruptedException e) {
-            // Will be interrupted if js  execution is interrupted
+        } catch (InterruptedException ignored) {
+            // Will be interrupted if js execution is interrupted
         }
         if (mV8Thread.hasException()) {
+            // Error occurred during execution -> print to error-view:
             Util.runOnUiThread(() -> mErrorViewer.setText(mContext.getString(R.string.run_error, mV8Thread.getException().toString())));
+        }
+        else {
+            // Print execution stats:
+            Util.runOnUiThread(() -> mStatsViewer.setText(mContext.getString(R.string.run_stats)));
         }
     }
 }

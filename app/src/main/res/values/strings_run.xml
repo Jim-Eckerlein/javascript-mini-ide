@@ -2,5 +2,5 @@
 <resources>
     <string name="run_tab_title">Run</string>
     <string name="run_error">Error on running JavaScript\n%1$s</string>
-    <string name="run_stats">Script execution finished, took %1$f seconds</string>
+    <string name="run_stats">Script execution finished</string>
 </resources>
