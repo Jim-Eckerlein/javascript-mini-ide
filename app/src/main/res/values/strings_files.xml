@@ -2,6 +2,7 @@
 <resources>
     <string name="files_tab_title">Files</string>
     <string name="files_create_title">Create file</string>
+    <string name="files_rename_title">Rename file</string>
     <string name="files_create_name_hint">Filename …</string>
     <string name="files_extension">.js</string>
     <string name="files_create_error_already_exists">File already exists</string>

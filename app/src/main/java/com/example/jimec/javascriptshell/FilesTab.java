@@ -69,7 +69,8 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     
         // Initialize fab:
         mFab = view.findViewById(R.id.files_fab);
-        mFab.setOnClickListener(v -> FileNameDialog.show(getContext(), this::createFile, () -> {}));
+        mFab.setOnClickListener(v -> FileNameDialog.show(getContext(), FileNameDialog.Mode.CREATE, this::createFile, () -> {
+        }));
         
         // Multiple file deletion:
         mMultipleFileDeletionBar = view.findViewById(R.id.files_multiple_file_deletion_bar);

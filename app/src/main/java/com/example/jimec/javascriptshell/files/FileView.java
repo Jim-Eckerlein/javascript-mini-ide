@@ -93,7 +93,7 @@ public class FileView extends FrameLayout {
         // Rename button:
         findViewById(R.id.file_rename).setOnClickListener(v -> {
             // Rename file:
-            FileNameDialog.show(getContext(), filename -> {
+            FileNameDialog.show(getContext(), FileNameDialog.Mode.RENAME, filename -> {
                 //FilesManager.getInstance().rename(getFilename(), filename);
                 mFilesTab.renameFile(getFilename(), filename);
                 mFilenameText.setText(filename);

@@ -12,7 +12,7 @@ public class FileNameDialog {
     private FileNameDialog() {
     }
     
-    public static void show(Context context, OnOkListener onOkListener, OnCancelListener onCancelListener) {
+    public static void show(Context context, Mode mode, OnOkListener onOkListener, OnCancelListener onCancelListener) {
         final View view = View.inflate(context, R.layout.view_file_create_dialog, null);
         final FileNameEditText filenameInput = view.findViewById(R.id.file_create_name);
         final TextView errorAlreadyExists = view.findViewById(R.id.file_create_error_already_exists);
@@ -40,7 +40,7 @@ public class FileNameDialog {
     
         new AlertDialog.Builder(context)
                 .setView(view)
-                .setTitle(R.string.files_create_title)
+                .setTitle(mode == Mode.CREATE ? R.string.files_create_title : R.string.files_rename_title)
                 .setPositiveButton(R.string.ok, (dialog, which) -> {
                     if (errorAlreadyExists.getVisibility() == View.INVISIBLE && errorInvalidCharacter.getVisibility() == View.INVISIBLE
                             && filenameInput.getText().length() > 0) {
@@ -54,6 +54,10 @@ public class FileNameDialog {
                     dialog.cancel();
                 })
                 .show();
+    }
+    
+    public enum Mode {
+        CREATE, RENAME
     }
     
     public interface OnOkListener {
