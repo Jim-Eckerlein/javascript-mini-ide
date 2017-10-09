@@ -1,4 +1,4 @@
-package com.example.jimec.javascriptshell.keyboard_view;
+package com.example.jimec.javascriptshell.keyboard;
 
 import android.content.Context;
 import android.util.AttributeSet;

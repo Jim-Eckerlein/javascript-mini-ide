@@ -23,7 +23,7 @@
         android:layout_weight="1"
         android:padding="8dp"/>
 
-    <com.example.jimec.javascriptshell.keyboard_view.KeyboardView
+    <com.example.jimec.javascriptshell.keyboard.KeyboardView
         android:id="@+id/keyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

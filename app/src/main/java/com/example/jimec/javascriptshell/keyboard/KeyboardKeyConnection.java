@@ -1,4 +1,4 @@
-package com.example.jimec.javascriptshell.keyboard_view;
+package com.example.jimec.javascriptshell.keyboard;
 
 /**
  * Every key needs a reference to its keyboard

@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.jimec.javascriptshell.editor.EditorView;
-import com.example.jimec.javascriptshell.keyboard_view.KeyboardView;
+import com.example.jimec.javascriptshell.keyboard.KeyboardView;
 
 public class EditorTab extends Fragment {
     
