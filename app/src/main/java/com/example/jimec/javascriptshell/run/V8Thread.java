@@ -4,11 +4,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.TextView;
 
-import com.eclipsesource.v8.JavaVoidCallback;
 import com.eclipsesource.v8.Releasable;
 import com.eclipsesource.v8.V8;
-import com.eclipsesource.v8.V8Array;
-import com.eclipsesource.v8.V8Object;
 import com.eclipsesource.v8.utils.V8Executor;
 
 /**
@@ -25,20 +22,11 @@ public class V8Thread extends V8Executor {
     
     @Override
     public void setup(V8 v8) {
-        v8.registerJavaMethod(new JsPrintCallback(), "print");
-        v8.registerJavaMethod(new JsSleepCallback(), "sleep");
-    }
-    
-    /**
-     * JavaScript print() function.
-     * Prints argument to a TextView.
-     */
-    private class JsPrintCallback implements JavaVoidCallback {
-        
-        @Override
-        public void invoke(V8Object receiver, final V8Array parameters) {
+        // JavaScript print() function.
+        // Prints argument to a TextView.
+        v8.registerJavaMethod((receiver, parameters) -> {
             final StringBuilder log = new StringBuilder();
-            
+        
             for (int i = 0; i < parameters.length(); i++) {
                 final Object param = parameters.get(i);
                 if (i > 0) {
@@ -49,21 +37,16 @@ public class V8Thread extends V8Executor {
                     ((Releasable) param).release();
                 }
             }
-            
-            log.append('\n');
-    
-            new Handler(Looper.getMainLooper()).post(() -> mConsole.append(log.toString()));
-        }
-    }
-    
-    /**
-     * JavaScript sleep() function.
-     * Pauses JavaScript execution, in milliseconds.
-     */
-    private class JsSleepCallback implements JavaVoidCallback {
         
-        @Override
-        public void invoke(V8Object receiver, V8Array parameters) {
+            log.append('\n');
+        
+            new Handler(Looper.getMainLooper()).post(() -> mConsole.append(log.toString()));
+        
+        }, "print");
+    
+        // JavaScript sleep() function.
+        // Pauses JavaScript execution, in milliseconds.
+        v8.registerJavaMethod((receiver, parameters) -> {
             if (parameters.length() == 1) {
                 try {
                     Thread.sleep(parameters.getInteger(0));
@@ -71,7 +54,7 @@ public class V8Thread extends V8Executor {
                     throw new RuntimeException();
                 }
             }
-        }
+        }, "sleep");
     }
     
 }
