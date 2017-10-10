@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.FrameLayout;
 
 import com.example.jimec.javascriptshell.R;
@@ -96,31 +94,4 @@ public class KeyboardView extends FrameLayout {
         mEditor = editor;
     }
     
-    public class ResizeHeightAnimation extends Animation {
-        final View mView;
-        final int mStartHeight;
-        final float mEndHeight;
-        
-        public ResizeHeightAnimation(View view, float endHeight) {
-            this.mView = view;
-            this.mEndHeight = endHeight;
-            this.mStartHeight = view.getHeight();
-        }
-        
-        @Override
-        protected void applyTransformation(float interpolatedTime, Transformation t) {
-            mView.getLayoutParams().height = (int) (mStartHeight + (mEndHeight - mStartHeight) * interpolatedTime);
-            mView.requestLayout();
-        }
-        
-        @Override
-        public void initialize(int width, int height, int parentWidth, int parentHeight) {
-            super.initialize(width, height, parentWidth, parentHeight);
-        }
-        
-        @Override
-        public boolean willChangeBounds() {
-            return true;
-        }
-    }
 }
