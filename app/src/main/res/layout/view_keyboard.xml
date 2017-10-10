@@ -391,8 +391,7 @@
         android:id="@+id/key_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="16dp"
-        android:visibility="invisible"/>
+        android:elevation="16dp"/>
 
 </FrameLayout>
 

@@ -36,7 +36,7 @@ public class BackspaceKeyView extends android.support.v7.widget.AppCompatImageVi
         mKeyboard = keyboard;
     }
     
-    private class TouchListener extends RepeatedTapListener {
+    private class TouchListener extends TapListenerRepeatable {
 
         @Override
         public void onTap() {

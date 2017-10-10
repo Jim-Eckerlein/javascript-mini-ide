@@ -35,7 +35,16 @@ public class KeyIndicatorView extends LinearLayout {
         mProgress = findViewById(R.id.key_indicator_progress);
     }
     
-    public void setPrimary(String primary) {
-        mPrimary.setText(primary);
+    public void show(KeyView target, String primaryText) {
+        setVisibility(VISIBLE);
+        mPrimary.setText(primaryText);
+        setX(getX());
+        setY(((LinearLayout) target.getParent()).getY() + target.getHeight() - getHeight());
+        getLayoutParams().width = target.getWidth() + target.getPaddingLeft() + target.getPaddingRight();
+        requestLayout();
+    }
+    
+    public void hide() {
+        setVisibility(GONE);
     }
 }

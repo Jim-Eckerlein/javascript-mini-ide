@@ -6,7 +6,9 @@
     android:layout_height="130dp"
     android:layout_gravity="bottom|center_horizontal"
     android:background="@color/primaryDarkColor"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:visibility="invisible"
+    tools:visibility="visible">
 
     <View
         android:id="@+id/key_indicator_progress"

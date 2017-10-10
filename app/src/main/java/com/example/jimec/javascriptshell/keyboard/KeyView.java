@@ -86,17 +86,12 @@ public class KeyView extends LinearLayout implements KeyboardKeyConnection {
     
         @Override
         public void onDown() {
-            mKeyIndicatorView.setVisibility(VISIBLE);
-            mKeyIndicatorView.setX(getX());
-            mKeyIndicatorView.setY(((LinearLayout) getParent()).getY() + getHeight() - mKeyIndicatorView.getHeight());
-            mKeyIndicatorView.getLayoutParams().width = getWidth();
-            mKeyIndicatorView.requestLayout();
-            mKeyIndicatorView.setPrimary(getPrimaryText());
+            mKeyIndicatorView.show(KeyView.this, getPrimaryText());
         }
     
         @Override
         public void onUp() {
-            mKeyIndicatorView.setVisibility(GONE);
+            mKeyIndicatorView.hide();
         }
     
         @Override

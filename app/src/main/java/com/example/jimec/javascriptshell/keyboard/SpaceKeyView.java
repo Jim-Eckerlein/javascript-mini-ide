@@ -39,7 +39,7 @@ public class SpaceKeyView extends FrameLayout implements KeyboardKeyConnection {
         mKeyboard = keyboard;
     }
     
-    private class TouchListener extends RepeatedTapListener {
+    private class TouchListener extends TapListenerRepeatable {
 
         @Override
         public void onTap() {
