@@ -8,22 +8,23 @@ import android.widget.TextView;
 
 import com.example.jimec.javascriptshell.R;
 
-public class Key extends LinearLayout implements KeyboardKeyConnection {
-
+public class KeyView extends LinearLayout implements KeyboardKeyConnection {
+    
+    private KeyIndicatorView mKeyIndicatorView;
     private TextView mPrimary;
     private TextView mSecondary;
     private KeyboardView mKeyboard;
-
-    public Key(Context context) {
+    
+    public KeyView(Context context) {
         super(context);
     }
-
-    public Key(Context context, AttributeSet attrs) {
+    
+    public KeyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
-
-    public Key(Context context, AttributeSet attrs, int defStyleAttr) {
+    
+    public KeyView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -32,11 +33,11 @@ public class Key extends LinearLayout implements KeyboardKeyConnection {
         inflate(context, R.layout.view_key, this);
         mPrimary = findViewById(R.id.primary);
         mSecondary = findViewById(R.id.secondary);
-
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Key, 0, 0);
+    
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.KeyView, 0, 0);
         try {
-            setPrimaryText(a.getString(R.styleable.Key_primary));
-            setSecondaryText(a.getString(R.styleable.Key_secondary));
+            setPrimaryText(a.getString(R.styleable.KeyView_primary));
+            setSecondaryText(a.getString(R.styleable.KeyView_secondary));
         } finally {
             a.recycle();
         }
@@ -77,8 +78,27 @@ public class Key extends LinearLayout implements KeyboardKeyConnection {
         mKeyboard = keyboard;
     }
     
+    public void setKeyIndicatorView(KeyIndicatorView keyIndicatorView) {
+        mKeyIndicatorView = keyIndicatorView;
+    }
+    
     private class TouchListener extends TapListener {
-
+    
+        @Override
+        public void onDown() {
+            mKeyIndicatorView.setVisibility(VISIBLE);
+            mKeyIndicatorView.setX(getX());
+            mKeyIndicatorView.setY(((LinearLayout) getParent()).getY() + getHeight() - mKeyIndicatorView.getHeight());
+            mKeyIndicatorView.getLayoutParams().width = getWidth();
+            mKeyIndicatorView.requestLayout();
+            mKeyIndicatorView.setPrimary(getPrimaryText());
+        }
+    
+        @Override
+        public void onUp() {
+            mKeyIndicatorView.setVisibility(GONE);
+        }
+    
         @Override
         public void onTap() {
             writePrimaryText();

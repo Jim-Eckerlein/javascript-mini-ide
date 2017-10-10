@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="Key">
+    <declare-styleable name="KeyView">
         <attr name="primary" format="string"/>
         <attr name="secondary" format="string"/>
     </declare-styleable>

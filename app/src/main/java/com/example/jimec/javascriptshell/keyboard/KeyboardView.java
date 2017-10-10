@@ -16,9 +16,10 @@ public class KeyboardView extends FrameLayout {
     public static float ALPHA_ACTIVE = 0.8f;
     private final HideKey mHideKey = new HideKey();
     private final ShowKey mShowKey = new ShowKey();
-    private ShiftKey mShiftKey;
+    private ShiftKeyView mShiftKey;
     private HighlighterEditText mEditor;
     private ViewGroup mInputKeyboard;
+    private KeyIndicatorView mKeyIndicatorView;
     
     public KeyboardView(Context context) {
         super(context);
@@ -37,33 +38,31 @@ public class KeyboardView extends FrameLayout {
     
     private void init() {
         inflate(getContext(), R.layout.view_keyboard, this);
-        setKeyboardToChildKeys(this);
-        findShiftKey(this);
+    
         mInputKeyboard = findViewById(R.id.input_keyboard);
+        mKeyIndicatorView = findViewById(R.id.key_indicator);
+    
+        initKeys(this);
+        
         findViewById(R.id.hide_keyboard).setOnClickListener(mHideKey);
         findViewById(R.id.keyboard_show_marker).setOnClickListener(mShowKey);
     }
     
-    private void setKeyboardToChildKeys(View view) {
+    private void initKeys(View view) {
+        if (view instanceof ShiftKeyView) {
+            mShiftKey = ((ShiftKeyView) view);
+        }
         if (view instanceof KeyboardKeyConnection) {
             ((KeyboardKeyConnection) view).setKeyboard(this);
+    
+            if (view instanceof KeyView) {
+                ((KeyView) view).setKeyIndicatorView(mKeyIndicatorView);
+            }
         }
         else if (view instanceof ViewGroup) {
             ViewGroup group = ((ViewGroup) view);
             for (int i = 0; i < group.getChildCount(); i++) {
-                setKeyboardToChildKeys(group.getChildAt(i));
-            }
-        }
-    }
-    
-    private void findShiftKey(View view) {
-        if (view instanceof ShiftKey) {
-            mShiftKey = ((ShiftKey) view);
-        }
-        if (view instanceof ViewGroup && !(view instanceof Key)) {
-            ViewGroup group = ((ViewGroup) view);
-            for (int i = 0; i < group.getChildCount(); i++) {
-                findShiftKey(group.getChildAt(i));
+                initKeys(group.getChildAt(i));
             }
         }
     }

@@ -35,4 +35,7 @@ public class KeyIndicatorView extends LinearLayout {
         mProgress = findViewById(R.id.key_indicator_progress);
     }
     
+    public void setPrimary(String primary) {
+        mPrimary.setText(primary);
+    }
 }

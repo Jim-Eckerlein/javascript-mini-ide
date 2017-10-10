@@ -7,25 +7,25 @@ import android.util.AttributeSet;
 
 import com.example.jimec.javascriptshell.R;
 
-public class ShiftKey extends android.support.v7.widget.AppCompatImageView implements KeyboardKeyConnection {
+public class ShiftKeyView extends android.support.v7.widget.AppCompatImageView implements KeyboardKeyConnection {
 
     public static final int INACTIVE = 0;
     public static final int SHIFT = 1;
     public static final int ALL_CAPS = 2;
     
     private int mStatus = INACTIVE;
-
-    public ShiftKey(Context context) {
+    
+    public ShiftKeyView(Context context) {
         super(context);
         init();
     }
-
-    public ShiftKey(Context context, AttributeSet attrs) {
+    
+    public ShiftKeyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
-
-    public ShiftKey(Context context, AttributeSet attrs, int defStyleAttr) {
+    
+    public ShiftKeyView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

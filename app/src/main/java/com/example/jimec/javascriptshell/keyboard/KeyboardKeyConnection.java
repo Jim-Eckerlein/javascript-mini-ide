@@ -6,5 +6,5 @@ package com.example.jimec.javascriptshell.keyboard;
 interface KeyboardKeyConnection {
     
     void setKeyboard(KeyboardView keyboard);
-
+    
 }

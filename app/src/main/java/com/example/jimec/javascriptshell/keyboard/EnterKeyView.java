@@ -6,27 +6,27 @@ import android.util.AttributeSet;
 
 import com.example.jimec.javascriptshell.R;
 
-public class EnterKey extends android.support.v7.widget.AppCompatImageView implements KeyboardKeyConnection {
+public class EnterKeyView extends android.support.v7.widget.AppCompatImageView implements KeyboardKeyConnection {
     
     private KeyboardView mKeyboard;
-
-    public EnterKey(Context context) {
+    
+    public EnterKeyView(Context context) {
         super(context);
         init();
     }
-
-    public EnterKey(Context context, AttributeSet attrs) {
+    
+    public EnterKeyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
-
-    public EnterKey(Context context, AttributeSet attrs, int defStyleAttr) {
+    
+    public EnterKeyView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
     private void init() {
-        setOnTouchListener(new EnterKey.TouchListener());
+        setOnTouchListener(new EnterKeyView.TouchListener());
         setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.enter));
     }
 

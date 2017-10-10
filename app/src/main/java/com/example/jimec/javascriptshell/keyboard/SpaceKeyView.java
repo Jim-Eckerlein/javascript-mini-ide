@@ -1,34 +1,37 @@
 package com.example.jimec.javascriptshell.keyboard;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.example.jimec.javascriptshell.R;
 
-public class BackspaceKey extends android.support.v7.widget.AppCompatImageView implements KeyboardKeyConnection {
+public class SpaceKeyView extends FrameLayout implements KeyboardKeyConnection {
     
     private KeyboardView mKeyboard;
-
-    public BackspaceKey(Context context) {
+    private View mSpaceKeyView;
+    
+    public SpaceKeyView(Context context) {
         super(context);
         init();
     }
-
-    public BackspaceKey(Context context, AttributeSet attrs) {
+    
+    public SpaceKeyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
-
-    public BackspaceKey(Context context, AttributeSet attrs, int defStyleAttr) {
+    
+    public SpaceKeyView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
     private void init() {
-        setOnTouchListener(new BackspaceKey.TouchListener());
-        setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.backspace));
-        setAlpha(KeyboardView.ALPHA_INACTIVE);
+        inflate(getContext(), R.layout.view_key_space, this);
+        mSpaceKeyView = findViewById(R.id.space_key_view);
+        setOnTouchListener(new SpaceKeyView.TouchListener());
+        mSpaceKeyView.setAlpha(KeyboardView.ALPHA_INACTIVE);
     }
 
     @Override
@@ -40,20 +43,19 @@ public class BackspaceKey extends android.support.v7.widget.AppCompatImageView i
 
         @Override
         public void onTap() {
-            mKeyboard.backspace();
+            mKeyboard.write(" ");
         }
 
         @Override
         public void onDown() {
             super.onDown();
-            setAlpha(KeyboardView.ALPHA_ACTIVE);
+            mSpaceKeyView.setAlpha(KeyboardView.ALPHA_ACTIVE);
         }
 
         @Override
         public void onUp() {
             super.onUp();
-            setAlpha(KeyboardView.ALPHA_INACTIVE);
+            mSpaceKeyView.setAlpha(KeyboardView.ALPHA_INACTIVE);
         }
-
     }
 }

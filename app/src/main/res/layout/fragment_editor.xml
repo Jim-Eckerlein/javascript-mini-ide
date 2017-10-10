@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="false"
     android:orientation="vertical">
 
     <TextView
@@ -16,8 +17,17 @@
         android:textSize="14sp"
         tools:text="filename.js"/>
 
-    <com.example.jimec.javascriptshell.JSEditorView
+    <com.example.jimec.javascriptshell.editor.HighlighterEditText
+        android:id="@+id/editor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"/>
+
+    <com.example.jimec.javascriptshell.keyboard.KeyboardView
+        android:id="@+id/keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"/>
 
 </LinearLayout>

@@ -13,25 +13,54 @@ import java.util.TimerTask;
  */
 public abstract class TapListener implements View.OnTouchListener {
     
-    // Time of a continuous tap interpreted as a long tap
+    /**
+     * Time of a continuous tap interpreted as a long tap
+     */
     private static final long LONG_TOUCH_MILLIS = 150;
     
+    /**
+     * Radius of movement acceptance
+     */
     private static final int MAX_DISTANCE = 50;
     
-    // Becomes true as soon as tap is recognized as long tap and therefore processed already
+    /**
+     * Becomes true as soon as tap is recognized as long tap and therefore processed already
+     */
     private boolean mLongTapped = false;
     
+    /**
+     * Timer is started as soon as the tap occurred.
+     * If the touch event is finished before the timer runs out, the gesture is interpreted as a tap,
+     * otherwise as a long tap.
+     */
     private Timer mLongTapTimer;
     
+    /**
+     * Start X coordinate
+     */
     private float mStartX;
+    
+    /**
+     * Start Y coordinate
+     */
     private float mStartY;
+    
+    /**
+     * True as soon as the acceptance radius was exceeded, invaliding this tap
+     */
     private boolean mExceededDistance = false;
+    
+    /**
+     * True as soon as the touch event was canceled from outside
+     */
+    private boolean mCanceled = false;
     
     @Override
     public boolean onTouch(View view, MotionEvent event) {
         boolean processed = false;
         int action = event.getAction();
     
+        // Init class members and be ready for a new tap:
         if (MotionEvent.ACTION_DOWN == action) {
             mLongTapped = false;
             mLongTapTimer = new Timer();
@@ -39,11 +68,13 @@ public abstract class TapListener implements View.OnTouchListener {
             mStartX = event.getX();
             mStartY = event.getY();
             mExceededDistance = false;
+            mCanceled = false;
             onDown();
             processed = true;
         }
 
-        else if (MotionEvent.ACTION_MOVE == action && !mExceededDistance) {
+        // Check for acceptance radius:
+        else if (MotionEvent.ACTION_MOVE == action && !mExceededDistance && !mCanceled) {
             if (Math.hypot(event.getX() - mStartX, event.getY() - mStartY) > MAX_DISTANCE) {
                 // Touch move exceeded distance
                 mExceededDistance = true;
@@ -51,7 +82,16 @@ public abstract class TapListener implements View.OnTouchListener {
             }
         }
 
-        else if (MotionEvent.ACTION_UP == action && !mExceededDistance) {
+        // Check for cancelling:
+        else if (MotionEvent.ACTION_CANCEL == action) {
+            mLongTapTimer.cancel();
+            onUp();
+            mCanceled = true;
+            processed = true;
+        }
+
+        // Tap ended:
+        else if (MotionEvent.ACTION_UP == action && !mExceededDistance && !mCanceled) {
             mLongTapTimer.cancel();
             if (!mLongTapped) {
                 // Initiate short touch event
@@ -64,15 +104,27 @@ public abstract class TapListener implements View.OnTouchListener {
         return processed;
     }
     
+    /**
+     * Called when touch event was interpreted as a tap.
+     */
     public void onTap() {
     }
     
+    /**
+     * Called when touch event was interpreted as a long tap.
+     */
     public void onLongTap() {
     }
     
+    /**
+     * Called every time a touch down event is received.
+     */
     public void onDown() {
     }
     
+    /**
+     * Called when touch finished or cancelled.
+     */
     public void onUp() {
     }
     

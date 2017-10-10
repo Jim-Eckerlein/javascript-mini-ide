@@ -16,11 +16,10 @@
 
     <TextView
         android:id="@+id/key_indicator_primary"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:padding="12dp"
-        android:paddingRight="4dp"
-        android:paddingTop="3dp"
         android:textSize="22sp"
         tools:text="p"/>
 
