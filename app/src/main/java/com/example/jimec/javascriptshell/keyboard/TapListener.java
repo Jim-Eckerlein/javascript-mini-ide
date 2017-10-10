@@ -46,20 +46,16 @@ public abstract class TapListener implements View.OnTouchListener {
     private float mStartY;
     
     /**
-     * True as soon as the acceptance radius was exceeded, invaliding this tap
-     */
-    private boolean mExceededDistance = false;
-    
-    /**
      * True as soon as the touch event was canceled from outside
+     * or the acceptance radius was exceeded.
      */
     private boolean mCanceled = false;
     
     @Override
     public boolean onTouch(View view, MotionEvent event) {
         boolean processed = false;
-        int action = event.getAction();
-    
+        int action = event.getActionMasked();
+        
         // Init class members and be ready for a new tap:
         if (MotionEvent.ACTION_DOWN == action) {
             mLongTapped = false;
@@ -67,23 +63,15 @@ public abstract class TapListener implements View.OnTouchListener {
             mLongTapTimer.schedule(new LongTapTimer(), LONG_TOUCH_MILLIS);
             mStartX = event.getX();
             mStartY = event.getY();
-            mExceededDistance = false;
             mCanceled = false;
             onDown();
             processed = true;
         }
 
-        // Check for acceptance radius:
-        else if (MotionEvent.ACTION_MOVE == action && !mExceededDistance && !mCanceled) {
-            if (Math.hypot(event.getX() - mStartX, event.getY() - mStartY) > MAX_DISTANCE) {
-                // Touch move exceeded distance
-                mExceededDistance = true;
-                mLongTapTimer.cancel();
-            }
-        }
-
         // Check for cancelling:
-        else if (MotionEvent.ACTION_CANCEL == action) {
+        else if ((MotionEvent.ACTION_MOVE == action && !mCanceled && Math.hypot(event.getX() - mStartX, event.getY() - mStartY) > MAX_DISTANCE)
+                || (MotionEvent.ACTION_CANCEL == action || MotionEvent.ACTION_OUTSIDE == action)) {
+            // Touch move exceeded distance
             mLongTapTimer.cancel();
             onUp();
             mCanceled = true;
@@ -91,7 +79,7 @@ public abstract class TapListener implements View.OnTouchListener {
         }
 
         // Tap ended:
-        else if (MotionEvent.ACTION_UP == action && !mExceededDistance && !mCanceled) {
+        else if (MotionEvent.ACTION_UP == action && !mCanceled) {
             mLongTapTimer.cancel();
             if (!mLongTapped) {
                 // Initiate short touch event
