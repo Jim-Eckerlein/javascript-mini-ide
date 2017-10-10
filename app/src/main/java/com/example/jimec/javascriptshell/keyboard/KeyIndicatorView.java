@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ public class KeyIndicatorView extends LinearLayout {
     
     private TextView mPrimary;
     private View mProgress;
+    private ViewGroup mRoot;
     
     public KeyIndicatorView(Context context) {
         super(context);
@@ -33,18 +35,19 @@ public class KeyIndicatorView extends LinearLayout {
         inflate(getContext(), R.layout.view_key_indicator, this);
         mPrimary = findViewById(R.id.key_indicator_primary);
         mProgress = findViewById(R.id.key_indicator_progress);
+        mRoot = (ViewGroup) getChildAt(0);
     }
     
     public void show(KeyView target, String primaryText) {
-        setVisibility(VISIBLE);
+        mRoot.setVisibility(VISIBLE);
         mPrimary.setText(primaryText);
-        setX(getX());
-        setY(((LinearLayout) target.getParent()).getY() + target.getHeight() - getHeight());
+        setX(target.getX());
+        setY(((LinearLayout) target.getParent()).getY() + target.getHeight() - mRoot.getHeight());
         getLayoutParams().width = target.getWidth() + target.getPaddingLeft() + target.getPaddingRight();
         requestLayout();
     }
     
     public void hide() {
-        setVisibility(GONE);
+        mRoot.setVisibility(GONE);
     }
 }
