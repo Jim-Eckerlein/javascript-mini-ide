@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.FrameLayout;
 
 import com.example.jimec.javascriptshell.R;
@@ -14,12 +16,11 @@ public class KeyboardView extends FrameLayout {
     
     public static float ALPHA_INACTIVE = 0.4f;
     public static float ALPHA_ACTIVE = 0.8f;
-    private final HideKey mHideKey = new HideKey();
-    private final ShowKey mShowKey = new ShowKey();
     private ShiftKeyView mShiftKey;
     private HighlighterEditText mEditor;
     private ViewGroup mInputKeyboard;
     private KeyIndicatorView mKeyIndicatorView;
+    private int mOldKeyboardHeight;
     
     public KeyboardView(Context context) {
         super(context);
@@ -43,9 +44,21 @@ public class KeyboardView extends FrameLayout {
         mKeyIndicatorView = findViewById(R.id.key_indicator);
     
         initKeys(this);
-        
-        findViewById(R.id.hide_keyboard).setOnClickListener(mHideKey);
-        findViewById(R.id.keyboard_show_marker).setOnClickListener(mShowKey);
+    
+        // Hide keyboard animation:
+        findViewById(R.id.hide_keyboard).setOnClickListener(v -> {
+            mOldKeyboardHeight = mInputKeyboard.getHeight();
+            ResizeHeightAnimation anim = new ResizeHeightAnimation(mInputKeyboard, 0);
+            anim.setDuration(Util.ANIMATION_DURATION);
+            mInputKeyboard.startAnimation(anim);
+        });
+    
+        // Show keyboard animation:
+        findViewById(R.id.keyboard_show_marker).setOnClickListener(v -> {
+            ResizeHeightAnimation anim = new ResizeHeightAnimation(mInputKeyboard, mOldKeyboardHeight);
+            anim.setDuration(Util.ANIMATION_DURATION);
+            mInputKeyboard.startAnimation(anim);
+        });
     }
     
     private void initKeys(View view) {
@@ -83,27 +96,31 @@ public class KeyboardView extends FrameLayout {
         mEditor = editor;
     }
     
-    private class HideKey implements OnClickListener {
+    public class ResizeHeightAnimation extends Animation {
+        final View mView;
+        final int mStartHeight;
+        final float mEndHeight;
         
-        @Override
-        public void onClick(View v) {
-            if (mInputKeyboard.getAnimation() == null
-                    || (mInputKeyboard.getAnimation() != null && mInputKeyboard.getAnimation().hasEnded())) {
-                mInputKeyboard.animate().y(getHeight()).setDuration(Util.ANIMATION_DURATION);
-            }
+        public ResizeHeightAnimation(View view, float endHeight) {
+            this.mView = view;
+            this.mEndHeight = endHeight;
+            this.mStartHeight = view.getHeight();
         }
         
-    }
-    
-    private class ShowKey implements OnClickListener {
-        
         @Override
-        public void onClick(View v) {
-            if (mInputKeyboard.getAnimation() == null
-                    || (mInputKeyboard.getAnimation() != null && mInputKeyboard.getAnimation().hasEnded())) {
-                mInputKeyboard.animate().y(0).setDuration(Util.ANIMATION_DURATION);
-            }
+        protected void applyTransformation(float interpolatedTime, Transformation t) {
+            mView.getLayoutParams().height = (int) (mStartHeight + (mEndHeight - mStartHeight) * interpolatedTime);
+            mView.requestLayout();
         }
         
+        @Override
+        public void initialize(int width, int height, int parentWidth, int parentHeight) {
+            super.initialize(width, height, parentWidth, parentHeight);
+        }
+        
+        @Override
+        public boolean willChangeBounds() {
+            return true;
+        }
     }
 }
