@@ -32,5 +32,7 @@
         <item>Function</item>
         <item>Time</item>
         <item>Typeof</item>
+        <item>Lambda</item>
+        <item>Root finder – Advanced</item>
     </string-array>
 </resources>

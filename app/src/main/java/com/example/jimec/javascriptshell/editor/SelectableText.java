@@ -10,7 +10,7 @@ class SelectableText {
     /**
      * Prepare the class to operate on a new text
      *
-     * @param text      Text.
+     * @param text Text.
      */
     public void initialize(String text) {
         mText.replace(0, mText.length(), text);
@@ -18,7 +18,11 @@ class SelectableText {
     }
     
     public void write(String s, int pos) {
-        mCursorPos.stream().filter(cursorPosition -> pos <= cursorPosition.getPos()).forEach(cursorPosition -> cursorPosition.mPos += s.length());
+        for (CursorPosition cursorPosition : mCursorPos) {
+            if (pos <= cursorPosition.getPos()) {
+                cursorPosition.mPos += s.length();
+            }
+        }
         mText.insert(pos, s);
     }
     
@@ -27,11 +31,11 @@ class SelectableText {
     }
     
     public void delete(int pos, int len) {
-        for(CursorPosition cursorPosition : mCursorPos) {
+        for (CursorPosition cursorPosition : mCursorPos) {
             if (pos + len < cursorPosition.getPos()) {
                 cursorPosition.mPos -= len;
             }
-            if(pos < cursorPosition.getPos() && pos + len >= cursorPosition.getPos()) {
+            if (pos < cursorPosition.getPos() && pos + len >= cursorPosition.getPos()) {
                 cursorPosition.setPos(pos);
             }
         }

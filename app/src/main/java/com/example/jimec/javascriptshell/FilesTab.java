@@ -30,7 +30,9 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
             R.raw.example_object,
             R.raw.example_function,
             R.raw.example_time,
-            R.raw.example_typeof
+            R.raw.example_typeof,
+            R.raw.example_lambda,
+            R.raw.example_root_finder
     };
     private final HashMap<String, FileView> mFileViews = new HashMap<>();
     private final ArrayList<FileView> mSelectedFileViews = new ArrayList<>();
