@@ -78,7 +78,9 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
         mMultipleFileDeletionCounter = view.findViewById(R.id.files_multiple_file_deletion_counter);
         view.findViewById(R.id.files_multiple_file_deletion_cancel_button).setOnClickListener(v -> endMultipleFileDeletion());
         view.findViewById(R.id.files_multiple_file_deletion_delete_button).setOnClickListener(v -> {
-            for (FileView fileView : mSelectedFileViews) {
+            FileView[] selected = new FileView[mSelectedFileViews.size()];
+            mSelectedFileViews.toArray(selected);
+            for (FileView fileView : selected) {
                 fileView.hideFileSelectBox();
                 deleteFile(fileView.getFilename());
             }
