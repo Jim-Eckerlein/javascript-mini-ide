@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.example.jimec.javascriptshell.R;
-import com.example.jimec.javascriptshell.Util;
 import com.example.jimec.javascriptshell.editor.HighlighterEditText;
 
 public class KeyboardView extends FrameLayout {
@@ -19,6 +18,7 @@ public class KeyboardView extends FrameLayout {
     private ViewGroup mInputKeyboard;
     private KeyIndicatorView mKeyIndicatorView;
     private int mOldKeyboardHeight;
+    private OnHideKeyboardListener mOnHideKeyboardListener;
     
     public KeyboardView(Context context) {
         super(context);
@@ -44,19 +44,7 @@ public class KeyboardView extends FrameLayout {
         initKeys(this);
     
         // Hide keyboard animation:
-        findViewById(R.id.hide_keyboard).setOnClickListener(v -> {
-            mOldKeyboardHeight = mInputKeyboard.getHeight();
-            ResizeHeightAnimation anim = new ResizeHeightAnimation(mInputKeyboard, 0);
-            anim.setDuration(Util.ANIMATION_DURATION);
-            mInputKeyboard.startAnimation(anim);
-        });
-    
-        // Show keyboard animation:
-        findViewById(R.id.keyboard_show_marker).setOnClickListener(v -> {
-            ResizeHeightAnimation anim = new ResizeHeightAnimation(mInputKeyboard, mOldKeyboardHeight);
-            anim.setDuration(Util.ANIMATION_DURATION);
-            mInputKeyboard.startAnimation(anim);
-        });
+        findViewById(R.id.hide_keyboard).setOnClickListener(v -> mOnHideKeyboardListener.onHideKeyboard());
     }
     
     private void initKeys(View view) {
@@ -92,6 +80,16 @@ public class KeyboardView extends FrameLayout {
     
     public void setEditor(HighlighterEditText editor) {
         mEditor = editor;
+    }
+    
+    public void setOnHideKeyboardListener(OnHideKeyboardListener onHideKeyboardListener) {
+        mOnHideKeyboardListener = onHideKeyboardListener;
+    }
+    
+    public interface OnHideKeyboardListener {
+        
+        void onHideKeyboard();
+        
     }
     
 }

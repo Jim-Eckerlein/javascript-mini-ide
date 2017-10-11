@@ -29,22 +29,20 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:paddingTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/keyboard"
+        app:layout_constraintBottom_toTopOf="@+id/show_keyboard_wrapper"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/current_file_name"
-        app:layout_constraintVertical_chainStyle="spread_inside"/>
+        app:layout_constraintTop_toBottomOf="@+id/current_file_name"/>
 
     <com.example.jimec.javascriptshell.keyboard.KeyboardView
         android:id="@+id/keyboard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:clipChildren="false"
         android:elevation="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editor"/>
+        app:layout_constraintTop_toBottomOf="@+id/show_keyboard_wrapper"/>
 
     <FrameLayout
         android:id="@+id/show_keyboard_wrapper"

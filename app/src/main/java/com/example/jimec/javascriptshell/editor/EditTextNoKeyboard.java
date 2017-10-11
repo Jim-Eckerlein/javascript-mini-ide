@@ -58,17 +58,17 @@ public class EditTextNoKeyboard extends android.support.v7.widget.AppCompatEditT
     
     public EditTextNoKeyboard(Context context) {
         super(context);
-        initialize();
+        init();
     }
     
     public EditTextNoKeyboard(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initialize();
+        init();
     }
     
     public EditTextNoKeyboard(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        initialize();
+        init();
     }
     
     /**
@@ -106,7 +106,7 @@ public class EditTextNoKeyboard extends android.support.v7.widget.AppCompatEditT
         return null;
     }
     
-    private void initialize() {
+    private void init() {
         synchronized (this) {
             setInputType(getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
             setFocusableInTouchMode(true);

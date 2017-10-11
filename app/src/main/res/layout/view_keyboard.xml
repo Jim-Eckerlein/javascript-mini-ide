@@ -2,30 +2,12 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/keyboard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipChildren="false"
     android:orientation="vertical">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/primaryColor"
-        android:elevation="14dp">
-
-        <Button
-            android:id="@+id/keyboard_show_marker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alpha="0.6"
-            android:background="@drawable/button_ripple"
-            android:foreground="@drawable/keyboard"
-            android:foregroundGravity="center"
-            android:padding="12dp"/>
-
-    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/input_keyboard"
@@ -391,7 +373,8 @@
         android:id="@+id/key_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="16dp"/>
+        android:elevation="16dp"
+        tools:visibility="gone"/>
 
 </FrameLayout>
 
