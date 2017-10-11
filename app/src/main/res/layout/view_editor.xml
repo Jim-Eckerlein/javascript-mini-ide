@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<HorizontalScrollView
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:scrollbars="vertical">
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <com.example.jimec.javascriptshell.editor.EditTextNoKeyboard
             android:id="@+id/edit_text"
@@ -20,6 +22,6 @@
             android:textSize="14sp"
             android:typeface="monospace"/>
 
-    </ScrollView>
+    </HorizontalScrollView>
 
-</HorizontalScrollView>
+</ScrollView>
