@@ -22,7 +22,7 @@ The JavaScript evaluator uses the high-performance J2V8 engine, a Java binding t
 
 ## Dev Notes - Supply an SVG Logo
 
-Android Studio has a built-in functionality to import SVGs and convert them to pngs into mipmaps resource folders, but unfortuntlely, Android Studio is in-capable of many SVG features.
+Android Studio has a built-in functionality to import SVGs and convert them to pngs into mipmaps resource folders, but unfortunately, Android Studio is in-capable of many SVG features.
 
 To supply any SVG manually, bypassing the Android Studio importer, use the following commands:
 
