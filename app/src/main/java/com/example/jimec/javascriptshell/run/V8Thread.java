@@ -39,8 +39,10 @@ public class V8Thread extends V8Executor {
             }
         
             log.append('\n');
-        
-            new Handler(Looper.getMainLooper()).post(() -> mConsole.append(log.toString()));
+    
+            new Handler(Looper.getMainLooper()).post(() -> {
+                mConsole.append(log.toString());
+            });
         
         }, "print");
     

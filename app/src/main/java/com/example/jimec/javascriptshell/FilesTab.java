@@ -152,6 +152,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     private void createFile(String filename) {
         try {
             FilesManager.getInstance().create(filename);
+            FilesManager.getInstance().write(filename, "\n");
             FileView fileView = FileView.create(getContext(), this, filename, this);
             mFileViews.put(filename, fileView);
             mFileViewListLayout.addView(fileView);
