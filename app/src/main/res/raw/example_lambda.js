@@ -1,3 +1,4 @@
+
 /*
 Lambdas are functions passed as parameters or used in returns.
 Syntax (simplified):

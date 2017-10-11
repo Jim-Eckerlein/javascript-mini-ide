@@ -1,3 +1,4 @@
+
 var array = ['BMW', 'Audi', 'VW', 'Porsche'];
 
 // Iterate over each array entry
