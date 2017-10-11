@@ -1,11 +1,11 @@
 
-let input = -123;
+let input = 123456;
 let acceptance = 0.0001;
 let bounds = [];
 let result;
 
 if(input < 0) {
-    input = -input;
+    exit("Input must be positive:", input);
 }
 
 // Initialize bounds:

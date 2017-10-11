@@ -26,7 +26,8 @@ public class Highlighter {
     private static final int DECIMAL_PART_NUMBER = 8;
     
     private static final String[] KEYWORD_LIST = new String[]{
-            "print", "sleep", "NaN", "Infinity", "arguments", "await", "break", "case", "catch",
+            "print", "sleep", "exit",
+            "NaN", "Infinity", "arguments", "await", "break", "case", "catch",
             "class", "const", "continue", "debugger", "default", "delete", "do",
             "else", "enum", "eval", "export", "extends", "false", "",
             "finally", "for", "function", "if", "implements", "import",

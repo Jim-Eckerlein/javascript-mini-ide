@@ -25,11 +25,15 @@ public class V8Joiner extends Thread {
         try {
             // Wait till V8 thread is finished:
             mV8Thread.join();
-            
+    
         } catch (InterruptedException ignored) {
             // Will be interrupted if js execution is interrupted
         }
-        if (mV8Thread.hasException()) {
+        if (mV8Thread.isExited()) {
+            // Script called exit():
+            Util.runOnUiThread(() -> mErrorViewer.setText(mContext.getString(R.string.run_exited, mV8Thread.getExitCause())));
+        }
+        else if (mV8Thread.hasException()) {
             // Error occurred during execution -> print to error-view:
             Util.runOnUiThread(() -> mErrorViewer.setText(mContext.getString(R.string.run_error, mV8Thread.getException().toString())));
         }

@@ -3,4 +3,5 @@
     <string name="run_tab_title">Run</string>
     <string name="run_error">Error on running JavaScript\n%1$s</string>
     <string name="run_stats">Script execution finished</string>
+    <string name="run_exited">JavaScript exited:\n%1$s</string>
 </resources>

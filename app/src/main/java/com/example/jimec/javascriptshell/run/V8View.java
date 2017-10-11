@@ -46,7 +46,7 @@ public class V8View extends FrameLayout {
     
     public void launchV8(String code) {
         stopV8();
-        mV8Thread = new V8Thread(mConsole, code);
+        mV8Thread = new V8Thread(mConsole, mErrorViewer, code);
         mV8Thread.start();
         mV8Joiner = new V8Joiner(mV8Thread, mErrorViewer, mStatsViewer, getContext());
         mV8Joiner.start();

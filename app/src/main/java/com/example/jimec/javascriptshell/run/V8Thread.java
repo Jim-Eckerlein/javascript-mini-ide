@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.TextView;
 
+import com.eclipsesource.v8.JavaVoidCallback;
 import com.eclipsesource.v8.Releasable;
 import com.eclipsesource.v8.V8;
 import com.eclipsesource.v8.utils.V8Executor;
@@ -13,11 +14,15 @@ import com.eclipsesource.v8.utils.V8Executor;
  */
 public class V8Thread extends V8Executor {
     
+    private final TextView mErrorViewer;
     private TextView mConsole;
+    private boolean mExited = false;
+    private String mExitCause;
     
-    public V8Thread(TextView console, String code) {
+    public V8Thread(TextView console, TextView errorViewer, String code) {
         super(code);
         mConsole = console;
+        mErrorViewer = errorViewer;
     }
     
     @Override
@@ -57,6 +62,35 @@ public class V8Thread extends V8Executor {
                 }
             }
         }, "sleep");
+    
+        // JavaScript exit() function.
+        // Immediately stops script execution with an optional reason.
+        v8.registerJavaMethod((JavaVoidCallback) (receiver, parameters) -> {
+            final StringBuilder errorReason = new StringBuilder();
+        
+            for (int i = 0; i < parameters.length(); i++) {
+                final Object param = parameters.get(i);
+                if (i > 0) {
+                    errorReason.append(' ');
+                }
+                errorReason.append(param.toString());
+                if (param instanceof Releasable) {
+                    ((Releasable) param).release();
+                }
+            }
+        
+            System.err.println("exited");
+            mExited = true;
+            mExitCause = errorReason.toString();
+            throw new RuntimeException(errorReason.toString());
+        }, "exit");
     }
     
+    public boolean isExited() {
+        return mExited;
+    }
+    
+    public String getExitCause() {
+        return mExitCause;
+    }
 }
