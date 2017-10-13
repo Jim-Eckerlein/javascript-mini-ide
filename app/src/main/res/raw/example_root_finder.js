@@ -5,7 +5,7 @@ let bounds = [];
 let result;
 
 if(input < 0) {
-    exit("Input must be positive:", input);
+    exit('Input must be positive:', input);
 }
 
 // Initialize bounds:

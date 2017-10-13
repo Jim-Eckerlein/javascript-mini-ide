@@ -7,6 +7,6 @@ function sayHello(name, age) {
 sayHello('Jim', 19);
 
 for(let i = 0; i < 10; i++) {
-    sleep(1000);
+    sleep(500);
     print(i + 1);
 }

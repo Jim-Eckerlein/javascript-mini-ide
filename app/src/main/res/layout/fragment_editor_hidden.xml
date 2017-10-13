@@ -3,32 +3,22 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/editor_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/current_file_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="4dp"
-        android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="filename.js"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <com.example.jimec.javascriptshell.editor.HighlighterEditText
         android:id="@+id/editor"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/show_keyboard_wrapper"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -38,8 +28,6 @@
         android:id="@+id/keyboard"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:clipChildren="false"
-        android:elevation="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/show_keyboard_wrapper"/>
@@ -48,8 +36,6 @@
         android:id="@+id/show_keyboard_wrapper"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/primaryColor"
-        android:elevation="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
@@ -57,12 +43,7 @@
         <Button
             android:id="@+id/show_keyboard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alpha="0.6"
-            android:background="@drawable/button_ripple"
-            android:foreground="@drawable/keyboard"
-            android:foregroundGravity="center"
-            android:padding="12dp"/>
+            android:layout_height="wrap_content"/>
 
     </FrameLayout>
 
