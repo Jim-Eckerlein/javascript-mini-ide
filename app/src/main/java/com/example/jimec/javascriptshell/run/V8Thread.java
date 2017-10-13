@@ -1,19 +1,23 @@
 package com.example.jimec.javascriptshell.run;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.widget.TextView;
 
 import com.eclipsesource.v8.JavaVoidCallback;
 import com.eclipsesource.v8.Releasable;
 import com.eclipsesource.v8.V8;
 import com.eclipsesource.v8.utils.V8Executor;
+import com.example.jimec.javascriptshell.Util;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A V8 engine with all predefined functions (print, sleep, ...)
  */
 public class V8Thread extends V8Executor {
     
+    private static final long FLUSH_DELAY_MILLIS = 100;
+    private final StringBuilder mConsoleBuffer = new StringBuilder();
     private TextView mConsole;
     private boolean mExited = false;
     private String mExitCause;
@@ -21,6 +25,20 @@ public class V8Thread extends V8Executor {
     public V8Thread(TextView console, String code) {
         super(code);
         mConsole = console;
+    
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (mConsoleBuffer.length() == 0) {
+                    return;
+                }
+                synchronized (mConsoleBuffer) {
+                    String log = mConsoleBuffer.toString();
+                    Util.runOnUiThread(() -> mConsole.append(log));
+                    mConsoleBuffer.delete(0, mConsoleBuffer.length());
+                }
+            }
+        }, FLUSH_DELAY_MILLIS, FLUSH_DELAY_MILLIS);
     }
     
     @Override
@@ -43,7 +61,9 @@ public class V8Thread extends V8Executor {
         
             log.append('\n');
     
-            new Handler(Looper.getMainLooper()).post(() -> mConsole.append(log.toString()));
+            synchronized (mConsoleBuffer) {
+                mConsoleBuffer.append(log);
+            }
         
         }, "print");
     
