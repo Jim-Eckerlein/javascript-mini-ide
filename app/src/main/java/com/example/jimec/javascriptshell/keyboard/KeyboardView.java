@@ -18,7 +18,7 @@ public class KeyboardView extends FrameLayout {
     private ViewGroup mInputKeyboard;
     private KeyIndicatorView mKeyIndicatorView;
     private int mOldKeyboardHeight;
-    private OnHideKeyboardListener mOnHideKeyboardListener;
+    private Runnable mOnHideKeyboardListener;
     
     public KeyboardView(Context context) {
         super(context);
@@ -44,7 +44,7 @@ public class KeyboardView extends FrameLayout {
         initKeys(this);
     
         // Hide keyboard animation:
-        findViewById(R.id.hide_keyboard).setOnClickListener(v -> mOnHideKeyboardListener.onHideKeyboard());
+        findViewById(R.id.hide_keyboard).setOnClickListener(v -> mOnHideKeyboardListener.run());
     }
     
     private void initKeys(View view) {
@@ -82,14 +82,8 @@ public class KeyboardView extends FrameLayout {
         mEditor = editor;
     }
     
-    public void setOnHideKeyboardListener(OnHideKeyboardListener onHideKeyboardListener) {
+    public void setOnHideKeyboardListener(Runnable onHideKeyboardListener) {
         mOnHideKeyboardListener = onHideKeyboardListener;
-    }
-    
-    public interface OnHideKeyboardListener {
-        
-        void onHideKeyboard();
-        
     }
     
 }

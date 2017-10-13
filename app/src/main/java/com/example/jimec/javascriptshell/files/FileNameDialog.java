@@ -12,7 +12,7 @@ public class FileNameDialog {
     private FileNameDialog() {
     }
     
-    public static void show(Context context, Mode mode, OnOkListener onOkListener, OnCancelListener onCancelListener) {
+    public static void show(Context context, Mode mode, OnOkListener onOkListener, Runnable onCancelListener) {
         final View view = View.inflate(context, R.layout.view_file_create_dialog, null);
         final FileNameEditText filenameInput = view.findViewById(R.id.file_create_name);
         final TextView errorAlreadyExists = view.findViewById(R.id.file_create_error_already_exists);
@@ -45,12 +45,12 @@ public class FileNameDialog {
                     if (errorAlreadyExists.getVisibility() == View.INVISIBLE && errorInvalidCharacter.getVisibility() == View.INVISIBLE
                             && filenameInput.getText().length() > 0) {
                         // Ok clicked => create file
-                        onOkListener.onOk(filenameInput.getText().toString() + context.getString(R.string.files_extension));
+                        onOkListener.run(filenameInput.getText().toString() + context.getString(R.string.files_extension));
                     }
                     dialog.dismiss();
                 })
                 .setNegativeButton(R.string.cancel, (dialog, which) -> {
-                    onCancelListener.onCancel();
+                    onCancelListener.run();
                     dialog.cancel();
                 })
                 .show();
@@ -61,11 +61,7 @@ public class FileNameDialog {
     }
     
     public interface OnOkListener {
-        void onOk(String filename);
-    }
-    
-    public interface OnCancelListener {
-        void onCancel();
+        void run(String filename);
     }
     
 }

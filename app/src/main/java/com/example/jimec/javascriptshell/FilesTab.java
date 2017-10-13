@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class FilesTab extends Fragment implements FileView.OnSelectedListener {
+public class FilesTab extends Fragment {
     
     private static final int[] EXAMPLE_ARRAY_FILE_MAP = new int[]{
             R.raw.example_demo,
@@ -173,15 +173,29 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     }
     
     private FileView createFileView(String filename) {
-        FileView ret = FileView.create(getContext(), this, filename, this);
-        ret.setOnFileSettingsOpenedListener(() -> {
+        FileView fileView = FileView.create(getContext(), this, filename);
+        
+        fileView.setOnFileSettingsOpenedListener(() -> {
             if (mFileSettingsOpened != null) {
                 mFileSettingsOpened.hideFileSettings();
             }
-            mFileSettingsOpened = ret;
+            mFileSettingsOpened = fileView;
         });
-        ret.setOnFileSettingsClosedListener(() -> mFileSettingsOpened = null);
-        return ret;
+    
+        // File view selected during multiple file deletion:
+        fileView.setOnFileSelectedListener(() -> {
+            mSelectedFileViews.add(fileView);
+            updateMultipleFileDeletionCounterText();
+        });
+    
+        // File view deselected during multiple file deletion:
+        fileView.setOnFileDeselectedListener(() -> {
+            mSelectedFileViews.remove(fileView);
+            updateMultipleFileDeletionCounterText();
+        });
+        
+        fileView.setOnFileSettingsClosedListener(() -> mFileSettingsOpened = null);
+        return fileView;
     }
     
     public void deleteFile(String filename) {
@@ -273,20 +287,6 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     private void updateMultipleFileDeletionCounterText() {
         int count = mSelectedFileViews.size();
         mMultipleFileDeletionCounter.setText(getResources().getQuantityString(R.plurals.files_multiple_files_selected, count, count));
-    }
-    
-    @Override
-    public void onFileViewSelected(FileView fileView) {
-        // File view selected during multiple file deletion:
-        mSelectedFileViews.add(fileView);
-        updateMultipleFileDeletionCounterText();
-    }
-    
-    @Override
-    public void onFileViewDeselected(FileView fileView) {
-        // File view deselected during multiple file deletion:
-        mSelectedFileViews.remove(fileView);
-        updateMultipleFileDeletionCounterText();
     }
     
     public boolean fileSettingsOpened() {

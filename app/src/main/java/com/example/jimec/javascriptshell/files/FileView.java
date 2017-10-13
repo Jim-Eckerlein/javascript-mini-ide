@@ -27,7 +27,8 @@ public class FileView extends FrameLayout {
     private ObjectAnimator mFilenameTextAnimation;
     private boolean mFileSettingsShown = false;
     private boolean mFileSelectBoxShown = false;
-    private OnSelectedListener mOnSelectedListener;
+    private Runnable mOnFileSelectedListener;
+    private Runnable mOnFileDeselectedListener;
     private Runnable mOnFileSettingsOpenedListener;
     private Runnable mOnFileSettingsClosedListener;
     
@@ -46,11 +47,10 @@ public class FileView extends FrameLayout {
         init();
     }
     
-    public static FileView create(Context context, FilesTab filesTab, String filenameTitle, OnSelectedListener selectedListener) {
+    public static FileView create(Context context, FilesTab filesTab, String filenameTitle) {
         FileView view = new FileView(context);
         view.mFilenameText.setText(filenameTitle);
         view.mFilesTab = filesTab;
-        view.mOnSelectedListener = selectedListener;
         return view;
     }
     
@@ -112,10 +112,10 @@ public class FileView extends FrameLayout {
         // Select listeners:
         mFileSelectBox.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
             if (isChecked) {
-                mOnSelectedListener.onFileViewSelected(this);
+                mOnFileSelectedListener.run();
             }
             else {
-                mOnSelectedListener.onFileViewDeselected(this);
+                mOnFileDeselectedListener.run();
             }
         });
         
@@ -185,12 +185,12 @@ public class FileView extends FrameLayout {
         mOnFileSettingsClosedListener = onFileSettingsClosedListener;
     }
     
-    public interface OnSelectedListener {
-        
-        void onFileViewSelected(FileView fileView);
-        
-        void onFileViewDeselected(FileView fileView);
-        
+    public void setOnFileSelectedListener(Runnable onFileSelectedListener) {
+        mOnFileSelectedListener = onFileSelectedListener;
+    }
+    
+    public void setOnFileDeselectedListener(Runnable onFileDeselectedListener) {
+        mOnFileDeselectedListener = onFileDeselectedListener;
     }
     
 }
