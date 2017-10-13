@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="help_editor_heading">Editor</string>
-    <string name="help_editor">Edit your script. Tap a key to write its primary text, hold to write the secondary one.</string>
+    <string name="help_editor">Edit your script. Tap a key to write its primary text, hold to write the secondary one. You can hide the keyboard as well.</string>
     <string name="help_run_heading">Run</string>
     <string name="help_run">Run your script. Leaving the run tab will immediately stop the script execution.</string>
     <string name="help_files_heading">Files</string>
-    <string name="help_files">Select an example script.</string>
+    <string name="help_files">Create, delete or rename your files, or open an example. Changes made to files are saved automatically. Changes in examples are never saved and lost whenever another file is opened.</string>
 </resources>
