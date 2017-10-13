@@ -187,10 +187,10 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
             if (mEditorTab.isKeyboardVisible()) {
                 mEditorTab.hideKeyboard();
             }
-            
-            // Quit app:
+
+            // Return to files tab:
             else {
-                return false;
+                mViewPager.setCurrentItem(FILES_TAB_POSITION);
             }
             
         }
@@ -199,6 +199,7 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
         else if (RUN_TAB_POSITION == currentTab) {
             
             // Return to editor tap:
+            mRunTab.stopV8();
             mViewPager.setCurrentItem(EDITOR_TAP_POSITION);
             
         }

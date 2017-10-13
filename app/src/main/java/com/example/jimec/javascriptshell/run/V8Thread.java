@@ -14,15 +14,13 @@ import com.eclipsesource.v8.utils.V8Executor;
  */
 public class V8Thread extends V8Executor {
     
-    private final TextView mErrorViewer;
     private TextView mConsole;
     private boolean mExited = false;
     private String mExitCause;
     
-    public V8Thread(TextView console, TextView errorViewer, String code) {
+    public V8Thread(TextView console, String code) {
         super(code);
         mConsole = console;
-        mErrorViewer = errorViewer;
     }
     
     @Override
@@ -45,9 +43,7 @@ public class V8Thread extends V8Executor {
         
             log.append('\n');
     
-            new Handler(Looper.getMainLooper()).post(() -> {
-                mConsole.append(log.toString());
-            });
+            new Handler(Looper.getMainLooper()).post(() -> mConsole.append(log.toString()));
         
         }, "print");
     
