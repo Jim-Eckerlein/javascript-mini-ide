@@ -14,10 +14,10 @@ import java.security.InvalidParameterException;
 
 public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabSelectedListener {
     
-    public static final int FRAGMENT_POSITION_FILES = 0;
-    public static final int FRAGMENT_POSITION_EDITOR = 1;
-    public static final int FRAGMENT_POSITION_RUN = 2;
-    public static final int NUM_FRAGMENTS = 3;
+    public static final int FILES_TAB_POSITION = 0;
+    public static final int EDITOR_TAP_POSITION = 1;
+    public static final int RUN_TAB_POSITION = 2;
+    public static final int NUM_TABS = 3;
     
     private final ViewPager mViewPager;
     private final FilesTab mFilesTab = new FilesTab();
@@ -35,12 +35,12 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
     
     public void loadExample(String exampleName, @RawRes int id) {
         mEditorTab.loadExample(mActivity.getString(R.string.files_example_title, exampleName), id);
-        mViewPager.setCurrentItem(FRAGMENT_POSITION_EDITOR);
+        mViewPager.setCurrentItem(EDITOR_TAP_POSITION);
     }
     
     public void loadFile(String filename, String content) {
         mEditorTab.loadFile(filename, content);
-        mViewPager.setCurrentItem(FRAGMENT_POSITION_EDITOR);
+        mViewPager.setCurrentItem(EDITOR_TAP_POSITION);
     }
     
     public void startMultipleFileDeletion() {
@@ -72,7 +72,7 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         switch (tab.getPosition()) {
-            case TabManager.FRAGMENT_POSITION_RUN:
+            case TabManager.RUN_TAB_POSITION:
                 mRunTab.clearOutput();
                 mRunTab.launchV8(mEditorTab.getEditor().toString());
         }
@@ -84,12 +84,12 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
         switch (tab.getPosition()) {
             
             // Break execution:
-            case TabManager.FRAGMENT_POSITION_RUN:
+            case TabManager.RUN_TAB_POSITION:
                 mRunTab.stopV8();
                 break;
             
             // Quit editor -> save file:
-            case TabManager.FRAGMENT_POSITION_EDITOR:
+            case TabManager.EDITOR_TAP_POSITION:
                 saveEditorFile();
         }
     }
@@ -100,17 +100,17 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
     
     @Override
     public int getCount() {
-        return NUM_FRAGMENTS;
+        return NUM_TABS;
     }
     
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case FRAGMENT_POSITION_FILES:
+            case FILES_TAB_POSITION:
                 return mFilesTab;
-            case FRAGMENT_POSITION_EDITOR:
+            case EDITOR_TAP_POSITION:
                 return mEditorTab;
-            case FRAGMENT_POSITION_RUN:
+            case RUN_TAB_POSITION:
                 return mRunTab;
             default:
                 throw new InvalidParameterException();
@@ -120,11 +120,11 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {
-            case FRAGMENT_POSITION_FILES:
+            case FILES_TAB_POSITION:
                 return mActivity.getString(R.string.files_tab_title);
-            case FRAGMENT_POSITION_EDITOR:
+            case EDITOR_TAP_POSITION:
                 return mActivity.getString(R.string.editor_tab_title);
-            case FRAGMENT_POSITION_RUN:
+            case RUN_TAB_POSITION:
                 return mActivity.getString(R.string.run_tab_title);
             default:
                 throw new InvalidParameterException();
@@ -133,7 +133,7 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
     
     public void loadSession() {
         String sessionFile = mActivity.getPreferences(Context.MODE_PRIVATE).getString(mActivity.getString(R.string.pref_session_file), null);
-        if(sessionFile != null) {
+        if (sessionFile != null) {
             mFilesTab.openFile(sessionFile);
         }
         else {
@@ -143,12 +143,70 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
     
     public void saveSession() {
         SharedPreferences.Editor edit = mActivity.getPreferences(Context.MODE_PRIVATE).edit();
-        if(!mEditorTab.currentFileIsExample()) {
+        if (!mEditorTab.currentFileIsExample()) {
             edit.putString(mActivity.getString(R.string.pref_session_file), mEditorTab.getCurrentFileName());
         }
         else {
             edit.putString(mActivity.getString(R.string.pref_session_file), null);
         }
         edit.apply();
+    }
+    
+    /**
+     * Try to handle a back-button key press.
+     *
+     * @return True if successfully processed, otherwise, false, which usually means app quit.
+     */
+    public boolean backPressed() {
+        int currentTab = mViewPager.getCurrentItem();
+        
+        // Back key pressed inside file tab:
+        if (FILES_TAB_POSITION == currentTab) {
+            
+            // Close file settings:
+            if (mFilesTab.fileSettingsOpened()) {
+                mFilesTab.hideFileSettings();
+            }
+            
+            // End multiple file deletion:
+            else if (mFilesTab.activeMultipleFileDeletion()) {
+                mFilesTab.endMultipleFileDeletion();
+            }
+            
+            // Return to editor tab:
+            else {
+                mViewPager.setCurrentItem(EDITOR_TAP_POSITION);
+            }
+            
+        }
+        
+        // Back key pressed inside editor tab:
+        else if (EDITOR_TAP_POSITION == currentTab) {
+            
+            // Hide keyboard:
+            if (mEditorTab.isKeyboardVisible()) {
+                mEditorTab.hideKeyboard();
+            }
+            
+            // Quit app:
+            else {
+                return false;
+            }
+            
+        }
+        
+        // Back key pressed inside run tab:
+        else if (RUN_TAB_POSITION == currentTab) {
+            
+            // Return to editor tap:
+            mViewPager.setCurrentItem(EDITOR_TAP_POSITION);
+            
+        }
+        
+        else {
+            return false;
+        }
+        
+        return true;
     }
 }

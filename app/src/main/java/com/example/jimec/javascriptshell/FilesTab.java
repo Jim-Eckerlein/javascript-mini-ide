@@ -45,6 +45,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
     private ViewGroup mMultipleFileDeletionBar;
     private TextView mMultipleFileDeletionCounter;
     private ScrollView mScroller;
+    private FileView mFileSettingsOpened;
     private boolean mSessionLoaded = false;
     
     @Override
@@ -67,7 +68,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
         // Load user files:
         mFileViewListLayout = view.findViewById(R.id.user_file_list);
         for (String filename : FilesManager.getInstance().listFiles()) {
-            FileView fileView = FileView.create(getContext(), this, filename, this);
+            FileView fileView = createFileView(filename);
             mFileViews.put(filename, fileView);
             mFileViewListLayout.addView(fileView);
         }
@@ -155,7 +156,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
         try {
             FilesManager.getInstance().create(filename);
             FilesManager.getInstance().write(filename, "\n");
-            FileView fileView = FileView.create(getContext(), this, filename, this);
+            FileView fileView = createFileView(filename);
             mFileViews.put(filename, fileView);
             mFileViewListLayout.addView(fileView);
         } catch (IOException e) {
@@ -169,6 +170,18 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
                     })
                     .show();
         }
+    }
+    
+    private FileView createFileView(String filename) {
+        FileView ret = FileView.create(getContext(), this, filename, this);
+        ret.setOnFileSettingsOpenedListener(() -> {
+            if (mFileSettingsOpened != null) {
+                mFileSettingsOpened.hideFileSettings();
+            }
+            mFileSettingsOpened = ret;
+        });
+        ret.setOnFileSettingsClosedListener(() -> mFileSettingsOpened = null);
+        return ret;
     }
     
     public void deleteFile(String filename) {
@@ -233,7 +246,7 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
         updateMultipleFileDeletionCounterText();
     }
     
-    private void endMultipleFileDeletion() {
+    void endMultipleFileDeletion() {
         if (!mActiveMultipleFileDeletion) {
             return;
         }
@@ -274,5 +287,19 @@ public class FilesTab extends Fragment implements FileView.OnSelectedListener {
         // File view deselected during multiple file deletion:
         mSelectedFileViews.remove(fileView);
         updateMultipleFileDeletionCounterText();
+    }
+    
+    public boolean fileSettingsOpened() {
+        return mFileSettingsOpened != null;
+    }
+    
+    public void hideFileSettings() {
+        if (mFileSettingsOpened != null) {
+            mFileSettingsOpened.hideFileSettings();
+        }
+    }
+    
+    public boolean activeMultipleFileDeletion() {
+        return mActiveMultipleFileDeletion;
     }
 }

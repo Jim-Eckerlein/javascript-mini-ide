@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mPager);
         tabLayout.addOnTabSelectedListener(mTabManager);
-        
-        mPager.setCurrentItem(TabManager.FRAGMENT_POSITION_EDITOR);
+    
+        mPager.setCurrentItem(TabManager.EDITOR_TAP_POSITION);
     }
     
     @Override
@@ -48,13 +48,13 @@ public class MainActivity extends AppCompatActivity {
         @MenuRes int res;
     
         switch (mPager.getCurrentItem()) {
-            case TabManager.FRAGMENT_POSITION_FILES:
+            case TabManager.FILES_TAB_POSITION:
                 res = R.menu.toolbar_files;
                 break;
-            case TabManager.FRAGMENT_POSITION_EDITOR:
+            case TabManager.EDITOR_TAP_POSITION:
                 res = R.menu.toolbar_editor;
                 break;
-            case TabManager.FRAGMENT_POSITION_RUN:
+            case TabManager.RUN_TAB_POSITION:
                 res = R.menu.toolbar_run;
                 break;
             default:
@@ -66,9 +66,16 @@ public class MainActivity extends AppCompatActivity {
     }
     
     @Override
+    public void onBackPressed() {
+        if (!mTabManager.backPressed()) {
+            super.onBackPressed();
+        }
+    }
+    
+    @Override
     protected void onStop() {
         super.onStop();
-    
+        
         // Save file:
         mTabManager.saveEditorFile();
         

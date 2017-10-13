@@ -28,6 +28,8 @@ public class FileView extends FrameLayout {
     private boolean mFileSettingsShown = false;
     private boolean mFileSelectBoxShown = false;
     private OnSelectedListener mOnSelectedListener;
+    private Runnable mOnFileSettingsOpenedListener;
+    private Runnable mOnFileSettingsClosedListener;
     
     public FileView(Context context) {
         super(context);
@@ -130,6 +132,7 @@ public class FileView extends FrameLayout {
             ((TransitionDrawable) mRoot.getBackground()).startTransition(Util.ANIMATION_DURATION);
             mFilenameTextAnimation.start();
             mFileSettingsShown = true;
+            mOnFileSettingsOpenedListener.run();
         }
     }
     
@@ -139,6 +142,7 @@ public class FileView extends FrameLayout {
             ((TransitionDrawable) mRoot.getBackground()).reverseTransition(Util.ANIMATION_DURATION);
             mFilenameTextAnimation.reverse();
             mFileSettingsShown = false;
+            mOnFileSettingsClosedListener.run();
         }
     }
     
@@ -171,6 +175,14 @@ public class FileView extends FrameLayout {
     
     public String getFilename() {
         return mFilenameText.getText().toString();
+    }
+    
+    public void setOnFileSettingsOpenedListener(Runnable onFileSettingsOpenedListener) {
+        mOnFileSettingsOpenedListener = onFileSettingsOpenedListener;
+    }
+    
+    public void setOnFileSettingsClosedListener(Runnable onFileSettingsClosedListener) {
+        mOnFileSettingsClosedListener = onFileSettingsClosedListener;
     }
     
     public interface OnSelectedListener {

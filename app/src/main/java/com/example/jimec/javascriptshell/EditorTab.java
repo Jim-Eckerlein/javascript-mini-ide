@@ -26,6 +26,7 @@ public class EditorTab extends Fragment {
     private ConstraintSet mConstraintSetOriginal = new ConstraintSet();
     private ConstraintSet mConstraintSetHiddenKeyboard = new ConstraintSet();
     private ConstraintLayout mRoot;
+    private boolean mIsKeyboardVisible = true;
     
     public void setPager(ViewPager viewPager) {
         mViewPager = viewPager;
@@ -51,17 +52,10 @@ public class EditorTab extends Fragment {
         // Keyboard:
         KeyboardView keyboardView = view.findViewById(R.id.keyboard);
         keyboardView.setEditor(mEditor);
+        keyboardView.setOnHideKeyboardListener(this::hideKeyboard);
+        view.findViewById(R.id.show_keyboard).setOnClickListener(v -> showKeyboard());
     
-        keyboardView.setOnHideKeyboardListener(() -> {
-            TransitionManager.beginDelayedTransition(mRoot);
-            mConstraintSetHiddenKeyboard.applyTo(mRoot);
-        });
-        view.findViewById(R.id.show_keyboard).setOnClickListener(v -> {
-            TransitionManager.beginDelayedTransition(mRoot);
-            mConstraintSetOriginal.applyTo(mRoot);
-        });
-        
-        view.findViewById(R.id.run_code_key).setOnClickListener(v -> mViewPager.setCurrentItem(TabManager.FRAGMENT_POSITION_RUN));
+        view.findViewById(R.id.run_code_key).setOnClickListener(v -> mViewPager.setCurrentItem(TabManager.RUN_TAB_POSITION));
         
         return view;
     }
@@ -98,5 +92,27 @@ public class EditorTab extends Fragment {
     
     public boolean hasOpenedFile() {
         return mHasOpenedFile;
+    }
+    
+    public boolean isKeyboardVisible() {
+        return mIsKeyboardVisible;
+    }
+    
+    public void hideKeyboard() {
+        if (!mIsKeyboardVisible) {
+            return;
+        }
+        TransitionManager.beginDelayedTransition(mRoot);
+        mConstraintSetHiddenKeyboard.applyTo(mRoot);
+        mIsKeyboardVisible = false;
+    }
+    
+    public void showKeyboard() {
+        if (mIsKeyboardVisible) {
+            return;
+        }
+        TransitionManager.beginDelayedTransition(mRoot);
+        mConstraintSetOriginal.applyTo(mRoot);
+        mIsKeyboardVisible = true;
     }
 }
