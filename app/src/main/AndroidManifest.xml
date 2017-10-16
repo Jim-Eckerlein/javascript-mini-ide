@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="io.jim_eckerlein.jsshell">
+          package="io.jimeckerlein.jsshell">
 
     <application
         android:allowBackup="true"

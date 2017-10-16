@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="filename.js"/>
 
-    <io.jim_eckerlein.jsshell.editor.CodeEditorView
+    <io.jimeckerlein.jsshell.editor.CodeEditorView
         android:id="@+id/editor"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/current_file_name"
         app:layout_constraintVertical_chainStyle="spread_inside"/>
 
-    <io.jim_eckerlein.jsshell.keyboard.KeyboardView
+    <io.jimeckerlein.jsshell.keyboard.KeyboardView
         android:id="@+id/keyboard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
