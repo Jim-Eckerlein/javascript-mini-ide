@@ -22,63 +22,63 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="1"
                 app:secondary="++"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="2"
                 app:secondary="--"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="3"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="4"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="5"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="6"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="7"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="8"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="9"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -90,68 +90,68 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="q"
                 app:secondary="&amp;"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="w"
                 app:secondary="|"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="e"
                 app:secondary="!"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="r"
                 app:secondary="\?"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="t"
                 app:secondary="%"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="z"
                 app:secondary="_"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="u"
                 app:secondary="~"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="i"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="o"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -169,62 +169,62 @@
                 android:layout_weight="0.5"
                 />
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="a"
                 app:secondary="+"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="s"
                 app:secondary="-"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="d"
                 app:secondary="*"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="f"
                 app:secondary="/"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="g"
                 app:secondary="="/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="h"
                 app:secondary="&lt;"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="j"
                 app:secondary="&gt;"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="k"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -243,62 +243,62 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.example.jimec.javascriptshell.keyboard.ShiftKeyView
+            <io.jim_eckerlein.jsshell.keyboard.ShiftKeyView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="y"
                 app:secondary="{"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="x"
                 app:secondary="("/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="c"
                 app:secondary="["/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="v"
                 app:secondary=":"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="b"
                 app:secondary="]"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="n"
                 app:secondary=")"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:primary="m"
                 app:secondary="}"/>
 
-            <com.example.jimec.javascriptshell.keyboard.BackspaceKeyView
+            <io.jim_eckerlein.jsshell.keyboard.BackspaceKeyView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingLeft="10dp"
@@ -330,19 +330,19 @@
                 android:src="@drawable/run"
                 android:tint="@color/secondaryColor"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 app:primary=","
                 app:secondary="."/>
 
-            <com.example.jimec.javascriptshell.keyboard.SpaceKeyView
+            <io.jim_eckerlein.jsshell.keyboard.SpaceKeyView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"/>
 
-            <com.example.jimec.javascriptshell.keyboard.KeyView
+            <io.jim_eckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -358,7 +358,7 @@
                     android:padding="4dp"
                     android:src="@drawable/circle"/>
 
-                <com.example.jimec.javascriptshell.keyboard.EnterKeyView
+                <io.jim_eckerlein.jsshell.keyboard.EnterKeyView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"/>
@@ -369,7 +369,7 @@
 
     </LinearLayout>
 
-    <com.example.jimec.javascriptshell.keyboard.KeyIndicatorView
+    <io.jim_eckerlein.jsshell.keyboard.KeyIndicatorView
         android:id="@+id/key_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

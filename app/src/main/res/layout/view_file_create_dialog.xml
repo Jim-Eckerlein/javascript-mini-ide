@@ -10,7 +10,7 @@
     android:paddingEnd="32dp"
     android:paddingStart="32dp">
 
-    <com.example.jimec.javascriptshell.files.FileNameEditText
+    <io.jim_eckerlein.jsshell.files.FileNameEditText
         android:id="@+id/file_create_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

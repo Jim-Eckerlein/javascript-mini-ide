@@ -12,7 +12,6 @@
     tools:visibility="visible">
 
     <View
-        android:id="@+id/key_indicator_progress"
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:background="@color/secondaryColor"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.jimec.javascriptshell.run.V8View
+<io.jim_eckerlein.jsshell.run.V8View
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/v8"
     android:layout_width="match_parent"
