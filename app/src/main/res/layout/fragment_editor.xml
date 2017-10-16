@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="filename.js"/>
 
-    <com.example.jimec.javascriptshell.editor.HighlighterEditText
+    <com.example.jimec.javascriptshell.editor.CodeEditorView
         android:id="@+id/editor"
         android:layout_width="0dp"
         android:layout_height="0dp"

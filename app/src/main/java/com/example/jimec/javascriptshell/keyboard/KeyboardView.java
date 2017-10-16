@@ -7,14 +7,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.example.jimec.javascriptshell.R;
-import com.example.jimec.javascriptshell.editor.HighlighterEditText;
+import com.example.jimec.javascriptshell.editor.CodeEditorView;
 
 public class KeyboardView extends FrameLayout {
     
     public static float ALPHA_INACTIVE = 0.4f;
     public static float ALPHA_ACTIVE = 0.8f;
     private ShiftKeyView mShiftKey;
-    private HighlighterEditText mEditor;
+    private CodeEditorView mEditor;
     private ViewGroup mInputKeyboard;
     private KeyIndicatorView mKeyIndicatorView;
     private int mOldKeyboardHeight;
@@ -78,7 +78,7 @@ public class KeyboardView extends FrameLayout {
         mEditor.backspace();
     }
     
-    public void setEditor(HighlighterEditText editor) {
+    public void setEditor(CodeEditorView editor) {
         mEditor = editor;
     }
     

@@ -14,7 +14,7 @@ import java.util.ArrayDeque;
 
 import static com.example.jimec.javascriptshell.Util.clamp;
 
-public class HighlighterEditText extends FrameLayout {
+public class CodeEditorView extends FrameLayout {
     
     public static final int MAX_UNDO_HISTORY = 50;
     
@@ -26,18 +26,19 @@ public class HighlighterEditText extends FrameLayout {
     private EditText mEditText;
     private boolean mSkipHistoryBackup = false;
     private int mCursorHistoryCurrentPosition;
+    private StringBuilder mNewCode = new StringBuilder();
     
-    public HighlighterEditText(Context context) {
+    public CodeEditorView(Context context) {
         super(context);
         init();
     }
     
-    public HighlighterEditText(Context context, AttributeSet attrs) {
+    public CodeEditorView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
     
-    public HighlighterEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CodeEditorView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -54,17 +55,17 @@ public class HighlighterEditText extends FrameLayout {
         int end = getCursorEnd();
         int cursorPos = start + code.length();
     
-        StringBuilder newCode = new StringBuilder(mEditText.getText().replace(start, end, code, 0, code.length()).toString());
+        mNewCode.replace(0, mNewCode.length(), mEditText.getText().replace(start, end, code, 0, code.length()).toString());
     
         if (code.equals("}") || code.equals("\n")) {
-            cursorPos = RuntimeFormatter.format(newCode, cursorPos - 1) + 1;
+            cursorPos = RuntimeFormatter.format(mNewCode, cursorPos - 1) + 1;
         }
     
         mCursorHistoryCurrentPosition = start;
         mTextChangeListener.mInternalChange = true;
         mEditText.setSelection(0);
-        highlight(newCode.toString());
-        mEditText.setSelection(clamp(cursorPos, 0, newCode.toString().length()));
+        highlight(mNewCode.toString());
+        mEditText.setSelection(clamp(cursorPos, 0, mNewCode.toString().length()));
     }
     
     public void backspace() {

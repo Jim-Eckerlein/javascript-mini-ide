@@ -13,12 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.jimec.javascriptshell.editor.HighlighterEditText;
+import com.example.jimec.javascriptshell.editor.CodeEditorView;
 import com.example.jimec.javascriptshell.keyboard.KeyboardView;
 
 public class EditorTab extends Fragment {
     
-    private HighlighterEditText mEditor;
+    private CodeEditorView mEditor;
     private ViewPager mViewPager;
     private TextView mCurrentFileName;
     private boolean mCurrentFileIsExample = false;
@@ -69,7 +69,7 @@ public class EditorTab extends Fragment {
         mEditor.moveCursorToStart();
     }
     
-    public HighlighterEditText getEditor() {
+    public CodeEditorView getEditor() {
         return mEditor;
     }
     
