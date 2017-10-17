@@ -29,15 +29,19 @@ Java_io_jimeckerlein_jsshell_editor_Highlighter_findHighlights(
         return (jboolean) false;
     }
 
-    Highlighter nativeHighlighter{
-            code,
-            [&](int type, int start, int end) {
-                env->CallVoidMethod(jTypeBuffer, putMethodId, type);
-                env->CallVoidMethod(jSpanStartBuffer, putMethodId, start);
-                env->CallVoidMethod(jSpanEndBuffer, putMethodId, end);
-            }};
+    Highlighter nativeHighlighter{code};
 
     nativeHighlighter.run();
+
+    for (int i : nativeHighlighter.getSpanTypes()) {
+        env->CallVoidMethod(jTypeBuffer, putMethodId, i);
+    }
+    for (int i : nativeHighlighter.getSpanStarts()) {
+        env->CallVoidMethod(jSpanStartBuffer, putMethodId, i);
+    }
+    for (int i : nativeHighlighter.getSpanEnds()) {
+        env->CallVoidMethod(jSpanEndBuffer, putMethodId, i);
+    }
 
     // Cleanup:
     env->ReleaseStringUTFChars(jCode, code);

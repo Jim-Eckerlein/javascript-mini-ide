@@ -9,6 +9,7 @@
 #include <string>
 #include <cstring>
 #include <functional>
+#include <vector>
 
 class Highlighter {
 
@@ -35,22 +36,26 @@ private:
     const static char *KEYWORD_LIST[];
     const static char OPERATOR_LIST[];
 
-    std::function<void(int, int, int)> mPut;
     std::string mCode;
+    std::vector<int> mSpanTypes, mSpanStarts, mSpanEnds;
 
 public:
 
-    Highlighter(const std::string &code, std::function<void(int, int, int)> &&put);
-
-    static bool compare(std::string a, std::string b, int start);
-
-    static bool backCompare(std::string a, std::string b, int start);
+    Highlighter(const std::string &code);
 
     void run();
 
-    bool isKeyword(std::string code, int position);
+    std::vector<int> getSpanTypes();
+    std::vector<int> getSpanStarts();
+    std::vector<int> getSpanEnds();
 
+private:
+
+    void put(int type, int start, int end);
+    bool isKeyword(std::string code, int position);
     bool isOperator(char character);
+    static bool compare(std::string a, std::string b, int start);
+    static bool backCompare(std::string a, std::string b, int start);
 
 };
 

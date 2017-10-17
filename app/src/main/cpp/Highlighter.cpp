@@ -20,10 +20,7 @@ const char Highlighter::OPERATOR_LIST[] = {
         '.', ';', '~', '=', '[', ']', '-', '&', '<', '>', ':', '\\'
 };
 
-Highlighter::Highlighter(const std::string &code,
-                  std::function<void(int, int, int)> &&put
-) {
-    mPut = std::forward<std::function<void(int, int, int)>>(put);
+Highlighter::Highlighter(const std::string &code) {
     mCode = code;
 }
 
@@ -36,6 +33,10 @@ bool Highlighter::backCompare(std::string a, std::string b, int start) {
 }
 
 void Highlighter::run() {
+    mSpanTypes.clear();
+    mSpanStarts.clear();
+    mSpanEnds.clear();
+
     int currentTextType = SPACE;
     char c = mCode[0];
     int spanStart = 0;
@@ -54,7 +55,7 @@ void Highlighter::run() {
 
             // Single line comment end
         else if (currentTextType == COMMENT_SINGE_LINE && c == '\n') {
-            mPut(COMMENT_SPAN, spanStart, i + 1);
+            put(COMMENT_SPAN, spanStart, i + 1);
             currentTextType = SPACE;
         }
 
@@ -67,7 +68,7 @@ void Highlighter::run() {
 
             // Multi line comment end
         else if (backCompare(mCode, "*/", i) && currentTextType == COMMENT_MULTI_LINE) {
-            mPut(COMMENT_SPAN, spanStart, i + 1);
+            put(COMMENT_SPAN, spanStart, i + 1);
             currentTextType = SPACE;
         }
 
@@ -80,7 +81,7 @@ void Highlighter::run() {
 
             // String ending
         else if (backCompare(mCode, "'", i) && currentTextType == STRING) {
-            mPut(STRING_SPAN, spanStart, i + 1);
+            put(STRING_SPAN, spanStart, i + 1);
             currentTextType = SPACE;
         }
 
@@ -93,7 +94,7 @@ void Highlighter::run() {
 
             // Keyword end
         else if (!std::isalnum(c) && currentTextType == KEYWORD) {
-            mPut(KEYWORD_SPAN, spanStart, i);
+            put(KEYWORD_SPAN, spanStart, i);
             currentTextType = SPACE;
             reprocessCurrentCharacter = true;
         }
@@ -115,7 +116,7 @@ void Highlighter::run() {
                                                    && !(c >= 'a' && c <= 'f')
                                                    && !(c >= 'A' && c <= 'F')
         )) {
-            mPut(NUMBER_SPAN, spanStart, i);
+            put(NUMBER_SPAN, spanStart, i);
             currentTextType = SPACE;
             reprocessCurrentCharacter = true;
         }
@@ -136,13 +137,13 @@ void Highlighter::run() {
                  (currentTextType == NUMBER || currentTextType == DECIMAL_PART_NUMBER)) {
             currentTextType = NEUTRAL;
             reprocessCurrentCharacter = true;
-            mPut(NUMBER_SPAN, spanStart, i);
+            put(NUMBER_SPAN, spanStart, i);
         }
 
             // Operator
         else if (!std::isspace(c) && isOperator(c) &&
                  (currentTextType == NEUTRAL || currentTextType == SPACE)) {
-            mPut(OPERATOR_SPAN, i, i + 1);
+            put(OPERATOR_SPAN, i, i + 1);
             currentTextType = SPACE;
         }
 
@@ -193,4 +194,22 @@ bool Highlighter::isOperator(char character) {
             return true;
     }
     return false;
+}
+
+void Highlighter::put(int type, int start, int end) {
+    mSpanTypes.push_back(type);
+    mSpanStarts.push_back(start);
+    mSpanEnds.push_back(end);
+}
+
+std::vector<int> Highlighter::getSpanTypes() {
+    return mSpanTypes;
+}
+
+std::vector<int> Highlighter::getSpanStarts() {
+    return mSpanStarts;
+}
+
+std::vector<int> Highlighter::getSpanEnds() {
+    return mSpanEnds;
 }
