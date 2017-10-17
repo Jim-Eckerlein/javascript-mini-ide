@@ -6,6 +6,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 
 import io.jimeckerlein.jsshell.R;
 
@@ -40,20 +41,38 @@ public class Highlighter {
             '+', '*', '/', '{', '}', '(', ')', ',', '|', '!', '?', '%', '^',
             '.', ';', '~', '=', '[', ']', '-', '&', '<', '>', ':', '\\'
     };
+    private static final String TAG = "Highlighter";
     
     private final SpannableStringBuilder mSpanBuilder = new SpannableStringBuilder();
     private final Context mContext;
+    private final ReallocatingIntBuffer mHighlightSpanPositionBuffer = new ReallocatingIntBuffer(100);
+    private final ReallocatingIntBuffer mHighlightSpanTypeBuffer = new ReallocatingIntBuffer(100);
     
     public Highlighter(Context context) {
         mContext = context;
     }
     
-    public native int nativeTest(int x);
-    
     public Spannable highlight(String code) {
-        int currentTextType = SPACE;
+        // Re-initialize span builder:
+        mSpanBuilder.clear();
+        mSpanBuilder.clearSpans();
+        mSpanBuilder.append(code);
+        
+        if(!findHighlights(code, mHighlightSpanPositionBuffer, mHighlightSpanTypeBuffer)) {
+            // Something went wrong
+            Log.e(TAG, "ERROR on finding Highlights");
+        }
     
-        System.out.println(nativeTest(4));
+        Log.e(TAG, "Highlight positions: " + mHighlightSpanPositionBuffer);
+        
+        return mSpanBuilder;
+    }
+    
+    private native boolean findHighlights(String code, ReallocatingIntBuffer positionBuffer, ReallocatingIntBuffer typeBuffer);
+    
+    @Deprecated
+    public Spannable highlightJAVA(String code) {
+        int currentTextType = SPACE;
         
         // Re-initialize span builder:
         mSpanBuilder.clear();
