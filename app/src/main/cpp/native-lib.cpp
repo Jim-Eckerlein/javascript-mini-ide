@@ -1,7 +1,32 @@
 #include <jni.h>
-#include "Highlighter.h"
+#include "NativeHighlighter.h"
 
-extern "C"
+extern "C" {
+
+JNIEXPORT jboolean JNICALL
+Java_io_jimeckerlein_jsshell_MainActivity_test(JNIEnv *env, jobject instance) {
+
+    jclass mainActivityClass = env->FindClass("io/jimeckerlein/jsshell/MainActivity");
+    if (nullptr == mainActivityClass) {
+        return (jboolean) false;
+    }
+
+    jmethodID mid = env->GetMethodID(mainActivityClass, "foo", "([I)V");
+    if (nullptr == mid) {
+        return (jboolean) false;
+    }
+
+    std::vector<int> v{{1, 2, 3, 4, 5, 6, 7, 8}};
+    jintArray array = env->NewIntArray((jsize) v.size());
+
+    void *dst = env->GetPrimitiveArrayCritical(array, nullptr);
+    memcpy(dst, v.data(), v.size() * sizeof(int));
+    env->ReleasePrimitiveArrayCritical(array, dst, 0);
+
+    env->CallVoidMethod(instance, mid, array);
+    return (jboolean) true;
+}
+
 JNIEXPORT jboolean JNICALL
 Java_io_jimeckerlein_jsshell_editor_Highlighter_findHighlights(
         JNIEnv *env, jobject,
@@ -29,7 +54,7 @@ Java_io_jimeckerlein_jsshell_editor_Highlighter_findHighlights(
         return (jboolean) false;
     }
 
-    Highlighter nativeHighlighter{code};
+    NativeHighlighter nativeHighlighter{code};
 
     nativeHighlighter.run();
 
@@ -48,3 +73,5 @@ Java_io_jimeckerlein_jsshell_editor_Highlighter_findHighlights(
     env->DeleteLocalRef(bufferClass);
     return (jboolean) true;
 }
+
+} // extern "C"

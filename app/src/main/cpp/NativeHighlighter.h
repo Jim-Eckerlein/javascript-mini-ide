@@ -11,7 +11,7 @@
 #include <functional>
 #include <vector>
 
-class Highlighter {
+class NativeHighlighter {
 
 private:
 
@@ -41,7 +41,7 @@ private:
 
 public:
 
-    Highlighter(const std::string &code);
+    NativeHighlighter(const std::string &code);
 
     void run();
 

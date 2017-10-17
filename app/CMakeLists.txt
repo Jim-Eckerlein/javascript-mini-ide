@@ -18,8 +18,8 @@ add_library( # Sets the name of the library.
 
              # Provides a relative path to your source file(s).
              src/main/cpp/native-lib.cpp
-             src/main/cpp/Highlighter.cpp
-             src/main/cpp/Highlighter.h )
+             src/main/cpp/NativeHighlighter.cpp
+             src/main/cpp/NativeHighlighter.h )
 
 target_compile_options(native-lib PRIVATE
     "$<$<CONFIG:RELEASE>:-O3>"

@@ -2,9 +2,9 @@
 // Created by jimec on 10/17/2017.
 //
 
-#include "Highlighter.h"
+#include "NativeHighlighter.h"
 
-const char *Highlighter::KEYWORD_LIST[] = {
+const char *NativeHighlighter::KEYWORD_LIST[] = {
         "print", "sleep", "exit",
         "NaN", "Infinity", "arguments", "await", "break", "case", "catch",
         "class", "const", "continue", "debugger", "default", "delete", "do",
@@ -15,24 +15,24 @@ const char *Highlighter::KEYWORD_LIST[] = {
         "super", "switch", "this", "throw", "true",
         "try", "typeof", "var", "void", "while", "with", "yield"
 };
-const char Highlighter::OPERATOR_LIST[] = {
+const char NativeHighlighter::OPERATOR_LIST[] = {
         '+', '*', '/', '{', '}', '(', ')', ',', '|', '!', '?', '%', '^',
         '.', ';', '~', '=', '[', ']', '-', '&', '<', '>', ':', '\\'
 };
 
-Highlighter::Highlighter(const std::string &code) {
+NativeHighlighter::NativeHighlighter(const std::string &code) {
     mCode = code;
 }
 
-bool Highlighter::compare(std::string a, std::string b, int start) {
+bool NativeHighlighter::compare(std::string a, std::string b, int start) {
     return 0 == std::strncmp(&a[start], b.c_str(), b.length());
 }
 
-bool Highlighter::backCompare(std::string a, std::string b, int start) {
+bool NativeHighlighter::backCompare(std::string a, std::string b, int start) {
     return 0 == std::strncmp(&a[start - b.length() + 1], b.c_str(), b.length());
 }
 
-void Highlighter::run() {
+void NativeHighlighter::run() {
     mSpanTypes.clear();
     mSpanStarts.clear();
     mSpanEnds.clear();
@@ -173,22 +173,19 @@ void Highlighter::run() {
     }
 }
 
-bool Highlighter::isKeyword(std::string code, int position) {
-    int i;
-    for (i = position; i < code.length(); i++) {
-        if (!std::isalnum(code[i])) {
-            break;
-        }
-    }
-    code = code.substr((unsigned long) position, (unsigned long) (i - position));
-    __android_log_write(ANDROID_LOG_ERROR, "Highlighter", code.c_str());
+bool NativeHighlighter::isKeyword(std::string code, int position) {
+    int i = position;
+    for (i; i < code.length() && std::isalnum(code[i]); i++);
+    size_t length = (size_t) (i - position);
     for (std::string item : KEYWORD_LIST) {
-        if (code == item) return true;
+        if(length == item.length() && 0 == std::strncmp(&code[position], item.c_str(), length)) {
+            return true;
+        }
     }
     return false;
 }
 
-bool Highlighter::isOperator(char character) {
+bool NativeHighlighter::isOperator(char character) {
     for (char c : OPERATOR_LIST) {
         if (character == c)
             return true;
@@ -196,20 +193,20 @@ bool Highlighter::isOperator(char character) {
     return false;
 }
 
-void Highlighter::put(int type, int start, int end) {
+void NativeHighlighter::put(int type, int start, int end) {
     mSpanTypes.push_back(type);
     mSpanStarts.push_back(start);
     mSpanEnds.push_back(end);
 }
 
-std::vector<int> Highlighter::getSpanTypes() {
+std::vector<int> NativeHighlighter::getSpanTypes() {
     return mSpanTypes;
 }
 
-std::vector<int> Highlighter::getSpanStarts() {
+std::vector<int> NativeHighlighter::getSpanStarts() {
     return mSpanStarts;
 }
 
-std::vector<int> Highlighter::getSpanEnds() {
+std::vector<int> NativeHighlighter::getSpanEnds() {
     return mSpanEnds;
 }
