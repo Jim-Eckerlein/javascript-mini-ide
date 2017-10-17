@@ -27,6 +27,8 @@ public class ReallocatingIntBuffer {
      */
     private boolean mReading = false;
     
+    private int mMaxWritePosition;
+    
     public ReallocatingIntBuffer(int initialIntegerCapacity) {
         mInitialCapacity = initialIntegerCapacity * 4;
         mByteBuffer = ByteBuffer.allocateDirect(mInitialCapacity);
@@ -40,8 +42,7 @@ public class ReallocatingIntBuffer {
      */
     public void put(int i) {
         if(mReading) {
-            mBuffer.rewind();
-            mReading = false;
+            throw new IllegalStateException("Cannot put int of writing has not been started");
         }
         
         if(mBuffer.hasRemaining()) {
@@ -67,8 +68,7 @@ public class ReallocatingIntBuffer {
      */
     public int get() {
         if(!mReading) {
-            mBuffer.rewind();
-            mReading = true;
+            throw new IllegalStateException("Cannot get int of reading has not been started");
         }
         return mBuffer.get();
     }
@@ -79,6 +79,25 @@ public class ReallocatingIntBuffer {
     
     public int getCapacity() {
         return mBuffer.capacity();
+    }
+    
+    public void startReading() {
+        mMaxWritePosition = mBuffer.position();
+        mBuffer.rewind();
+        mReading = true;
+    }
+    
+    public void startWriting() {
+        mBuffer.rewind();
+        mReading = false;
+        mMaxWritePosition = 0;
+    }
+    
+    public boolean hasRemaining() {
+        if(!mReading) {
+            throw new IllegalStateException("Cannot check for remaining ints when writing");
+        }
+        return mBuffer.position() < mMaxWritePosition;
     }
     
     @Override

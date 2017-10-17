@@ -1,52 +1,46 @@
 #include <jni.h>
-
-static int SPACE = 100;
-static int NEUTRAL = 0;
-static int STRING = 1;
-static int COMMENT_SINGE_LINE = 2;
-static int COMMENT_MULTI_LINE = 3;
-static int KEYWORD = 4;
-static int NUMBER = 5;
-static int HEX_NUMBER = 6;
-static int HEX_NUMBER_PREFIX = 7;
-static int DECIMAL_PART_NUMBER = 8;
+#include "Highlighter.h"
 
 extern "C"
 JNIEXPORT jboolean JNICALL
 Java_io_jimeckerlein_jsshell_editor_Highlighter_findHighlights(
-        JNIEnv *env, jobject jInstance,
+        JNIEnv *env, jobject,
         jstring jCode,
-        jobject jPositionBuffer,
-        jobject jTypeBuffer)
-{
+        jobject jTypeBuffer,
+        jobject jSpanStartBuffer,
+        jobject jSpanEndBuffer) {
+
+    // Get code from Java String:
+    const char *code = env->GetStringUTFChars(jCode, 0);
+
+    // If code string is empty, the highlighter does not need to run:
+    if (strlen(code) == 0) return (jboolean) true;
+
+    // Get Java reallocating int buffer class:
     jclass bufferClass = env->FindClass("io/jimeckerlein/jsshell/editor/ReallocatingIntBuffer");
-    if(nullptr == bufferClass) {
+    if (nullptr == bufferClass) {
         return (jboolean) false;
     }
 
-    jmethodID put = env->GetMethodID(bufferClass, "put", "(I)V");
-    if(nullptr == put) {
+    // Get put method of buffer:
+    jmethodID putMethodId = env->GetMethodID(bufferClass, "put", "(I)V");
+    if (nullptr == putMethodId) {
         env->DeleteLocalRef(bufferClass);
         return (jboolean) false;
     }
 
-    env->CallVoidMethod(jPositionBuffer, put, 27);
+    Highlighter nativeHighlighter{
+            code,
+            [&](int type, int start, int end) {
+                env->CallVoidMethod(jTypeBuffer, putMethodId, type);
+                env->CallVoidMethod(jSpanStartBuffer, putMethodId, start);
+                env->CallVoidMethod(jSpanEndBuffer, putMethodId, end);
+            }};
 
-    const char *code = env->GetStringUTFChars(jCode, 0);
+    nativeHighlighter.run();
 
+    // Cleanup:
     env->ReleaseStringUTFChars(jCode, code);
     env->DeleteLocalRef(bufferClass);
     return (jboolean) true;
-}
-
-extern "C"
-JNIEXPORT jint JNICALL
-Java_io_jimeckerlein_jsshell_editor_Highlighter_nativeTest(JNIEnv *, jobject, jint x) {
-    return x * x;
-}
-
-extern "C"
-JNIEXPORT jint JNICALL
-Java_io_jimeckerlein_jsshell_JNITest_sum(JNIEnv *env, jobject instance, jint x, jint y) {
-    return x + y;
 }
