@@ -11,14 +11,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import io.jimeckerlein.jsshell.files.FilesManager;
-
 import java.security.InvalidParameterException;
+
+import io.jimeckerlein.jsshell.files.FilesManager;
 
 public class MainActivity extends AppCompatActivity {
     
     private ViewPager mPager;
     private TabManager mTabManager;
+    
+    static {
+        System.loadLibrary("native-lib");
+    }
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {

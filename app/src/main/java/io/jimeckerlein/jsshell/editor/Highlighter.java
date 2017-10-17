@@ -52,6 +52,8 @@ public class Highlighter {
     
     public Spannable highlight(String code) {
         int currentTextType = SPACE;
+    
+        System.out.println(nativeTest(4));
         
         // Re-initialize span builder:
         mSpanBuilder.clear();
