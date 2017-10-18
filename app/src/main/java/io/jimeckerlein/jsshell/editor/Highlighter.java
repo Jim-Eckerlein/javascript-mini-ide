@@ -32,7 +32,10 @@ public class Highlighter {
         mSpanCaches.append(OPERATOR_SPAN, new SpanCache<>(() -> new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.highlightOperator))));
         mSpanCaches.append(COMMENT_SPAN, new SpanCache<>(() -> new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.highlightComment))));
         mSpanCaches.append(NUMBER_SPAN, new SpanCache<>(() -> new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.highlightNumber))));
+        initHighlighter();
     }
+    
+    private native void initHighlighter();
     
     public Spannable highlight(String code) {
         // Re-initialize span builder:

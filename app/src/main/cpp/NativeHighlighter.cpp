@@ -18,10 +18,6 @@ const char NativeHighlighter::OPERATOR_LIST[] = {
         '.', ';', '~', '=', '[', ']', '-', '&', '<', '>', ':', '\\'
 };
 
-NativeHighlighter::NativeHighlighter(const std::string &code) {
-    mCode = code;
-}
-
 bool NativeHighlighter::compare(std::string a, std::string b, int start) {
     return 0 == std::strncmp(&a[start], b.c_str(), b.length());
 }
@@ -30,13 +26,13 @@ bool NativeHighlighter::backCompare(std::string a, std::string b, int start) {
     return 0 == std::strncmp(&a[start - b.length() + 1], b.c_str(), b.length());
 }
 
-void NativeHighlighter::run() {
+void NativeHighlighter::run(const std::string &code) {
     mSpanTypes.clear();
     mSpanStarts.clear();
     mSpanEnds.clear();
 
     int currentTextType = SPACE;
-    char c = mCode[0];
+    char c = code[0];
     int spanStart = 0;
 
     // Highlight line:
@@ -51,7 +47,7 @@ void NativeHighlighter::run() {
         else if (currentTextType == NEUTRAL && std::isalnum(c));
 
             // Single line comment start
-        else if (compare(mCode, "//", i) &&
+        else if (compare(code, "//", i) &&
                  (currentTextType == NEUTRAL || currentTextType == SPACE)) {
             spanStart = i;
             currentTextType = COMMENT_SINGE_LINE;
@@ -64,34 +60,34 @@ void NativeHighlighter::run() {
         }
 
             // Multi line comment start
-        else if (compare(mCode, "/*", i) &&
+        else if (compare(code, "/*", i) &&
                  (currentTextType == NEUTRAL || currentTextType == SPACE)) {
             spanStart = i;
             currentTextType = COMMENT_MULTI_LINE;
         }
 
             // Multi line comment end
-        else if (backCompare(mCode, "*/", i) && currentTextType == COMMENT_MULTI_LINE) {
+        else if (backCompare(code, "*/", i) && currentTextType == COMMENT_MULTI_LINE) {
             put(COMMENT_SPAN, spanStart, i + 1);
             currentTextType = SPACE;
         }
 
             // String starting
-        else if (compare(mCode, "'", i) &&
+        else if (compare(code, "'", i) &&
                  (currentTextType == NEUTRAL || currentTextType == SPACE)) {
             spanStart = i;
             currentTextType = STRING;
         }
 
             // String ending
-        else if (backCompare(mCode, "'", i) && currentTextType == STRING) {
+        else if (backCompare(code, "'", i) && currentTextType == STRING) {
             put(STRING_SPAN, spanStart, i + 1);
             currentTextType = SPACE;
         }
 
             // Keyword start
-        else if (std::isalpha(c) && currentTextType == SPACE && isKeyword(mCode, i)
-                 && (i == 0 || !std::isalnum(mCode[i - 1]))) {
+        else if (std::isalpha(c) && currentTextType == SPACE && isKeyword(code, i)
+                 && (i == 0 || !std::isalnum(code[i - 1]))) {
             currentTextType = KEYWORD;
             spanStart = i;
         }
@@ -104,7 +100,7 @@ void NativeHighlighter::run() {
         }
 
             // Hex number start
-        else if (compare(mCode, "0x", i) && currentTextType == SPACE) {
+        else if (compare(code, "0x", i) && currentTextType == SPACE) {
             currentTextType = HEX_NUMBER_PREFIX;
             spanStart = i;
         }
@@ -165,13 +161,13 @@ void NativeHighlighter::run() {
         }
 
         i++;
-        if (i > mCode.length()) {
+        if (i > code.length()) {
             break;
-        } else if (i == mCode.length()) {
+        } else if (i == code.length()) {
             // Append apparently \0 to code, so that spans have the change to end
             c = '\0';
         } else {
-            c = mCode[i];
+            c = code[i];
         }
     }
 }

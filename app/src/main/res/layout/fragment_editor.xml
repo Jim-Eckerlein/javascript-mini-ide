@@ -58,15 +58,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        tools:alpha="0.5"
         tools:elevation="16dp"
-        tools:visibility="invisible"
-        tools:alpha="0.5">
+        tools:visibility="invisible">
 
         <ImageButton
             android:id="@+id/show_keyboard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
+            android:background="@null"
             android:padding="12dp"
             android:src="@drawable/keyboard"/>
 
@@ -75,6 +76,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@null"
             android:padding="12dp"
             android:src="@drawable/run"
             android:tint="@color/secondaryColor"/>

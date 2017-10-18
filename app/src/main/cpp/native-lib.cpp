@@ -5,11 +5,27 @@
 extern "C" {
 
 static const char __unused *TAG = "native-lib";
+static jmethodID setSpansId;
+static NativeHighlighter nativeHighlighter;
 
+/**
+ * Initialize highlighter.
+ */
+JNIEXPORT void JNICALL
+Java_io_jimeckerlein_jsshell_editor_Highlighter_initHighlighter(JNIEnv *env, jobject) {
+
+    // Get put method of buffer:
+    setSpansId = env->GetMethodID(
+            env->FindClass("io/jimeckerlein/jsshell/editor/Highlighter"), "setSpans", "(I[I)V");
+
+}
+
+/**
+ * Highlight given code.
+ */
 JNIEXPORT jboolean JNICALL
-Java_io_jimeckerlein_jsshell_editor_Highlighter_findHighlights(
-        JNIEnv *env, jobject instance,
-        jstring jCode) {
+Java_io_jimeckerlein_jsshell_editor_Highlighter_findHighlights(JNIEnv *env, jobject instance,
+                                                               jstring jCode) {
 
     // Get code from Java String:
     const char *code = env->GetStringUTFChars(jCode, 0);
@@ -17,15 +33,11 @@ Java_io_jimeckerlein_jsshell_editor_Highlighter_findHighlights(
     // If code string is empty, the highlighter does not need to run:
     if (strlen(code) == 0) return (jboolean) true;
 
-    // Get put method of buffer:
-    jmethodID setSpansId = env->GetMethodID(env->FindClass("io/jimeckerlein/jsshell/editor/Highlighter"), "setSpans", "(I[I)V");
-
-    NativeHighlighter nativeHighlighter{code};
-
-    nativeHighlighter.run();
+    nativeHighlighter.run(code);
 
     auto length = nativeHighlighter.getSpanTypes().size();
-    jintArray dataArray = env->NewIntArray((jsize) length * 3);
+
+    jintArray dataArray = (jintArray) env->NewIntArray((jsize) length * 3);
 
     // Bulk copy span data into array
     // Data is aligned behind each other: types, starts, ends

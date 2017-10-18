@@ -36,16 +36,13 @@ private:
     static const char *KEYWORD_LIST[];
     static const char OPERATOR_LIST[];
 
-    std::string mCode;
     std::vector<int> mSpanTypes, mSpanStarts, mSpanEnds;
 
     static const char __unused *TAG;
 
 public:
 
-    NativeHighlighter(const std::string &code);
-
-    void run();
+    void run(const std::string &code);
 
     std::vector<int> getSpanTypes();
     std::vector<int> getSpanStarts();
