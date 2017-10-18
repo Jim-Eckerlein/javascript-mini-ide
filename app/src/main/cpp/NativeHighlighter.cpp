@@ -85,6 +85,16 @@ void NativeHighlighter::run(const std::string &code) {
             currentTextType = STRING_BROKEN_DOUBLE_QUOTED;
         }
 
+            // Interrupted broken string (single quoted) ==> Escaped character
+        else if (currentTextType == STRING_BROKEN_SINGLE_QUOTED) {
+            currentTextType = STRING_SINGLE_QUOTED;
+        }
+
+            // Interrupted broken string (double quoted) ==> Escaped character
+        else if (currentTextType == STRING_BROKEN_DOUBLE_QUOTED) {
+            currentTextType = STRING_DOUBLE_QUOTED;
+        }
+
             // Broken string (single quoted)
         else if ('\n' == c && currentTextType == STRING_BROKEN_SINGLE_QUOTED) {
             currentTextType = STRING_SINGLE_QUOTED;
