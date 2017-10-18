@@ -152,11 +152,11 @@ public class FileView extends FrameLayout {
         }
         
         // Show select box:
-        mFileSelectBox.animate().setDuration(Util.ANIMATION_DURATION)
+        mFileSelectBox.animate().setDuration(Util.ANIMATION_DURATION).setInterpolator(FilesTab.INTERPOLATOR)
                 .x(((MarginLayoutParams) mFileSelectBox.getLayoutParams()).leftMargin);
         
         // Push filename text:
-        mFilenameText.animate().setDuration(Util.ANIMATION_DURATION)
+        mFilenameText.animate().setDuration(Util.ANIMATION_DURATION).setInterpolator(FilesTab.INTERPOLATOR)
                 .x(mFileSelectBox.getWidth() + ((MarginLayoutParams) mFileSelectBox.getLayoutParams()).leftMargin);
         
         mFileSelectBoxShown = true;
@@ -164,11 +164,13 @@ public class FileView extends FrameLayout {
     
     public void hideFileSelectBox() {
         // Hide select box:
-        mFileSelectBox.animate().setDuration(Util.ANIMATION_DURATION).x(-mFileSelectBox.getWidth());
+        mFileSelectBox.animate().setDuration(Util.ANIMATION_DURATION).setInterpolator(FilesTab.INTERPOLATOR)
+                .x(-mFileSelectBox.getWidth());
         mFileSelectBox.setChecked(false);
         
         // Pull filename text:
-        mFilenameText.animate().setDuration(Util.ANIMATION_DURATION).x(0);
+        mFilenameText.animate().setDuration(Util.ANIMATION_DURATION).setInterpolator(FilesTab.INTERPOLATOR)
+                .x(0);
         
         mFileSelectBoxShown = false;
     }
