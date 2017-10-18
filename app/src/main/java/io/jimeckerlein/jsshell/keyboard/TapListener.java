@@ -21,8 +21,8 @@ public abstract class TapListener implements View.OnTouchListener {
     /**
      * Radius of movement acceptance
      */
-    private static final int MAX_DISTANCE = 50;
-    
+    public static final int MAX_DISTANCE = 50;
+
     /**
      * Becomes true as soon as tap is recognized as long tap and therefore processed already
      */
