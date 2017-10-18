@@ -15,29 +15,31 @@ class NativeHighlighter {
 
 private:
 
-    const static int SPACE = 100;
-    const static int NEUTRAL = 0;
-    const static int STRING = 1;
-    const static int COMMENT_SINGE_LINE = 2;
-    const static int COMMENT_MULTI_LINE = 3;
-    const static int KEYWORD = 4;
-    const static int NUMBER = 5;
-    const static int HEX_NUMBER = 6;
-    const static int HEX_NUMBER_PREFIX = 7;
-    const static int DECIMAL_PART_NUMBER = 8;
+    static const int SPACE = 100;
+    static const int NEUTRAL = 0;
+    static const int STRING = 1;
+    static const int COMMENT_SINGE_LINE = 2;
+    static const int COMMENT_MULTI_LINE = 3;
+    static const int KEYWORD = 4;
+    static const int NUMBER = 5;
+    static const int HEX_NUMBER = 6;
+    static const int HEX_NUMBER_PREFIX = 7;
+    static const int DECIMAL_PART_NUMBER = 8;
 
-    const static int KEYWORD_SPAN = 0;
-    const static int STRING_SPAN = 1;
-    const static int OPERATOR_SPAN = 2;
-    const static int COMMENT_SPAN = 3;
-    const static int NUMBER_SPAN = 4;
+    static const int KEYWORD_SPAN = 0;
+    static const int STRING_SPAN = 1;
+    static const int OPERATOR_SPAN = 2;
+    static const int COMMENT_SPAN = 3;
+    static const int NUMBER_SPAN = 4;
 
 
-    const static char *KEYWORD_LIST[];
-    const static char OPERATOR_LIST[];
+    static const char *KEYWORD_LIST[];
+    static const char OPERATOR_LIST[];
 
     std::string mCode;
     std::vector<int> mSpanTypes, mSpanStarts, mSpanEnds;
+
+    static const char *TAG;
 
 public:
 

@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.security.InvalidParameterException;
-import java.util.Arrays;
 
 import io.jimeckerlein.jsshell.files.FilesManager;
 
@@ -46,16 +45,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(mTabManager);
     
         mPager.setCurrentItem(TabManager.EDITOR_TAP_POSITION);
-        
-        // -------------------------------------------------------------
-        boolean ret = test();
-        System.out.println("TEST returned: " + ret);
-    }
-    
-    private native boolean test();
-    
-    public void foo(int[] n) {
-        System.out.println(Arrays.toString(n));
     }
     
     @Override

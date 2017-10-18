@@ -4,6 +4,8 @@
 
 #include "NativeHighlighter.h"
 
+const char *NativeHighlighter::TAG = "NativeHighlighter";
+
 const char *NativeHighlighter::KEYWORD_LIST[] = {
         "print", "sleep", "exit",
         "NaN", "Infinity", "arguments", "await", "break", "case", "catch",
@@ -46,8 +48,12 @@ void NativeHighlighter::run() {
 
         bool reprocessCurrentCharacter = false;
 
+        if(currentTextType == SPACE && std::isspace(c)) {
+            // Continues white space,just skip
+        }
+
         // Single line comment start
-        if (compare(mCode, "//", i) &&
+        else if (compare(mCode, "//", i) &&
             (currentTextType == NEUTRAL || currentTextType == SPACE)) {
             spanStart = i;
             currentTextType = COMMENT_SINGE_LINE;
