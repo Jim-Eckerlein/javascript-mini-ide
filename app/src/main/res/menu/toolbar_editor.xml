@@ -2,13 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Undo -->
-    <item
-        android:id="@+id/action_undo"
-        android:icon="@drawable/undo"
-        android:title="@string/action_undo"
-        app:showAsAction="ifRoom"/>
-
     <!-- Format -->
     <item
         android:id="@+id/action_format_code"
@@ -16,17 +9,19 @@
         android:title="@string/action_format_code"
         app:showAsAction="ifRoom"/>
 
+    <!-- Share -->
+    <item
+        android:id="@+id/action_share"
+        android:title="@string/action_share"
+        android:icon="@drawable/share"
+        app:showAsAction="ifRoom"/>
+
     <!-- Clear -->
     <item
         android:id="@+id/action_clear_code"
         android:icon="@drawable/trash"
         android:title="@string/action_clear_code"
-        app:showAsAction="ifRoom"/>
-
-    <!-- Share -->
-    <item
-        android:id="@+id/action_share"
-        android:title="@string/action_share"/>
+        app:showAsAction="never"/>
 
     <!-- Help -->
     <item

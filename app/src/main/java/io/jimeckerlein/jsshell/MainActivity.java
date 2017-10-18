@@ -100,10 +100,6 @@ public class MainActivity extends AppCompatActivity {
                 mTabManager.editorClear();
                 return true;
         
-            case R.id.action_undo:
-                mTabManager.editorUndo();
-                return true;
-        
             case R.id.action_about:
                 // Start About activity:
                 Intent aboutIntent = new Intent(this, AboutActivity.class);

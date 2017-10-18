@@ -55,10 +55,6 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
         mEditorTab.getEditor().clear();
     }
     
-    public void editorUndo() {
-        mEditorTab.getEditor().undo();
-    }
-    
     public String getEditorCode() {
         return mEditorTab.getEditor().toString();
     }

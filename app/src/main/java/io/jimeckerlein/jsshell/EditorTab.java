@@ -73,8 +73,7 @@ public class EditorTab extends Fragment {
         mCurrentFileIsExample = true;
         mHasOpenedFile = true;
         mEditor.clear();
-        mEditor.write(Util.readTextFile(getContext(), id));
-        mEditor.moveCursorToStart();
+        mEditor.write(Util.readTextFile(getContext(), id), true);
     }
     
     public CodeEditorView getEditor() {
@@ -86,8 +85,7 @@ public class EditorTab extends Fragment {
         mCurrentFileIsExample = false;
         mHasOpenedFile = true;
         mEditor.clear();
-        mEditor.write(content);
-        mEditor.moveCursorToStart();
+        mEditor.write(content, true);
     }
     
     public String getCurrentFileName() {
