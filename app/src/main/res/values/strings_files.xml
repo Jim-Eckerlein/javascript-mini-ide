@@ -27,6 +27,7 @@
     <string-array name="files_examples_array">
         <item>Demo</item>
         <item>Print</item>
+        <item>Strings</item>
         <item>Array</item>
         <item>Object</item>
         <item>Function</item>

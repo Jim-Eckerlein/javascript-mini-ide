@@ -17,7 +17,8 @@ private:
 
     static const int SPACE = 100;
     static const int NEUTRAL = 0;
-    static const int STRING = 1;
+    static const int STRING_SINGLE_QUOTED = 1;
+    static const int STRING_DOUBLE_QUOTED = 1000;
     static const int COMMENT_SINGE_LINE = 2;
     static const int COMMENT_MULTI_LINE = 3;
     static const int KEYWORD = 4;

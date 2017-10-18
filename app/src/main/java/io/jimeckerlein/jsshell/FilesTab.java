@@ -8,8 +8,6 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -28,6 +26,7 @@ public class FilesTab extends Fragment {
     private static final int[] EXAMPLE_ARRAY_FILE_MAP = new int[]{
             R.raw.example_demo,
             R.raw.example_print,
+            R.raw.example_strings,
             R.raw.example_array,
             R.raw.example_object,
             R.raw.example_function,
@@ -49,8 +48,6 @@ public class FilesTab extends Fragment {
     private ScrollView mScroller;
     private FileView mFileSettingsOpened;
     private boolean mSessionLoaded = false;
-    
-    public static final Interpolator INTERPOLATOR = new AccelerateDecelerateInterpolator();
     
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -247,12 +244,12 @@ public class FilesTab extends Fragment {
         mActiveMultipleFileDeletion = true;
         
         // Hide fab:
-        mFab.animate().setDuration(Util.ANIMATION_DURATION).setInterpolator(FilesTab.INTERPOLATOR)
+        mFab.animate().setDuration(Util.ANIMATION_DURATION).setInterpolator(Util.INTERPOLATOR)
                 .x(mScroller.getWidth())
                 .withStartAction(() -> mFab.setEnabled(false));
         
         // Show selection bar:
-        mMultipleFileDeletionBar.animate().setDuration(Util.ANIMATION_DURATION).setInterpolator(FilesTab.INTERPOLATOR)
+        mMultipleFileDeletionBar.animate().setDuration(Util.ANIMATION_DURATION).setInterpolator(Util.INTERPOLATOR)
                 .y(mScroller.getHeight() - mMultipleFileDeletionBar.getHeight());
         
         // Show selection box for each file view:
@@ -271,12 +268,12 @@ public class FilesTab extends Fragment {
         mActiveMultipleFileDeletion = false;
         
         // Show fab:
-        mFab.animate().setDuration(Util.ANIMATION_DURATION).setInterpolator(FilesTab.INTERPOLATOR)
+        mFab.animate().setDuration(Util.ANIMATION_DURATION).setInterpolator(Util.INTERPOLATOR)
                 .x(mScroller.getWidth() - mFab.getWidth() - ((ViewGroup.MarginLayoutParams) mFab.getLayoutParams()).rightMargin)
                 .withEndAction(() -> mFab.setEnabled(true));
         
         // Hide selection bar:
-        mMultipleFileDeletionBar.animate().setDuration(Util.ANIMATION_DURATION).setInterpolator(FilesTab.INTERPOLATOR)
+        mMultipleFileDeletionBar.animate().setDuration(Util.ANIMATION_DURATION).setInterpolator(Util.INTERPOLATOR)
                 .y(mScroller.getHeight());
         
         // Hide selection box for each file view:

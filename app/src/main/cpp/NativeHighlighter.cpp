@@ -66,21 +66,43 @@ void NativeHighlighter::run(const std::string &code) {
             currentTextType = COMMENT_MULTI_LINE;
         }
 
+            // String ending at line ending (single and double quoted)
+        else if ('\n' == c &&
+                 (currentTextType == STRING_SINGLE_QUOTED ||
+                  currentTextType == STRING_DOUBLE_QUOTED)
+                ) {
+            put(STRING_SPAN, spanStart, i + 1);
+            currentTextType = SPACE;
+        }
+
             // Multi line comment end
         else if (backCompare(code, "*/", i) && currentTextType == COMMENT_MULTI_LINE) {
             put(COMMENT_SPAN, spanStart, i + 1);
             currentTextType = SPACE;
         }
 
-            // String starting
+            // String (double quoted) starting
+        else if (compare(code, "\"", i) &&
+                 (currentTextType == NEUTRAL || currentTextType == SPACE)) {
+            spanStart = i;
+            currentTextType = STRING_DOUBLE_QUOTED;
+        }
+
+            // String (double quoted) ending
+        else if (backCompare(code, "\"", i) && currentTextType == STRING_DOUBLE_QUOTED) {
+            put(STRING_SPAN, spanStart, i + 1);
+            currentTextType = SPACE;
+        }
+
+            // String (single quoted) starting
         else if (compare(code, "'", i) &&
                  (currentTextType == NEUTRAL || currentTextType == SPACE)) {
             spanStart = i;
-            currentTextType = STRING;
+            currentTextType = STRING_SINGLE_QUOTED;
         }
 
-            // String ending
-        else if (backCompare(code, "'", i) && currentTextType == STRING) {
+            // String (single quoted) ending
+        else if (backCompare(code, "'", i) && currentTextType == STRING_SINGLE_QUOTED) {
             put(STRING_SPAN, spanStart, i + 1);
             currentTextType = SPACE;
         }
