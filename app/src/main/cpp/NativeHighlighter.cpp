@@ -34,6 +34,7 @@ void NativeHighlighter::run(const std::string &code) {
     int currentTextType = SPACE;
     char c = code[0];
     int spanStart = 0;
+    int templateStringCurlyBraces = 0;
 
     // Highlight line:
     for (int i = 0;;) {
@@ -46,24 +47,30 @@ void NativeHighlighter::run(const std::string &code) {
             // Skip continues chunks of neutral text
         else if (currentTextType == NEUTRAL && std::isalnum(c));
 
-            // Single line comment start
+            // Comment start (single line)
         else if (compare(code, "//", i) &&
                  (currentTextType == NEUTRAL || currentTextType == SPACE)) {
             spanStart = i;
             currentTextType = COMMENT_SINGE_LINE;
         }
 
-            // Single line comment end
+            // Comment end (single line)
         else if (currentTextType == COMMENT_SINGE_LINE && c == '\n') {
             put(COMMENT_SPAN, spanStart, i + 1);
             currentTextType = SPACE;
         }
 
-            // Multi line comment start
+            // Comment start (multi line)
         else if (compare(code, "/*", i) &&
                  (currentTextType == NEUTRAL || currentTextType == SPACE)) {
             spanStart = i;
             currentTextType = COMMENT_MULTI_LINE;
+        }
+
+            // Comment end (multi line)
+        else if (backCompare(code, "*/", i) && currentTextType == COMMENT_MULTI_LINE) {
+            put(COMMENT_SPAN, spanStart, i + 1);
+            currentTextType = SPACE;
         }
 
             // String ending at line ending (single and double quoted)
@@ -71,6 +78,79 @@ void NativeHighlighter::run(const std::string &code) {
                  (currentTextType == STRING_SINGLE_QUOTED ||
                   currentTextType == STRING_DOUBLE_QUOTED)
                 ) {
+            put(STRING_SPAN, spanStart, i + 1);
+            currentTextType = SPACE;
+        }
+
+            // String (double quoted) starting
+        else if (compare(code, "\"", i) &&
+                 (currentTextType == NEUTRAL || currentTextType == SPACE)) {
+            spanStart = i;
+            currentTextType = STRING_DOUBLE_QUOTED;
+        }
+
+            // String (double quoted) ending
+        else if (backCompare(code, "\"", i) && currentTextType == STRING_DOUBLE_QUOTED) {
+            put(STRING_SPAN, spanStart, i + 1);
+            currentTextType = SPACE;
+        }
+
+            // String (single quoted) starting
+        else if (compare(code, "'", i) &&
+                 (currentTextType == NEUTRAL || currentTextType == SPACE)) {
+            spanStart = i;
+            currentTextType = STRING_SINGLE_QUOTED;
+        }
+
+            // String (single quoted) ending
+        else if (backCompare(code, "'", i) && currentTextType == STRING_SINGLE_QUOTED) {
+            put(STRING_SPAN, spanStart, i + 1);
+            currentTextType = SPACE;
+        }
+
+            // Template string starting
+        else if (compare(code, "`", i) &&
+                 (currentTextType == NEUTRAL || currentTextType == SPACE)) {
+            spanStart = i;
+            currentTextType = TEMPLATE_STRING;
+        }
+
+            // Template string argument head $
+        else if (currentTextType == TEMPLATE_STRING && c == '$') {
+            currentTextType = TEMPLATE_STRING_ARGUMENT_HEAD;
+        }
+
+            // Template string argument head aborting (no { after $)
+        else if (currentTextType == TEMPLATE_STRING_ARGUMENT_HEAD && c != '{') {
+            currentTextType = TEMPLATE_STRING;
+            reprocessCurrentCharacter = true;
+        }
+
+            // Template string argument start {
+        else if (currentTextType == TEMPLATE_STRING_ARGUMENT_HEAD && c == '{') {
+            put(STRING_SPAN, spanStart, i - 1);
+            spanStart = i - 1;
+            currentTextType = TEMPLATE_STRING_ARGUMENT;
+            templateStringCurlyBraces++;
+        }
+
+            // Template string argument {
+        else if (currentTextType == TEMPLATE_STRING_ARGUMENT && c == '{') {
+            templateStringCurlyBraces++;
+        }
+
+            // Template string argument ending
+        else if (currentTextType == TEMPLATE_STRING_ARGUMENT && c == '}') {
+            templateStringCurlyBraces--;
+            if (templateStringCurlyBraces == 0) {
+                currentTextType = TEMPLATE_STRING;
+                put(OPERATOR_SPAN, spanStart, i + 1);
+                spanStart = i + 1;
+            }
+        }
+
+            // Template string ending
+        else if (backCompare(code, "`", i) && currentTextType == TEMPLATE_STRING) {
             put(STRING_SPAN, spanStart, i + 1);
             currentTextType = SPACE;
         }
@@ -103,38 +183,6 @@ void NativeHighlighter::run(const std::string &code) {
             // Broken string (double quoted)
         else if ('\n' == c && currentTextType == STRING_BROKEN_DOUBLE_QUOTED) {
             currentTextType = STRING_DOUBLE_QUOTED;
-        }
-
-            // Multi line comment end
-        else if (backCompare(code, "*/", i) && currentTextType == COMMENT_MULTI_LINE) {
-            put(COMMENT_SPAN, spanStart, i + 1);
-            currentTextType = SPACE;
-        }
-
-            // String (double quoted) starting
-        else if (compare(code, "\"", i) &&
-                 (currentTextType == NEUTRAL || currentTextType == SPACE)) {
-            spanStart = i;
-            currentTextType = STRING_DOUBLE_QUOTED;
-        }
-
-            // String (double quoted) ending
-        else if (backCompare(code, "\"", i) && currentTextType == STRING_DOUBLE_QUOTED) {
-            put(STRING_SPAN, spanStart, i + 1);
-            currentTextType = SPACE;
-        }
-
-            // String (single quoted) starting
-        else if (compare(code, "'", i) &&
-                 (currentTextType == NEUTRAL || currentTextType == SPACE)) {
-            spanStart = i;
-            currentTextType = STRING_SINGLE_QUOTED;
-        }
-
-            // String (single quoted) ending
-        else if (backCompare(code, "'", i) && currentTextType == STRING_SINGLE_QUOTED) {
-            put(STRING_SPAN, spanStart, i + 1);
-            currentTextType = SPACE;
         }
 
             // Keyword start
@@ -215,10 +263,12 @@ void NativeHighlighter::run(const std::string &code) {
         i++;
         if (i > code.length()) {
             break;
-        } else if (i == code.length()) {
+        }
+        else if (i == code.length()) {
             // Append apparently \0 to code, so that spans have the change to end
             c = '\0';
-        } else {
+        }
+        else {
             c = code[i];
         }
     }
