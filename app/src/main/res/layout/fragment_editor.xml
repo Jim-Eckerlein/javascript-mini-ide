@@ -48,26 +48,37 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editor"/>
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/show_keyboard_wrapper"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/primaryColor"
         android:elevation="14dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        tools:elevation="16dp"
+        tools:visibility="invisible"
+        tools:alpha="0.5">
 
-        <Button
+        <ImageButton
             android:id="@+id/show_keyboard"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:alpha="0.6"
-            android:background="@drawable/button_ripple"
-            android:foreground="@drawable/keyboard"
-            android:foregroundGravity="center"
-            android:padding="12dp"/>
+            android:layout_weight="2"
+            android:padding="12dp"
+            android:src="@drawable/keyboard"/>
 
-    </FrameLayout>
+        <ImageButton
+            android:id="@+id/run_code_key_shortcut"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="12dp"
+            android:src="@drawable/run"
+            android:tint="@color/secondaryColor"/>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

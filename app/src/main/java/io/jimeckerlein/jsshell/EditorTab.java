@@ -7,10 +7,13 @@ import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.transition.ChangeBounds;
+import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 
 import io.jimeckerlein.jsshell.editor.CodeEditorView;
@@ -27,6 +30,7 @@ public class EditorTab extends Fragment {
     private ConstraintSet mConstraintSetHiddenKeyboard = new ConstraintSet();
     private ConstraintLayout mRoot;
     private boolean mIsKeyboardVisible = true;
+    private Transition mKeyboardTransition = new ChangeBounds();
     
     public void setPager(ViewPager viewPager) {
         mViewPager = viewPager;
@@ -35,6 +39,9 @@ public class EditorTab extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    
+        mKeyboardTransition.setDuration(200);
+        mKeyboardTransition.setInterpolator(new AccelerateDecelerateInterpolator());
     }
     
     @Override
@@ -56,6 +63,7 @@ public class EditorTab extends Fragment {
         view.findViewById(R.id.show_keyboard).setOnClickListener(v -> showKeyboard());
     
         view.findViewById(R.id.run_code_key).setOnClickListener(v -> mViewPager.setCurrentItem(TabManager.RUN_TAB_POSITION));
+        view.findViewById(R.id.run_code_key_shortcut).setOnClickListener(v -> mViewPager.setCurrentItem(TabManager.RUN_TAB_POSITION));
         
         return view;
     }
@@ -102,7 +110,7 @@ public class EditorTab extends Fragment {
         if (!mIsKeyboardVisible) {
             return;
         }
-        TransitionManager.beginDelayedTransition(mRoot);
+        TransitionManager.beginDelayedTransition(mRoot, mKeyboardTransition);
         mConstraintSetHiddenKeyboard.applyTo(mRoot);
         mIsKeyboardVisible = false;
     }
@@ -111,7 +119,7 @@ public class EditorTab extends Fragment {
         if (mIsKeyboardVisible) {
             return;
         }
-        TransitionManager.beginDelayedTransition(mRoot);
+        TransitionManager.beginDelayedTransition(mRoot, mKeyboardTransition);
         mConstraintSetOriginal.applyTo(mRoot);
         mIsKeyboardVisible = true;
     }

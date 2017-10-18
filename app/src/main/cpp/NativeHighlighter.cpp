@@ -1,10 +1,6 @@
-//
-// Created by jimec on 10/17/2017.
-//
-
 #include "NativeHighlighter.h"
 
-const char *NativeHighlighter::TAG = "NativeHighlighter";
+const char __unused *NativeHighlighter::TAG = "NativeHighlighter";
 
 const char *NativeHighlighter::KEYWORD_LIST[] = {
         "print", "sleep", "exit",
@@ -48,13 +44,15 @@ void NativeHighlighter::run() {
 
         bool reprocessCurrentCharacter = false;
 
-        if(currentTextType == SPACE && std::isspace(c)) {
-            // Continues white space,just skip
-        }
+        // Skip continues chunks of white spaces
+        if (currentTextType == SPACE && std::isspace(c));
 
-        // Single line comment start
+            // Skip continues chunks of neutral text
+        else if (currentTextType == NEUTRAL && std::isalnum(c));
+
+            // Single line comment start
         else if (compare(mCode, "//", i) &&
-            (currentTextType == NEUTRAL || currentTextType == SPACE)) {
+                 (currentTextType == NEUTRAL || currentTextType == SPACE)) {
             spanStart = i;
             currentTextType = COMMENT_SINGE_LINE;
         }
@@ -106,8 +104,7 @@ void NativeHighlighter::run() {
         }
 
             // Hex number start
-        else if (compare(mCode, "0x", i) && currentTextType == SPACE &&
-                 (i > 0 && std::isspace(mCode[i - 1]))) {
+        else if (compare(mCode, "0x", i) && currentTextType == SPACE) {
             currentTextType = HEX_NUMBER_PREFIX;
             spanStart = i;
         }
@@ -184,7 +181,7 @@ bool NativeHighlighter::isKeyword(std::string code, int position) {
     for (i; i < code.length() && std::isalnum(code[i]); i++);
     size_t length = (size_t) (i - position);
     for (std::string item : KEYWORD_LIST) {
-        if(length == item.length() && 0 == std::strncmp(&code[position], item.c_str(), length)) {
+        if (length == item.length() && 0 == std::strncmp(&code[position], item.c_str(), length)) {
             return true;
         }
     }

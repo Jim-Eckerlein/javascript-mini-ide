@@ -4,7 +4,7 @@
 
 extern "C" {
 
-static const char *TAG = "native-lib";
+static const char __unused *TAG = "native-lib";
 
 JNIEXPORT jboolean JNICALL
 Java_io_jimeckerlein_jsshell_editor_Highlighter_findHighlights(

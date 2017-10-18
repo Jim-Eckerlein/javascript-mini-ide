@@ -1,4 +1,4 @@
-//
+#include <stdint.h>//
 // Created by jimec on 10/17/2017.
 //
 
@@ -39,7 +39,7 @@ private:
     std::string mCode;
     std::vector<int> mSpanTypes, mSpanStarts, mSpanEnds;
 
-    static const char *TAG;
+    static const char __unused *TAG;
 
 public:
 
