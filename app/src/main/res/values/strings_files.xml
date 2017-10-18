@@ -29,8 +29,9 @@
         <item>Print</item>
         <item>Strings</item>
         <item>Array</item>
-        <item>Object</item>
         <item>Function</item>
+        <item>Object</item>
+        <item>Regular Expressions</item>
         <item>Time</item>
         <item>Typeof</item>
         <item>Lambda</item>
