@@ -6,10 +6,11 @@ import com.eclipsesource.v8.JavaVoidCallback;
 import com.eclipsesource.v8.Releasable;
 import com.eclipsesource.v8.V8;
 import com.eclipsesource.v8.utils.V8Executor;
-import io.jimeckerlein.jsshell.Util;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import io.jimeckerlein.jsshell.Util;
 
 /**
  * A V8 engine with all predefined functions (print, sleep, ...)
@@ -29,16 +30,23 @@ public class V8Thread extends V8Executor {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (mConsoleBuffer.length() == 0) {
-                    return;
-                }
-                synchronized (mConsoleBuffer) {
-                    String log = mConsoleBuffer.toString();
-                    Util.runOnUiThread(() -> mConsole.append(log));
-                    mConsoleBuffer.delete(0, mConsoleBuffer.length());
-                }
+                flushConsole();
             }
         }, FLUSH_DELAY_MILLIS, FLUSH_DELAY_MILLIS);
+    }
+    
+    /**
+     * Flush buffered content to console.
+     */
+    public void flushConsole() {
+        if (mConsoleBuffer.length() == 0) {
+            return;
+        }
+        synchronized (mConsoleBuffer) {
+            String log = mConsoleBuffer.toString();
+            Util.runOnUiThread(() -> mConsole.append(log));
+            mConsoleBuffer.delete(0, mConsoleBuffer.length());
+        }
     }
     
     @Override
