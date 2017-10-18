@@ -8,8 +8,6 @@
     android:gravity="center"
     android:orientation="horizontal"
     android:paddingBottom="8dp"
-    android:paddingEnd="2dp"
-    android:paddingStart="2dp"
     android:paddingTop="6dp">
 
     <TextView

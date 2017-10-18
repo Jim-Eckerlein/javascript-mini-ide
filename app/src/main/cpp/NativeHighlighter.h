@@ -15,18 +15,26 @@ class NativeHighlighter {
 
 private:
 
-    static const int SPACE = 100;
-    static const int NEUTRAL = 0;
-    static const int STRING_SINGLE_QUOTED = 1;
-    static const int STRING_DOUBLE_QUOTED = 1000;
-    static const int COMMENT_SINGE_LINE = 2;
-    static const int COMMENT_MULTI_LINE = 3;
-    static const int KEYWORD = 4;
-    static const int NUMBER = 5;
-    static const int HEX_NUMBER = 6;
-    static const int HEX_NUMBER_PREFIX = 7;
-    static const int DECIMAL_PART_NUMBER = 8;
+    enum {
+        SPACE,
+        NEUTRAL,
+        STRING_SINGLE_QUOTED,
+        STRING_DOUBLE_QUOTED,
+        STRING_BROKEN_SINGLE_QUOTED,
+        STRING_BROKEN_DOUBLE_QUOTED,
+        COMMENT_SINGE_LINE,
+        COMMENT_MULTI_LINE,
+        KEYWORD,
+        NUMBER,
+        HEX_NUMBER,
+        HEX_NUMBER_PREFIX,
+        DECIMAL_PART_NUMBER
+    };
 
+    /**
+     * Integer constants mapping to spans used on Java side.
+     * Must match up with Java constants.
+     */
     static const int KEYWORD_SPAN = 0;
     static const int STRING_SPAN = 1;
     static const int OPERATOR_SPAN = 2;
@@ -46,19 +54,24 @@ public:
     void run(const std::string &code);
 
     std::vector<int> getSpanTypes();
+
     std::vector<int> getSpanStarts();
+
     std::vector<int> getSpanEnds();
 
 private:
 
     void put(int type, int start, int end);
+
     bool isKeyword(std::string code, int position);
+
     bool isOperator(char character);
+
     static bool compare(std::string a, std::string b, int start);
+
     static bool backCompare(std::string a, std::string b, int start);
 
 };
-
 
 
 #endif //JSSHELL_HIGHLIGHTER_H

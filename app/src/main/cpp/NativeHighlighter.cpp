@@ -75,6 +75,26 @@ void NativeHighlighter::run(const std::string &code) {
             currentTextType = SPACE;
         }
 
+            // Broken string with \ declared (single quoted)
+        else if ('\\' == c && currentTextType == STRING_SINGLE_QUOTED) {
+            currentTextType = STRING_BROKEN_SINGLE_QUOTED;
+        }
+
+            // Broken string with \ declared (double quoted)
+        else if ('\\' == c && currentTextType == STRING_DOUBLE_QUOTED) {
+            currentTextType = STRING_BROKEN_DOUBLE_QUOTED;
+        }
+
+            // Broken string (single quoted)
+        else if ('\n' == c && currentTextType == STRING_BROKEN_SINGLE_QUOTED) {
+            currentTextType = STRING_SINGLE_QUOTED;
+        }
+
+            // Broken string (double quoted)
+        else if ('\n' == c && currentTextType == STRING_BROKEN_DOUBLE_QUOTED) {
+            currentTextType = STRING_DOUBLE_QUOTED;
+        }
+
             // Multi line comment end
         else if (backCompare(code, "*/", i) && currentTextType == COMMENT_MULTI_LINE) {
             put(COMMENT_SPAN, spanStart, i + 1);
@@ -192,6 +212,7 @@ void NativeHighlighter::run(const std::string &code) {
             c = code[i];
         }
     }
+
 }
 
 bool NativeHighlighter::isKeyword(std::string code, int position) {
@@ -199,7 +220,8 @@ bool NativeHighlighter::isKeyword(std::string code, int position) {
     for (i; i < code.length() && std::isalnum(code[i]); i++);
     size_t length = (size_t) (i - position);
     for (std::string item : KEYWORD_LIST) {
-        if (length == item.length() && 0 == std::strncmp(&code[position], item.c_str(), length)) {
+        if (length == item.length() &&
+            0 == std::strncmp(&code[position], item.c_str(), length)) {
             return true;
         }
     }

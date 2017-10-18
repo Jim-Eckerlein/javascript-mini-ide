@@ -155,7 +155,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:primary="p"/>
+                app:primary="p"
+                app:secondary="\\"/>
 
         </LinearLayout>
 
@@ -222,7 +223,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:primary="k"/>
+                app:primary="k"
+                app:secondary="&#x22;"/>
 
             <io.jimeckerlein.jsshell.keyboard.KeyView
                 android:layout_width="0dp"
