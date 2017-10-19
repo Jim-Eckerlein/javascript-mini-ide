@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.jimeckerlein.jsshell.run.V8View
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/v8"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent">
+
+    <io.jimeckerlein.jsshell.run.V8View
+        android:id="@+id/v8"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <io.jimeckerlein.jsshell.DiscoverView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="30dp"
+        app:description="@array/run_discover_description"
+        app:heading="@string/run_discover_heading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/editor"
+        app:layout_constraintRight_toRightOf="@+id/editor"
+        app:layout_constraintTop_toTopOf="parent"
+        app:prefName="run"
+        tools:visibility="gone"/>
+
+</FrameLayout>

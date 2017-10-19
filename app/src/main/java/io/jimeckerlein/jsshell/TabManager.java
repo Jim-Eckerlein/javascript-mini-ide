@@ -128,8 +128,8 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
     }
     
     public void loadSession() {
-        String sessionFile = mActivity.getPreferences(Context.MODE_PRIVATE).getString(mActivity.getString(R.string.pref_session_file), null);
-        if (sessionFile != null) {
+        String sessionFile = mActivity.getPreferences(Context.MODE_PRIVATE).getString(mActivity.getString(R.string.pref_session_file), "");
+        if (!sessionFile.equals("")) {
             mFilesTab.openFile(sessionFile);
         }
         else {

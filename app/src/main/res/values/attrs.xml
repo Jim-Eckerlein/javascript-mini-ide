@@ -4,4 +4,9 @@
         <attr name="primary" format="string"/>
         <attr name="secondary" format="string"/>
     </declare-styleable>
+    <declare-styleable name="DiscoverView">
+        <attr name="heading" format="string"/>
+        <attr name="description" format="reference"/>
+        <attr name="prefName" format="string"/>
+    </declare-styleable>
 </resources>

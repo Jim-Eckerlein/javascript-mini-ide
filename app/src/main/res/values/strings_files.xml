@@ -23,6 +23,16 @@
         <item quantity="one">1 file selected</item>
         <item quantity="other">%1$d files selected</item>
     </plurals>
+
+    <string name="files_discover_heading">Manage your files</string>
+    <array name="files_discover_description">
+        <item>All examples and files are listed here</item>
+        <item>Create, rename and delete your files</item>
+        <item>Examples cannot be deleted or renamed</item>
+        <item>Changes to files are saved automatically</item>
+        <item>Changes to examples are discarded</item>
+    </array>
+
     <string name="files_example_title">Example – %1$s</string>
     <string-array name="files_examples_array">
         <item>Demo</item>

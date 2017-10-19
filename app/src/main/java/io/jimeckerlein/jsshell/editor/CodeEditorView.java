@@ -12,7 +12,7 @@ import static io.jimeckerlein.jsshell.Util.clamp;
 
 public class CodeEditorView extends FrameLayout {
     
-    private final Highlighter mHighlighter = new Highlighter(getContext());
+    private Highlighter mHighlighter;
     private final CodeFormatter mCodeFormatter = new CodeFormatter();
     private EditText mEditText;
     private StringBuilder mNewCode = new StringBuilder();
@@ -36,6 +36,7 @@ public class CodeEditorView extends FrameLayout {
         inflate(getContext(), R.layout.view_editor, this);
         mEditText = findViewById(R.id.edit_text);
         mEditText.requestFocus();
+        if(!isInEditMode()) mHighlighter = new Highlighter(getContext());
     }
     
     public void write(String code, boolean moveCursorToStart) {

@@ -107,9 +107,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         
             case R.id.action_help:
+                // todo: delete
                 // Start Help activity:
-                Intent helpIntent = new Intent(this, HelpActivity.class);
-                startActivity(helpIntent);
+                //Intent helpIntent = new Intent(this, HelpActivity.class);
+                //startActivity(helpIntent);
+                DiscoverView.resetSkipped(this);
                 return true;
         
             case R.id.action_share:

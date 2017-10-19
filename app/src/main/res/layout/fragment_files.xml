@@ -109,4 +109,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
+    <io.jimeckerlein.jsshell.DiscoverView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="30dp"
+        app:description="@array/files_discover_description"
+        app:heading="@string/files_discover_heading"
+        app:prefName="editor"
+        tools:visibility="gone"/>
+
 </FrameLayout>

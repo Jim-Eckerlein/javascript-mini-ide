@@ -17,29 +17,32 @@ public class KeyView extends LinearLayout implements KeyboardKeyConnection {
     
     public KeyView(Context context) {
         super(context);
+        init(null);
     }
     
     public KeyView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
+        init(attrs);
     }
     
     public KeyView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs);
+        init(attrs);
     }
     
-    private void init(Context context, AttributeSet attrs) {
-        inflate(context, R.layout.view_key, this);
+    private void init(AttributeSet attrs) {
+        inflate(getContext(), R.layout.view_key, this);
         mPrimary = findViewById(R.id.primary);
         mSecondary = findViewById(R.id.secondary);
-    
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.KeyView, 0, 0);
-        try {
-            setPrimaryText(a.getString(R.styleable.KeyView_primary));
-            setSecondaryText(a.getString(R.styleable.KeyView_secondary));
-        } finally {
-            a.recycle();
+
+        if(null != attrs) {
+            TypedArray a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.KeyView, 0, 0);
+            try {
+                setPrimaryText(a.getString(R.styleable.KeyView_primary));
+                setSecondaryText(a.getString(R.styleable.KeyView_secondary));
+            } finally {
+                a.recycle();
+            }
         }
 
         setOnTouchListener(new TouchListener());
