@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="on_boarding_headlines">
+        <item>Welcome to JavaScript</item>
+        <item>Simple and feature rich</item>
+        <item>V8 Code Execution</item>
+    </array>
+
+    <array name="on_boarding_texts">
+        <item>Enjoy the beauty of the most important scripting language in web</item>
+        <item>Free, no ads, no in-app purchasing</item>
+        <item>Uses the powerful V8 engine, the workhorse behind Chrome</item>
+    </array>
+
+</resources>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.MenuRes;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -46,7 +47,18 @@ public class MainActivity extends AppCompatActivity {
     
         mPager.setCurrentItem(TabManager.EDITOR_TAP_POSITION);
     }
-    
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        // Eventually launch on-boarding activity:
+        boolean onBoarded = false;
+        if(!onBoarded) {
+            startActivity(new Intent(this, OnBoardingActivity.class));
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         @MenuRes int res;
@@ -108,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         
             case R.id.action_help:
                 // Start Help activity:
-                DiscoverView.resetSkipped(this);
+                DiscoverView.showAll(this);
                 return true;
         
             case R.id.action_share:

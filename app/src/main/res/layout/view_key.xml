@@ -15,18 +15,19 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:paddingTop="3dp"
         android:textSize="22sp"
-        tools:text="p"/>
+        tools:text="a"/>
 
     <TextView
         android:id="@+id/secondary"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:alpha="0.8"
-        android:fontFamily="monospace"
+        android:fontFamily="monospace-light"
         android:textSize="12sp"
-        tools:text="p"/>
+        tools:text="++"/>
 
 </LinearLayout>

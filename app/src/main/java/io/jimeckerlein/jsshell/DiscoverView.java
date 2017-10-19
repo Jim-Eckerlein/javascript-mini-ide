@@ -68,18 +68,9 @@ public class DiscoverView extends FrameLayout {
             prefs.edit().putBoolean(finalPrefName, true).apply();
             setVisibility(GONE);
         });
-
-        // Skip Button
-        findViewById(R.id.discover_skip).setOnClickListener(v -> {
-            for(DiscoverView view : DISCOVER_VIEWS) {
-                prefs.edit().putBoolean(view.mPrefName, true).apply();
-                view.setVisibility(GONE);
-            }
-            setVisibility(GONE);
-        });
     }
 
-    public static void resetSkipped(Context context) {
+    public static void showAll(Context context) {
         for(DiscoverView view : DISCOVER_VIEWS) {
             ((Activity) context).getPreferences(Context.MODE_PRIVATE).edit().putBoolean(view.mPrefName, false).apply();
             view.setVisibility(VISIBLE);

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#d0212121"
+    android:background="#dc212121"
     android:padding="24dp">
 
     <TextView
@@ -16,6 +16,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@color/secondaryColor"
         android:textSize="35sp"
@@ -30,38 +32,29 @@
         android:id="@+id/discover_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
         android:divider="@null"
-        app:layout_constraintBottom_toTopOf="@+id/discover_skip"
+        app:layout_constraintBottom_toTopOf="@+id/discover_ok"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/discover_heading"
         tools:layout_height="200dp"/>
 
     <Button
-        android:id="@+id/discover_skip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/discover_skip"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <Button
         android:id="@+id/discover_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/secondaryColor"
+        android:layout_marginLeft="8dp"
+        android:background="@null"
         android:text="@string/ok"
-        android:textColor="@android:color/primary_text_light"
+        android:textColor="@color/secondaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

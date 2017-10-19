@@ -17,6 +17,7 @@
         android:background="@drawable/underline"
         android:backgroundTint="@color/primaryColor"
         android:elevation="8dp"
+        android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:padding="4dp"
         android:textSize="14sp"

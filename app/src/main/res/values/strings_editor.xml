@@ -5,5 +5,7 @@
         <item>This is the editor you type your JS in</item>
         <item>Below is you keyboard</item>
         <item>Tap for the big letter, hold for the smaller</item>
+        <item>Swipe Right: Run your code</item>
+        <item>Swipe Left: Manage your files and examples</item>
     </array>
 </resources>

@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:fullBackupContent="@xml/backup_descriptor">
+
         <activity android:name=".MainActivity"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden">
@@ -23,6 +24,11 @@
             android:name=".AboutActivity"
             android:label="About"
             android:parentActivityName=".MainActivity">
+        </activity>
+
+        <activity
+            android:name=".OnBoardingActivity"
+            android:label="On Boarding">
         </activity>
 
     </application>
