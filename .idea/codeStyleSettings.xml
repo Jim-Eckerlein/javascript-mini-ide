@@ -66,6 +66,9 @@
         <XML>
           <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
         </XML>
+        <codeStyleSettings language="JAVA">
+          <option name="ELSE_ON_NEW_LINE" value="true" />
+        </codeStyleSettings>
         <codeStyleSettings language="ObjectiveC">
           <option name="ELSE_ON_NEW_LINE" value="true" />
         </codeStyleSettings>

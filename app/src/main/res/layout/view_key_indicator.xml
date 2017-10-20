@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:padding="12dp"
+        android:fontFamily="sans-serif-light"
         android:textSize="22sp"
         tools:text="p"/>
 
