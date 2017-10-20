@@ -119,6 +119,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(aboutIntent);
                 return true;
 
+            case R.id.action_replay_on_boarding:
+                // Start On-Boarding activity:
+                startActivity(new Intent(this, OnBoardingActivity.class));
+                return true;
+
             case R.id.action_help:
                 // Start Help activity:
                 DiscoverView.showAll(this);

@@ -35,4 +35,10 @@
         android:title="@string/action_about"
         app:showAsAction="never"/>
 
+    <!-- Replay On-Boarding -->
+    <item
+        android:id="@+id/action_replay_on_boarding"
+        android:title="@string/action_replay_on_boarding"
+        app:showAsAction="never"/>
+
 </menu>
