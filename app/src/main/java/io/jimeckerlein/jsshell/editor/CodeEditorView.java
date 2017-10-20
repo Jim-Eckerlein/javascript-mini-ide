@@ -95,6 +95,7 @@ public class CodeEditorView extends FrameLayout {
     }
     
     private void highlight(String newCode, int selection) {
+        mEditText.setText(newCode);
         mEditText.setSelection(selection);
         HighlighterTask.Params params = new HighlighterTask.Params();
         HighlighterTask highlighterTask = new HighlighterTask(getContext(), mEditText);
