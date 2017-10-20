@@ -17,6 +17,7 @@ import io.jimeckerlein.jsshell.files.FilesManager;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String ON_BOARDED_PREF = "io.jimeckerlein.jsshell.ON_BOARDED_PREF";
     private ViewPager mPager;
     private TabManager mTabManager;
 
@@ -47,13 +48,14 @@ public class MainActivity extends AppCompatActivity {
         mPager.setCurrentItem(TabManager.EDITOR_TAP_POSITION);
 
         // Eventually launch on-boarding activity:
-        final boolean[] onBoarded = {false}; // todo: read from prefs
-        if (!onBoarded[0]) {
+        final Util.FinalRef<Boolean> onBoarded = new Util.FinalRef<>(getPreferences(MODE_PRIVATE).getBoolean(ON_BOARDED_PREF, false));
+        if (!onBoarded.get()) {
             startActivity(new Intent(this, OnBoardingActivity.class));
             findViewById(android.R.id.content).getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-                if(onBoarded[0]) return;
+                if(onBoarded.get()) return;
                 DiscoverView.showAll(this);
-                onBoarded[0] = true;
+                getPreferences(MODE_PRIVATE).edit().putBoolean(ON_BOARDED_PREF, true).apply();
+                onBoarded.set(true);
             });
         }
     }

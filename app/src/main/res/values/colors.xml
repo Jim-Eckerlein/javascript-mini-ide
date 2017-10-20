@@ -7,6 +7,7 @@
 
     <color name="keyColor">@android:color/primary_text_dark</color>
     <color name="keyInverseColor">@android:color/primary_text_light</color>
+    <color name="keySecondary">@android:color/tertiary_text_dark</color>
 
     <color name="textError">#EF5350</color>
 

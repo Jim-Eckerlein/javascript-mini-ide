@@ -48,4 +48,30 @@ public class Util {
     public static void runOnUiThread(Runnable runnable) {
         new Handler(Looper.getMainLooper()).post(runnable);
     }
+
+    /**
+     * Enables mutable references declared as final.
+     * @param <T> Type of reference.
+     */
+    public static class FinalRef<T> {
+
+        private T mRef;
+
+        FinalRef(T ref) {
+            mRef = ref;
+        }
+
+        public void set(T ref) {
+            mRef = ref;
+        }
+
+        public T get() {
+            return mRef;
+        }
+
+        @Override
+        public String toString() {
+            return mRef.toString();
+        }
+    }
 }

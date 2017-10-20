@@ -25,7 +25,7 @@
         android:id="@+id/secondary"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:alpha="0.6"
+        android:textColor="@color/keySecondary"
         android:fontFamily="monospace-light"
         android:textSize="12sp"
         tools:text="++"/>
