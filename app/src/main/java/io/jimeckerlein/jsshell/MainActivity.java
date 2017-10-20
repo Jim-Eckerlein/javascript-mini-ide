@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.MenuRes;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,52 +16,52 @@ import java.security.InvalidParameterException;
 import io.jimeckerlein.jsshell.files.FilesManager;
 
 public class MainActivity extends AppCompatActivity {
-    
+
     private ViewPager mPager;
     private TabManager mTabManager;
-    
+
     static {
         System.loadLibrary("native-lib");
     }
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    
+
         // Initialize files manager:
         FilesManager.initialize(this);
-        
+
         // Toolbar:
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-    
+
         mPager = (ViewPager) findViewById(R.id.pager);
         mTabManager = new TabManager(getSupportFragmentManager(), mPager, this);
         mPager.setAdapter(mTabManager);
-    
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mPager);
         tabLayout.addOnTabSelectedListener(mTabManager);
-    
-        mPager.setCurrentItem(TabManager.EDITOR_TAP_POSITION);
-    }
 
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+        mPager.setCurrentItem(TabManager.EDITOR_TAP_POSITION);
 
         // Eventually launch on-boarding activity:
-        boolean onBoarded = false;
-        if(!onBoarded) {
+        final boolean[] onBoarded = {false}; // todo: read from prefs
+        if (!onBoarded[0]) {
             startActivity(new Intent(this, OnBoardingActivity.class));
+            findViewById(android.R.id.content).getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+                if(onBoarded[0]) return;
+                DiscoverView.showAll(this);
+                onBoarded[0] = true;
+            });
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         @MenuRes int res;
-    
+
         switch (mPager.getCurrentItem()) {
             case TabManager.FILES_TAB_POSITION:
                 res = R.menu.toolbar_files;
@@ -76,53 +75,53 @@ public class MainActivity extends AppCompatActivity {
             default:
                 throw new InvalidParameterException("No such tab");
         }
-    
+
         getMenuInflater().inflate(res, menu);
         return true;
     }
-    
+
     @Override
     public void onBackPressed() {
         if (!mTabManager.backPressed()) {
             super.onBackPressed();
         }
     }
-    
+
     @Override
     protected void onStop() {
         super.onStop();
-        
+
         // Save file:
         mTabManager.saveEditorFile();
-        
+
         // Save session:
         mTabManager.saveSession();
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         @IdRes int id = item.getItemId();
-    
+
         switch (id) {
             case R.id.action_format_code:
                 mTabManager.editorFormat();
                 return true;
-        
+
             case R.id.action_clear_code:
                 mTabManager.editorClear();
                 return true;
-        
+
             case R.id.action_about:
                 // Start About activity:
                 Intent aboutIntent = new Intent(this, AboutActivity.class);
                 startActivity(aboutIntent);
                 return true;
-        
+
             case R.id.action_help:
                 // Start Help activity:
                 DiscoverView.showAll(this);
                 return true;
-        
+
             case R.id.action_share:
                 // Share code:
                 Intent sendIntent = new Intent();
@@ -131,12 +130,12 @@ public class MainActivity extends AppCompatActivity {
                 sendIntent.setType("application/javascript");
                 startActivity(sendIntent);
                 return true;
-        
+
             case R.id.action_delete_multiple_files:
                 // Delete multiple files from file tab
                 mTabManager.startMultipleFileDeletion();
                 return true;
-            
+
             default:
                 return false;
         }

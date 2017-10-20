@@ -28,9 +28,8 @@
     <array name="files_discover_description">
         <item>All examples and files are listed here</item>
         <item>Create, rename and delete your files</item>
-        <item>Examples cannot be deleted or renamed</item>
-        <item>Changes to files are saved automatically</item>
-        <item>Changes to examples are discarded</item>
+        <item>Files are saved automatically</item>
+        <item>Examples are never saved</item>
     </array>
 
     <string name="files_example_title">Example – %1$s</string>

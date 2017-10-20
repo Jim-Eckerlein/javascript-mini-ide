@@ -2,10 +2,10 @@
     <string name="editor_tab_title">Editor</string>
     <string name="editor_discover_heading">Edit your code</string>
     <array name="editor_discover_description">
-        <item>This is the editor you type your JS in</item>
+        <item>Here you write you JavaScript</item>
         <item>Below is you keyboard</item>
         <item>Tap for the big letter, hold for the smaller</item>
-        <item>Swipe Right: Run your code</item>
-        <item>Swipe Left: Manage your files and examples</item>
+        <item>&#x21A6; Run your code</item>
+        <item>&#x21A4; Files and examples</item>
     </array>
 </resources>

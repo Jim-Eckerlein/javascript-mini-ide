@@ -26,7 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
-                android:gravity="center"
                 android:padding="16dp"
                 android:text="@string/files_file_list_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
@@ -44,7 +43,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
-                android:gravity="center"
                 android:padding="16dp"
                 android:text="@string/files_example_list_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
@@ -119,7 +117,7 @@
         android:elevation="30dp"
         app:description="@array/files_discover_description"
         app:heading="@string/files_discover_heading"
-        app:prefName="editor"
+        app:prefName="files"
         tools:visibility="gone"/>
 
 </FrameLayout>
