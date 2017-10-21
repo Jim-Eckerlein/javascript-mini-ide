@@ -48,8 +48,7 @@ public class FilesTab extends Fragment {
     private TextView mMultipleFileDeletionCounter;
     private ScrollView mScroller;
     private FileView mFileSettingsOpened;
-    private boolean mSessionLoaded = false;
-    
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,12 +96,6 @@ public class FilesTab extends Fragment {
         view.post(() -> {
             // Hide multiple file selection bar initially:
             mMultipleFileDeletionBar.setY(mScroller.getHeight());
-            
-            // Load session file:
-            if (!mSessionLoaded) {
-                mTabManager.loadSession();
-                mSessionLoaded = true;
-            }
         });
         
         return view;

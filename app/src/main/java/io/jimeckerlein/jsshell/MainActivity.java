@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(mTabManager);
 
         mPager.setCurrentItem(TabManager.EDITOR_TAP_POSITION);
+        mPager.post(() -> mTabManager.loadSession());
 
         // Eventually launch on-boarding activity:
         final Util.FinalRef<Boolean> onBoarded = new Util.FinalRef<>(getPreferences(MODE_PRIVATE).getBoolean(ON_BOARDED_PREF, false));
