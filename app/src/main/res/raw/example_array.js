@@ -1,7 +1,7 @@
 
-var array = ['BMW', 'Audi', 'VW', 'Porsche'];
+var array = ['January', 'February', 'March', 'April']
 
 // Iterate over each array entry
-for(var i = 0; i < array.length; i++) {
-    print(array[i]);
+for(let i = 0; i < array.length; i++) {
+    print(array[i])
 }

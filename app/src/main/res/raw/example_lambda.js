@@ -10,22 +10,22 @@ Syntax (simplified):
 */
 
 function doTwice(func, args) {
-    func(args);
-    func(args);
+    func(args)
+    func(args)
 }
 
 // Simple lambda:
-doTwice(() => print('Lambda call'));
+doTwice(() => print('Lambda call'))
 
 // With parameters:
 doTwice((text) => {
-    print('Lambda call: ' + text);
-}, 'Hello world');
+    print('Lambda call: ' + text)
+}, 'Hello world')
 
 
 // You can even wrap your parameters into an object,
 // so you can access it by reference instead of getting
 // a copy for each invocation:
 doTwice((myArgs) => {
-    print('Lambda call: ' + myArgs.callNr++);
-}, {callNr: 1});
+    print('Lambda call: ' + myArgs.callNr++)
+}, {callNr: 1})

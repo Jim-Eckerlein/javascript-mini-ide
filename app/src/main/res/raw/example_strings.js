@@ -21,7 +21,7 @@ print(`This is a template string.
 They can freely expand over multiple lines
 and even include variables using special syntax:
 foo is ${foo}
-and this: ${bar} is bar`);
+and this: ${bar} is bar`)
 print()
 
 print`Tagged string: foo ${foo} and bar ${bar}

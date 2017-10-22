@@ -9,6 +9,6 @@ a string when passing to print().
 */
 
 while(true) {
-    print(new Date());
-    sleep(1000);
+    print(new Date())
+    sleep(1000)
 }
