@@ -1,6 +1,7 @@
 package io.jimeckerlein.jsshell.editor;
 
 import android.text.Editable;
+import android.text.Selection;
 import android.text.Spanned;
 
 /**
@@ -24,7 +25,12 @@ public class InlineFormatter {
         mEditable = editable;
     }
 
-    public void format(Editable editable) {
+    /**
+     * Pretty print the given editable string
+     * @param editable String to be formatted
+     * @param restrictToCursor If true, only line up to cursor line will be formatted
+     */
+    public void format(Editable editable, boolean restrictToCursor) {
         mEditable = editable;
         mI.reset();
         mLineStart.reset();
@@ -35,6 +41,12 @@ public class InlineFormatter {
         boolean enableContinuation = false;
         boolean inTemplateString = false;
         boolean atLineStart = true;
+
+        int userSelection = 0;
+
+        if(restrictToCursor) {
+            userSelection = Selection.getSelectionEnd(editable);
+        }
 
         for (; mI.hasNext(); mI.inc()) {
 
@@ -74,6 +86,11 @@ public class InlineFormatter {
                 // Write indent into editable:
                 if (!inTemplateString) {
                     writeIndent();
+                }
+
+                // Check whether user selected line was reached:
+                if(restrictToCursor && cp(mI) >= userSelection) {
+                    break;
                 }
 
                 if (enableContinuation) {
@@ -116,8 +133,12 @@ public class InlineFormatter {
 
         else if (0 < spaceIndentDiff) {
             // We have to add some tabs
+            boolean moveIManually = cp(mLineStart) == cp(mI);
             for (int i = 0; i < spaceIndentDiff; i++) {
                 mEditable.insert(cp(mLineStart), " ");
+                if(moveIManually) {
+                    mI.inc();
+                }
             }
         }
     }

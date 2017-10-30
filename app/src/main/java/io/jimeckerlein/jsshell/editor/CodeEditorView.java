@@ -48,7 +48,10 @@ public class CodeEditorView extends FrameLayout {
         mNewCode.replace(0, mNewCode.length(), mEditText.getText().replace(start, end, code, 0, code.length()).toString());
     
         if (code.equals("}") || code.equals("\n")) {
-            cursorPos = RuntimeFormatter.format(mNewCode, cursorPos - 1) + 1;
+            //cursorPos = RuntimeFormatter.format(mNewCode, cursorPos - 1) + 1;
+            mCodeFormatter.format(mEditText.getText(), true);
+            cursorPos = mEditText.getSelectionStart();
+            mNewCode.replace(0, mNewCode.length(), mEditText.getText().toString());
         }
     
         highlight(mNewCode.toString(), moveCursorToStart ? 0 : clamp(cursorPos, 0, mNewCode.toString().length()));
@@ -116,7 +119,7 @@ public class CodeEditorView extends FrameLayout {
     }
     
     public void format() {
-        mCodeFormatter.format(mEditText.getText());
+        mCodeFormatter.format(mEditText.getText(), false);
         // todo: simplify
         int cp = mEditText.getSelectionStart();
         mEditText.setText(mHighlighter.highlight(mEditText.getText().toString()));
