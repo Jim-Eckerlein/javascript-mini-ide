@@ -2,7 +2,6 @@ package io.jimeckerlein.jsshell.keyboard;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -36,7 +35,7 @@ public class KeyIndicatorView extends LinearLayout {
         mRoot = (ViewGroup) getChildAt(0);
     }
     
-    public void show(KeyView target, SpannableString text) {
+    public void show(KeyView target, CharSequence text) {
         mRoot.setVisibility(VISIBLE);
         mPrimary.setText(text);
         setX(target.getX());

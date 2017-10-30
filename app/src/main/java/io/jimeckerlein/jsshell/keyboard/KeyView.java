@@ -108,7 +108,7 @@ public class KeyView extends LinearLayout implements KeyboardKeyConnection {
 
         @Override
         public void onDown() {
-            mKeyIndicatorView.show(KeyView.this, getText());
+            mKeyIndicatorView.show(KeyView.this, getPrimaryText());
         }
 
         @Override
