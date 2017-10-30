@@ -62,7 +62,7 @@ public class Highlighter {
     
     /**
      * Called from C with span data array, which aligned behind each other.
-     * @param length Length of each part array, therefore: <code>data</code>.length() == 3 * length
+     * @param length Length of each part array, therefore: {@code data.length() == 3 * length}
      * @param data Span data array in that configuration: types, starts, ends
      */
     @SuppressWarnings("unused")

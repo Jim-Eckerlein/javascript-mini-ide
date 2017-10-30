@@ -19,8 +19,6 @@ public class InlineFormatter {
     private int mIndent;
     private int mLeadingSpaceCount;
     private boolean mInContinuation;
-    private int mRoundBraceBalance;
-    private int mSquareBraceBalance;
 
     public InlineFormatter(Editable editable) {
         mEditable = editable;
@@ -33,16 +31,10 @@ public class InlineFormatter {
         mIndent = 0;
         mLeadingSpaceCount = 0;
         mInContinuation = false;
-        mRoundBraceBalance = 0;
-        mSquareBraceBalance = 0;
         int indentChange = 0;
         boolean enableContinuation = false;
         boolean inTemplateString = false;
         boolean atLineStart = true;
-        int roundBraceBalanceChange = 0;
-        int squareBraceBalanceChange = 0;
-        int immediateSquareBraceBalanceChange = 0;
-        int immediateRoundBraceBalanceChange = 0;
 
         for (; mI.hasNext(); mI.inc()) {
 
@@ -63,30 +55,6 @@ public class InlineFormatter {
                 mIndent--;
             }
 
-            else if ('(' == c) {
-                roundBraceBalanceChange++;
-            }
-
-            else if (atLineStart && ')' == c) {
-                immediateRoundBraceBalanceChange--;
-            }
-
-            else if (')' == c) {
-                roundBraceBalanceChange--;
-            }
-
-            else if ('[' == c) {
-                squareBraceBalanceChange++;
-            }
-
-            else if (atLineStart && c == ']') {
-                immediateSquareBraceBalanceChange--;
-            }
-
-            else if (']' == c) {
-                squareBraceBalanceChange--;
-            }
-
             else if (!inTemplateString && c == '`') {
                 inTemplateString = true;
             }
@@ -102,10 +70,6 @@ public class InlineFormatter {
             atLineStart = false;
 
             if ('\n' == c) {
-                mSquareBraceBalance += immediateSquareBraceBalanceChange;
-                mRoundBraceBalance += immediateRoundBraceBalanceChange;
-                immediateSquareBraceBalanceChange = 0;
-                immediateRoundBraceBalanceChange = 0;
 
                 // Write indent into editable:
                 if (!inTemplateString) {
@@ -125,14 +89,10 @@ public class InlineFormatter {
 
                 // Add indent change onto indentation:
                 mIndent += indentChange;
-                mRoundBraceBalance += roundBraceBalanceChange;
-                mSquareBraceBalance += squareBraceBalanceChange;
 
                 // Reset variables:
                 atLineStart = true;
                 indentChange = 0;
-                roundBraceBalanceChange = 0;
-                squareBraceBalanceChange = 0;
                 mLeadingSpaceCount = 0;
             }
         }
@@ -145,13 +105,7 @@ public class InlineFormatter {
     private void writeIndent() {
         int spaceIndentDiff = Math.max(mIndent, 0) * 4 - mLeadingSpaceCount;
 
-        if (mSquareBraceBalance != 0) {
-            spaceIndentDiff += 2 * mSquareBraceBalance;
-        }
-        else if (mRoundBraceBalance != 0) {
-            spaceIndentDiff += 2 * mRoundBraceBalance;
-        }
-        else if (mInContinuation) {
+        if (mInContinuation) {
             spaceIndentDiff += 2;
         }
 
