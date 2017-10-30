@@ -7,7 +7,7 @@ import android.text.Spanned;
 /**
  * Todo: Editable should be final
  */
-public class InlineFormatter {
+public class Formatter {
 
     private static final char[] CONTINUATION_OPERATOR = new char[]{
             '+', '*', '/', '|', '!', '?', '%', '^',
@@ -21,7 +21,7 @@ public class InlineFormatter {
     private int mLeadingSpaceCount;
     private boolean mInContinuation;
 
-    public InlineFormatter(Editable editable) {
+    public Formatter(Editable editable) {
         mEditable = editable;
     }
 

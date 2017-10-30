@@ -13,7 +13,7 @@ import static io.jimeckerlein.jsshell.Util.clamp;
 public class CodeEditorView extends FrameLayout {
     
     private Highlighter mHighlighter;
-    private InlineFormatter mCodeFormatter;
+    private Formatter mCodeFormatter;
     private EditText mEditText;
     private StringBuilder mNewCode = new StringBuilder();
     
@@ -37,7 +37,7 @@ public class CodeEditorView extends FrameLayout {
         mEditText = findViewById(R.id.edit_text);
         mEditText.requestFocus();
         if(!isInEditMode()) mHighlighter = new Highlighter(getContext());
-        mCodeFormatter = new InlineFormatter(mEditText.getText());
+        mCodeFormatter = new Formatter(mEditText.getText());
     }
     
     public void write(String code, boolean moveCursorToStart) {
@@ -48,7 +48,6 @@ public class CodeEditorView extends FrameLayout {
         mNewCode.replace(0, mNewCode.length(), mEditText.getText().replace(start, end, code, 0, code.length()).toString());
     
         if (code.equals("}") || code.equals("\n")) {
-            //cursorPos = RuntimeFormatter.format(mNewCode, cursorPos - 1) + 1;
             mCodeFormatter.format(mEditText.getText(), true);
             cursorPos = mEditText.getSelectionStart();
             mNewCode.replace(0, mNewCode.length(), mEditText.getText().toString());
