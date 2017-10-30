@@ -32,9 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_above="@id/keyboard"
-            android:layout_below="@id/current_file_name"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"/>
+            android:layout_below="@id/current_file_name"/>
 
         <LinearLayout
             android:id="@+id/show_keyboard_wrapper"
