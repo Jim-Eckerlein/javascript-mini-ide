@@ -46,10 +46,8 @@ public class CodeEditorView extends FrameLayout {
     
         if (code.equals("}") || code.equals("\n")) {
             mCodeFormatter.format(mEditText.getText(), true);
-            System.out.println("FORMAT");
         }
 
-        System.out.println(mEditText.getText());
         highlight(mEditText.getText().toString(), moveCursorToStart ? 0 : mEditText.getSelectionStart());
     }
     
