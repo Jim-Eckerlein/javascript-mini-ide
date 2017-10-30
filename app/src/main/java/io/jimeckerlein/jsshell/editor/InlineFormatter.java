@@ -33,13 +33,14 @@ public class InlineFormatter {
         mInContinuation = false;
         int indentChange = 0;
         boolean enableContinuation = false;
+        boolean inTemplateString = false;
         boolean atLineStart = true;
 
         for (; mI.hasNext(); mI.inc()) {
 
             char c = mI.getChar();
 
-            if (atLineStart) {
+            if (atLineStart && !inTemplateString) {
                 for (; ' ' == mI.getChar(); mI.inc()) {
                     mLeadingSpaceCount++;
                 }
@@ -55,7 +56,11 @@ public class InlineFormatter {
                 mIndent--;
             }
 
-            if (!enableContinuation && checkContinuationChar(c)) {
+            if(!inTemplateString && c == '`') {
+                inTemplateString = true;
+            }
+
+            if (!enableContinuation && !inTemplateString && checkContinuationChar(c)) {
                 enableContinuation = true;
             }
 
