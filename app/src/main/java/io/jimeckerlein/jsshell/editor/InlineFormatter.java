@@ -8,11 +8,17 @@ import android.text.Spanned;
  */
 public class InlineFormatter {
 
+    private static final char[] CONTINUATION_OPERATOR = new char[]{
+            '+', '*', '/', '(', '|', '!', '?', '%', '^',
+            '.', '~', '=', '[', '-', '&', '<', '>', ':', '\\'
+    };
+
     private Editable mEditable;
     private final Cursor mI = new Cursor();
     private final Cursor mLineStart = new Cursor();
     private int mIndent;
     private int mLeadingSpaceCount;
+    private boolean mInContinuation;
 
     public InlineFormatter(Editable editable) {
         mEditable = editable;
@@ -24,7 +30,9 @@ public class InlineFormatter {
         mLineStart.reset();
         mIndent = 0;
         mLeadingSpaceCount = 0;
+        mInContinuation = false;
         int indentChange = 0;
+        boolean enableContinuation = false;
         boolean atLineStart = true;
 
         for (; mI.hasNext(); mI.inc()) {
@@ -47,9 +55,25 @@ public class InlineFormatter {
                 mIndent--;
             }
 
+            if (!enableContinuation && checkContinuationChar(c)) {
+                enableContinuation = true;
+            }
+
+            else if (enableContinuation && !Character.isWhitespace(c)) {
+                enableContinuation = false;
+            }
+
             if ('\n' == c) {
                 // Write indent into editable:
                 writeIndent();
+
+                if (enableContinuation) {
+                    mInContinuation = true;
+                    enableContinuation = false;
+                }
+                else {
+                    mInContinuation = false;
+                }
 
                 // Remember line start, but only after editable was eventually altered by writing indentation
                 mEditable.setSpan(mLineStart, cp(mI) + 1, cp(mI) + 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -70,19 +94,32 @@ public class InlineFormatter {
     }
 
     private void writeIndent() {
-        int indentDiff = Math.max(mIndent, 0) * 4 - mLeadingSpaceCount;
+        int spaceIndentDiff = Math.max(mIndent, 0) * 4 - mLeadingSpaceCount;
 
-        if(0 > indentDiff) {
-            // We have to delete some tabs
-            mEditable.delete(cp(mLineStart), cp(mLineStart) - indentDiff);
+        if (mInContinuation) {
+            spaceIndentDiff += 2;
         }
 
-        else if(0 < indentDiff) {
+        if (0 > spaceIndentDiff) {
+            // We have to delete some tabs
+            mEditable.delete(cp(mLineStart), cp(mLineStart) - spaceIndentDiff);
+        }
+
+        else if (0 < spaceIndentDiff) {
             // We have to add some tabs
-            for (int i = 0; i < indentDiff; i++) {
+            for (int i = 0; i < spaceIndentDiff; i++) {
                 mEditable.insert(cp(mLineStart), " ");
             }
         }
+    }
+
+    private boolean checkContinuationChar(char c) {
+        for (char operator : CONTINUATION_OPERATOR) {
+            if (operator == c) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -90,21 +127,22 @@ public class InlineFormatter {
      * All line leading spaces are replaced by that dot: ⋅
      * {@code mI} is visualized by: ^I^
      * {@code mLineStart} is visualized by: ^LS^
+     *
      * @return Current formatter state as string
      */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         boolean atLineStart = true;
-        for(int i = 0; i < mEditable.length(); i++) {
+        for (int i = 0; i < mEditable.length(); i++) {
             char c = mEditable.charAt(i);
-            if(cp(mI) == i) {
+            if (cp(mI) == i) {
                 sb.append("^I^");
             }
-            if(cp(mLineStart) == i) {
+            if (cp(mLineStart) == i) {
                 sb.append("^LS^");
             }
-            if(' ' == c && atLineStart) {
+            if (' ' == c && atLineStart) {
                 sb.append('\u22C5');
             }
             else {
