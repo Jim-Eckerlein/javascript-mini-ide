@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import io.jimeckerlein.jsshell.editor.CodeEditorView;
@@ -26,7 +27,7 @@ public class EditorTab extends Fragment {
     private boolean mIsKeyboardVisible = true;
     private Transition mKeyboardTransition = new ChangeBounds();
     private KeyboardView mKeyboardView;
-    
+
     public void setPager(ViewPager viewPager) {
         mViewPager = viewPager;
     }
@@ -52,7 +53,7 @@ public class EditorTab extends Fragment {
         mKeyboardView.setEditor(mEditor);
         mKeyboardView.setOnHideKeyboardListener(this::hideKeyboard);
         view.findViewById(R.id.show_keyboard).setOnClickListener(v -> showKeyboard());
-    
+
         view.findViewById(R.id.run_code_key).setOnClickListener(v -> mViewPager.setCurrentItem(TabManager.RUN_TAB_POSITION));
         view.findViewById(R.id.run_code_key_shortcut).setOnClickListener(v -> mViewPager.setCurrentItem(TabManager.RUN_TAB_POSITION));
         
@@ -100,7 +101,8 @@ public class EditorTab extends Fragment {
             return;
         }
         // todo: add animation
-        mKeyboardView.setTranslationY(100);
+        mKeyboardView.setVisibility(View.GONE);
+        ((RelativeLayout.LayoutParams) mEditor.getLayoutParams()).addRule(RelativeLayout.ABOVE, R.id.show_keyboard_wrapper);
         mIsKeyboardVisible = false;
     }
     
@@ -109,7 +111,8 @@ public class EditorTab extends Fragment {
             return;
         }
         // todo: add animation
-        mKeyboardView.setTranslationY(0);
+        mKeyboardView.setVisibility(View.VISIBLE);
+        ((RelativeLayout.LayoutParams) mEditor.getLayoutParams()).addRule(RelativeLayout.ABOVE, R.id.keyboard);
         mIsKeyboardVisible = true;
     }
 }
