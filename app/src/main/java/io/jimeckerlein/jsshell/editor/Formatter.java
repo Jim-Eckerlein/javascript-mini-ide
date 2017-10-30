@@ -5,7 +5,8 @@ import android.text.Selection;
 import android.text.Spanned;
 
 /**
- * Todo: Editable should be final
+ * Format code to follow some general guide-lines.
+ * Indents 4 spaces, continuation is indented by 2 spaces
  */
 public class Formatter {
 

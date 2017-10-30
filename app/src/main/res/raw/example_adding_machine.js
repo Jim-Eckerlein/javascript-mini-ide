@@ -27,7 +27,7 @@ function printByteArray(a) {
 
 // Build byte arrays:
 function buildByteArray(v, a) {
-    for(let offset; = 0 offset < MAX; offset++) {
+    for(let offset = 0; offset < MAX; offset++) {
         a[MAX - offset - 1] = (v & (1 << offset)) ? true : false
     }
 }
