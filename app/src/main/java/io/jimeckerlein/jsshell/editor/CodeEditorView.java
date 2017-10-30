@@ -9,9 +9,8 @@ import android.widget.FrameLayout;
 import io.jimeckerlein.jsshell.R;
 
 public class CodeEditorView extends FrameLayout {
-    
-    private Highlighter mHighlighter;
-    private Formatter mCodeFormatter;
+
+    private final Formatter mFormatter = new Formatter();
     private EditText mEditText;
 
     public CodeEditorView(Context context) {
@@ -33,19 +32,13 @@ public class CodeEditorView extends FrameLayout {
         inflate(getContext(), R.layout.view_editor, this);
         mEditText = findViewById(R.id.edit_text);
         mEditText.requestFocus();
-        if(!isInEditMode()) mHighlighter = new Highlighter(getContext());
-        mCodeFormatter = new Formatter(mEditText.getText());
     }
     
     public void write(String code, boolean moveCursorToStart) {
-        int start = getCursorStart();
-        int end = getCursorEnd();
-        int cursorPos = start + code.length();
-    
-        mEditText.getText().replace(start, end, code, 0, code.length());
+        mEditText.getText().replace(getCursorStart(), getCursorEnd(), code, 0, code.length());
     
         if (code.equals("}") || code.equals("\n")) {
-            mCodeFormatter.format(mEditText.getText(), true);
+            mFormatter.format(mEditText.getText(), true);
         }
 
         highlight(mEditText.getText().toString(), moveCursorToStart ? 0 : mEditText.getSelectionStart());
@@ -111,11 +104,7 @@ public class CodeEditorView extends FrameLayout {
     }
     
     public void format() {
-        mCodeFormatter.format(mEditText.getText(), false);
-        // todo: simplify
-        int cp = mEditText.getSelectionStart();
-        mEditText.setText(mHighlighter.highlight(mEditText.getText().toString()));
-        mEditText.setSelection(cp);
+        mFormatter.format(mEditText.getText(), false);
     }
     
     public void clear() {

@@ -21,10 +21,6 @@ public class Formatter {
     private int mLeadingSpaceCount;
     private boolean mInContinuation;
 
-    public Formatter(Editable editable) {
-        mEditable = editable;
-    }
-
     /**
      * Pretty print the given editable string
      * @param editable String to be formatted
