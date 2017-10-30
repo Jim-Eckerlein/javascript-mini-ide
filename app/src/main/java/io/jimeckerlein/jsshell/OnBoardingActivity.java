@@ -1,15 +1,18 @@
 package io.jimeckerlein.jsshell;
 
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class OnBoardingActivity extends AppCompatActivity {
@@ -43,7 +46,7 @@ public class OnBoardingActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if(tab.getPosition() == TAB_COUNT - 1) {
+                if (tab.getPosition() == TAB_COUNT - 1) {
                     // Last tab selected, show lets-go button:
                     mNextButton.setVisibility(View.GONE);
                     mLetsGoButton.setVisibility(View.VISIBLE);
@@ -89,6 +92,19 @@ public class OnBoardingActivity extends AppCompatActivity {
             int pos = getArguments().getInt(TAB_POSITION);
             ((TextView) rootView.findViewById(R.id.on_boarding_text)).setText(getResources().getStringArray(R.array.on_boarding_texts)[pos]);
             ((TextView) rootView.findViewById(R.id.on_boarding_headline)).setText(getResources().getStringArray(R.array.on_boarding_headlines)[pos]);
+            @DrawableRes int id = 0;
+            switch (pos) {
+                case 0:
+                    id = R.drawable.intro_robot;
+                    break;
+                case 1:
+                    id = R.drawable.intro_code;
+                    break;
+                case 2:
+                    id = R.drawable.intro_circuit;
+                    break;
+            }
+            ((ImageView) rootView.findViewById(R.id.on_boarding_image)).setImageDrawable(ContextCompat.getDrawable(getContext(), id));
             return rootView;
         }
     }
