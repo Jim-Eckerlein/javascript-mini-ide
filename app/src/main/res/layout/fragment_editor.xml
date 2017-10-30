@@ -1,53 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/editor_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:orientation="vertical">
+    android:id="@+id/editor_root">
 
-    <TextView
-        android:id="@+id/current_file_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/underline"
-        android:backgroundTint="@color/primaryColor"
-        android:elevation="8dp"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center"
-        android:padding="4dp"
-        android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="filename.js"/>
-
-    <io.jimeckerlein.jsshell.editor.CodeEditorView
-        android:id="@+id/editor"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/keyboard"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/current_file_name"
-        app:layout_constraintVertical_chainStyle="spread_inside"/>
-
-    <io.jimeckerlein.jsshell.keyboard.KeyboardView
-        android:id="@+id/keyboard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:clipChildren="false"
-        android:elevation="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editor"/>
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/current_file_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/underline"
+            android:backgroundTint="@color/primaryColor"
+            android:elevation="8dp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:padding="4dp"
+            android:textSize="14sp"
+            tools:text="filename.js"/>
+
+        <io.jimeckerlein.jsshell.editor.CodeEditorView
+            android:id="@+id/editor"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/highlightOperator"
+            android:paddingBottom="0dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="0dp"/>
+
+        <io.jimeckerlein.jsshell.keyboard.KeyboardView
+            android:id="@+id/keyboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:elevation="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editor"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/show_keyboard_wrapper"
@@ -97,4 +99,4 @@
         app:prefName="editor"
         tools:visibility="gone"/>
 
-</android.support.constraint.ConstraintLayout>
+</FrameLayout>

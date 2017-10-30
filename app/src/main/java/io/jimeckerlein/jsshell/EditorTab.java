@@ -3,13 +3,10 @@ package io.jimeckerlein.jsshell;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RawRes;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.transition.ChangeBounds;
 import android.transition.Transition;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +23,9 @@ public class EditorTab extends Fragment {
     private TextView mCurrentFileName;
     private boolean mCurrentFileIsExample = false;
     private boolean mHasOpenedFile = false;
-    private ConstraintSet mConstraintSetOriginal = new ConstraintSet();
-    private ConstraintSet mConstraintSetHiddenKeyboard = new ConstraintSet();
-    private ConstraintLayout mRoot;
     private boolean mIsKeyboardVisible = true;
     private Transition mKeyboardTransition = new ChangeBounds();
+    private KeyboardView mKeyboardView;
     
     public void setPager(ViewPager viewPager) {
         mViewPager = viewPager;
@@ -51,15 +46,11 @@ public class EditorTab extends Fragment {
         // Editor:
         mEditor = view.findViewById(R.id.editor);
         mCurrentFileName = view.findViewById(R.id.current_file_name);
-    
-        mRoot = view.findViewById(R.id.editor_root);
-        mConstraintSetOriginal.clone(mRoot);
-        mConstraintSetHiddenKeyboard.clone(getContext(), R.layout.fragment_editor_hidden);
         
         // Keyboard:
-        KeyboardView keyboardView = view.findViewById(R.id.keyboard);
-        keyboardView.setEditor(mEditor);
-        keyboardView.setOnHideKeyboardListener(this::hideKeyboard);
+        mKeyboardView = view.findViewById(R.id.keyboard);
+        mKeyboardView.setEditor(mEditor);
+        mKeyboardView.setOnHideKeyboardListener(this::hideKeyboard);
         view.findViewById(R.id.show_keyboard).setOnClickListener(v -> showKeyboard());
     
         view.findViewById(R.id.run_code_key).setOnClickListener(v -> mViewPager.setCurrentItem(TabManager.RUN_TAB_POSITION));
@@ -108,8 +99,8 @@ public class EditorTab extends Fragment {
         if (!mIsKeyboardVisible) {
             return;
         }
-        TransitionManager.beginDelayedTransition(mRoot, mKeyboardTransition);
-        mConstraintSetHiddenKeyboard.applyTo(mRoot);
+        // todo: add animation
+        mKeyboardView.setTranslationY(100);
         mIsKeyboardVisible = false;
     }
     
@@ -117,8 +108,8 @@ public class EditorTab extends Fragment {
         if (mIsKeyboardVisible) {
             return;
         }
-        TransitionManager.beginDelayedTransition(mRoot, mKeyboardTransition);
-        mConstraintSetOriginal.applyTo(mRoot);
+        // todo: add animation
+        mKeyboardView.setTranslationY(0);
         mIsKeyboardVisible = true;
     }
 }
