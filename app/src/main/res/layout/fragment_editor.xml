@@ -91,8 +91,8 @@
         app:description="@array/editor_discover_description"
         app:heading="@string/editor_discover_heading"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/editor"
-        app:layout_constraintRight_toRightOf="@+id/editor"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:prefName="editor"
         tools:visibility="gone"/>
