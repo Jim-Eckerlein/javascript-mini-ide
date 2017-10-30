@@ -138,6 +138,7 @@ public class Formatter {
                 mEditable.insert(cp(mLineStart), " ");
                 if(moveIManually) {
                     mI.inc();
+                    moveIManually = false;
                 }
             }
         }
