@@ -8,7 +8,7 @@
     <string name="run_discover_heading">Run your code</string>
     <array name="run_discover_description">
         <item>This is the place where your code runs</item>
-        <item>In case of an error, you'll see a red message</item>
+        <item>A red message indicates an error</item>
         <item>Stop by simply returning to the editor</item>
     </array>
 
