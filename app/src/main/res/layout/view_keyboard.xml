@@ -339,7 +339,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 app:primary=","
-                app:secondary="."/>
+                app:secondary=";"/>
 
             <io.jimeckerlein.jsshell.keyboard.SpaceKeyView
                 android:layout_width="0dp"
@@ -350,7 +350,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                app:primary=";"/>
+                app:primary="."/>
 
             <FrameLayout
                 android:layout_width="wrap_content"
