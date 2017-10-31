@@ -130,7 +130,9 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
     public void loadSession() {
         String sessionFile = mActivity.getPreferences(Context.MODE_PRIVATE).getString(mActivity.getString(R.string.pref_session_file), "");
         if (!sessionFile.equals("")) {
-            mFilesTab.openFile(sessionFile);
+            if (!mFilesTab.openFile(sessionFile, false)) {
+                mFilesTab.openDefaultExample();
+            }
         }
         else {
             mFilesTab.openDefaultExample();
@@ -205,5 +207,9 @@ public class TabManager extends FragmentPagerAdapter implements TabLayout.OnTabS
         }
         
         return true;
+    }
+
+    public EditorTab getEditor() {
+        return mEditorTab;
     }
 }

@@ -59,6 +59,16 @@ public class EditorTab extends Fragment {
         
         return view;
     }
+
+    /**
+     * Clear the editor without saving anything
+     */
+    public void clear() {
+        mCurrentFileIsExample = true;
+        mCurrentFileName.setText("");
+        mHasOpenedFile = false;
+        mEditor.clear();
+    }
     
     public void loadExample(String exampleTitle, @RawRes final int id) {
         mCurrentFileName.setText(exampleTitle);

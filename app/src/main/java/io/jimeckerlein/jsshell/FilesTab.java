@@ -104,21 +104,32 @@ public class FilesTab extends Fragment {
     public void setTabManager(TabManager tabManager) {
         mTabManager = tabManager;
     }
-    
-    public void openFile(String filename) {
+
+    /**
+     * Try to open a file
+     *
+     * @param filename      File to be opened
+     * @param dialogOnError Whether a dialog should be display in case of an error
+     * @return True on success
+     */
+    public boolean openFile(String filename, boolean dialogOnError) {
         try {
             mTabManager.loadFile(filename, FilesManager.getInstance().read(filename));
         } catch (IOException e) {
             e.printStackTrace();
-    
-            // Create error notifier dialog
-            new AlertDialog.Builder(getContext())
-                    .setTitle(R.string.error)
-                    .setMessage(R.string.files_error_cannot_open_file)
-                    .setPositiveButton(R.string.ok, (dialog, which) -> {
-                    })
-                    .show();
+
+            if (dialogOnError) {
+                // Create error notifier dialog
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.error)
+                        .setMessage(R.string.files_error_cannot_open_file)
+                        .setPositiveButton(R.string.ok, (dialog, which) -> {
+                        })
+                        .show();
+            }
+            return false;
         }
+        return true;
     }
     
     public void openDefaultExample() {
@@ -198,6 +209,7 @@ public class FilesTab extends Fragment {
             mFileViewListLayout.removeView(mFileViews.get(filename));
             mFileViews.remove(filename);
             FilesManager.getInstance().delete(filename);
+            mTabManager.getEditor().clear();
         } catch (IOException e) {
             e.printStackTrace();
             

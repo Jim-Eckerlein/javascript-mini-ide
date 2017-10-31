@@ -70,7 +70,7 @@ public class FileView extends FrameLayout {
         mRoot.setOnClickListener(v -> {
             if (!mFileSettingsShown) {
                 // File settings are not opened currently, so open file:
-                mFilesTab.openFile(getFilename());
+                mFilesTab.openFile(getFilename(), true);
             } else {
                 // File settings are opened currently, so close the settings:
                 hideFileSettings();
