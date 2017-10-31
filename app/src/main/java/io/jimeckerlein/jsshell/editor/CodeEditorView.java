@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import io.jimeckerlein.jsshell.R;
+import io.jimeckerlein.jsshell.Util;
 
 public class CodeEditorView extends FrameLayout {
 
@@ -17,42 +18,42 @@ public class CodeEditorView extends FrameLayout {
         super(context);
         init();
     }
-    
+
     public CodeEditorView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
-    
+
     public CodeEditorView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
-    
+
     private void init() {
         inflate(getContext(), R.layout.view_editor, this);
         mEditText = findViewById(R.id.edit_text);
         mEditText.requestFocus();
     }
-    
+
     public void write(String code, boolean moveCursorToStart) {
         mEditText.getText().replace(getCursorStart(), getCursorEnd(), code, 0, code.length());
-    
+
         if (code.equals("}") || code.equals("\n")) {
             mFormatter.format(mEditText.getText(), true);
         }
 
         highlight(mEditText.getText().toString(), moveCursorToStart ? 0 : mEditText.getSelectionStart());
     }
-    
+
     public void write(String code) {
         write(code, false);
     }
-    
+
     public void backspace() {
         int start = getCursorStart();
         int end = getCursorEnd();
         Editable text = mEditText.getText();
-        
+
         if (start == end && start > 0) {
             // If at line start, delete all leading spaces as well:
             boolean atLineStart = true;
@@ -70,7 +71,7 @@ public class CodeEditorView extends FrameLayout {
                 text.delete(spaceIndex, start);
                 highlight(text.toString(), spaceIndex);
             }
-            
+
             // Delete single char
             else {
                 mEditText.getText().delete(start - 1, start);
@@ -84,38 +85,41 @@ public class CodeEditorView extends FrameLayout {
             highlight(mEditText.getText().toString(), start);
         }
     }
-    
+
     private void highlight(String newCode, int selection) {
         HighlighterTask.Params params = new HighlighterTask.Params();
-        HighlighterTask highlighterTask = new HighlighterTask(getContext(), mEditText);
+        HighlighterTask highlighterTask = new HighlighterTask(getContext(), mEditText, ((highlightedCode, cursorPos) -> post(() -> Util.runOnUiThread(() -> {
+            mEditText.setText(highlightedCode);
+            mEditText.setSelection(cursorPos);
+        }))));
         highlighterTask.execute(params.set(newCode, selection));
     }
-    
+
     private int getCursorStart() {
         int start = Math.max(mEditText.getSelectionStart(), 0);
         int end = Math.max(mEditText.getSelectionEnd(), 0);
         return Math.min(start, end);
     }
-    
+
     private int getCursorEnd() {
         int start = Math.max(mEditText.getSelectionStart(), 0);
         int end = Math.max(mEditText.getSelectionEnd(), 0);
         return Math.max(start, end);
     }
-    
+
     public void format() {
         mFormatter.format(mEditText.getText(), false);
     }
-    
+
     public void clear() {
         mEditText.getText().clear();
         mEditText.getText().clearSpans();
         mEditText.setSelection(0);
     }
-    
+
     @Override
     public String toString() {
         return mEditText.getText().toString();
     }
-    
+
 }

@@ -8,11 +8,11 @@ import android.widget.EditText;
 public class HighlighterTask extends AsyncTask<HighlighterTask.Params, Integer, HighlighterTask.Params> {
     
     private final Highlighter mHighlighter;
-    private final EditText mEditText;
-    
-    HighlighterTask(Context context, EditText editText) {
+    private final OnFinishListener mOnFinish;
+
+    HighlighterTask(Context context, EditText editText, OnFinishListener onFinish) {
         mHighlighter = new Highlighter(context);
-        mEditText = editText;
+        mOnFinish = onFinish;
     }
     
     @Override
@@ -24,20 +24,25 @@ public class HighlighterTask extends AsyncTask<HighlighterTask.Params, Integer, 
     
     @Override
     protected void onPostExecute(Params result) {
-        mEditText.setText(result.mHighlightedCode);
-        mEditText.setSelection(result.mSelection);
+        /*mEditText.setText(result.mHighlightedCode);
+        mEditText.setSelection(result.mSelection);*/
+        mOnFinish.run(result.mHighlightedCode, result.mSelection);
     }
-    
+
+    public interface OnFinishListener {
+        void run(Spannable highlightedCode, int selection);
+    }
+
     public static class Params {
         public String mCode;
         public int mSelection;
         public Spannable mHighlightedCode;
-        
+
         public Params set(String code, int selection) {
             mCode = code;
             mSelection = selection;
             return this;
         }
     }
-    
+
 }
