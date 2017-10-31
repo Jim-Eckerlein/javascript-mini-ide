@@ -18,12 +18,14 @@ import io.jimeckerlein.jsshell.files.FilesManager;
 public class MainActivity extends AppCompatActivity {
 
     private static final String ON_BOARDED_PREF = "io.jimeckerlein.jsshell.ON_BOARDED_PREF";
-    private ViewPager mPager;
-    private TabManager mTabManager;
 
     static {
+        // Load C++ library:
         System.loadLibrary("native-lib");
     }
+
+    private ViewPager mPager;
+    private TabManager mTabManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

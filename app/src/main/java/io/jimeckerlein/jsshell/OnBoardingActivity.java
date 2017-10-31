@@ -15,12 +15,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * The activity introducing the app user to JS Shell.
+ * Is only shown the first time the app is opened or when the user click 'Intro'.
+ */
 public class OnBoardingActivity extends AppCompatActivity {
 
+    private static final int TAB_COUNT = 3;
     private ViewPager mViewPager;
     private Button mNextButton;
     private Button mLetsGoButton;
-    private static final int TAB_COUNT = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -9,6 +9,9 @@ import android.widget.FrameLayout;
 import io.jimeckerlein.jsshell.R;
 import io.jimeckerlein.jsshell.Util;
 
+/**
+ * The view containing a fully scrollable edit text.
+ */
 public class CodeEditorView extends FrameLayout {
 
     private final Formatter mFormatter = new Formatter();
@@ -35,6 +38,12 @@ public class CodeEditorView extends FrameLayout {
         mEditText.requestFocus();
     }
 
+    /**
+     * Write the piece of code at the current cursor position.
+     *
+     * @param code              Code to be written.
+     * @param moveCursorToStart If true, cursor is moved to start
+     */
     public void write(String code, boolean moveCursorToStart) {
         mEditText.getText().replace(getCursorStart(), getCursorEnd(), code, 0, code.length());
 
@@ -49,6 +58,10 @@ public class CodeEditorView extends FrameLayout {
         write(code, false);
     }
 
+    /**
+     * Delete code at cursor position.
+     * If a range of characters is selected, that range is deleted.
+     */
     public void backspace() {
         int start = getCursorStart();
         int end = getCursorEnd();
@@ -86,6 +99,11 @@ public class CodeEditorView extends FrameLayout {
         }
     }
 
+    /**
+     * Emit the asynchronous highlighting task.
+     * @param newCode Code to be highlighted
+     * @param selection Cursor position, required because whole text is replaced
+     */
     private void highlight(String newCode, int selection) {
         HighlighterTask.Params params = new HighlighterTask.Params();
         HighlighterTask highlighterTask = new HighlighterTask(getContext(), mEditText, ((highlightedCode, cursorPos) -> post(() -> Util.runOnUiThread(() -> {
@@ -95,22 +113,36 @@ public class CodeEditorView extends FrameLayout {
         highlighterTask.execute(params.set(newCode, selection));
     }
 
+    /**
+     * Get start of selected range or simply the cursor position.
+     * @return Selection start.
+     */
     private int getCursorStart() {
         int start = Math.max(mEditText.getSelectionStart(), 0);
         int end = Math.max(mEditText.getSelectionEnd(), 0);
         return Math.min(start, end);
     }
 
+    /**
+     * Get end of selected range or simply the cursor position.
+     * @return Selection end.
+     */
     private int getCursorEnd() {
         int start = Math.max(mEditText.getSelectionStart(), 0);
         int end = Math.max(mEditText.getSelectionEnd(), 0);
         return Math.max(start, end);
     }
 
+    /**
+     * Formats the whole code.
+     */
     public void format() {
         mFormatter.format(mEditText.getText(), false);
     }
 
+    /**
+     * Clear the editor.
+     */
     public void clear() {
         mEditText.getText().clear();
         mEditText.getText().clearSpans();

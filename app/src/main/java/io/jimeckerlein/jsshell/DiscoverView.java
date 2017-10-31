@@ -13,6 +13,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A view overlay displaying some information to the user.
+ */
 public class DiscoverView extends FrameLayout {
 
     private static final List<DiscoverView> DISCOVER_VIEWS = new ArrayList<>();
@@ -31,6 +34,18 @@ public class DiscoverView extends FrameLayout {
     public DiscoverView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
+    }
+
+    /**
+     * Reopens all discover views.
+     *
+     * @param context Application context
+     */
+    public static void showAll(Context context) {
+        for (DiscoverView view : DISCOVER_VIEWS) {
+            ((Activity) context).getPreferences(Context.MODE_PRIVATE).edit().putBoolean(view.mPrefName, false).apply();
+            view.setVisibility(VISIBLE);
+        }
     }
 
     private void init(AttributeSet attrs) {
@@ -68,13 +83,6 @@ public class DiscoverView extends FrameLayout {
             prefs.edit().putBoolean(finalPrefName, true).apply();
             setVisibility(GONE);
         });
-    }
-
-    public static void showAll(Context context) {
-        for(DiscoverView view : DISCOVER_VIEWS) {
-            ((Activity) context).getPreferences(Context.MODE_PRIVATE).edit().putBoolean(view.mPrefName, false).apply();
-            view.setVisibility(VISIBLE);
-        }
     }
 
 }

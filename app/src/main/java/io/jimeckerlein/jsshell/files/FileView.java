@@ -19,6 +19,9 @@ import io.jimeckerlein.jsshell.FilesTab;
 import io.jimeckerlein.jsshell.R;
 import io.jimeckerlein.jsshell.Util;
 
+/**
+ * A single file entry representing one user created file.
+ */
 public class FileView extends FrameLayout {
 
     private FilesTab mFilesTab;

@@ -6,12 +6,16 @@ import android.widget.TextView;
 import io.jimeckerlein.jsshell.R;
 import io.jimeckerlein.jsshell.Util;
 
+/**
+ * A thread waiting for the V8 engine to finish.
+ * Prints errors to console.
+ */
 public class V8Joiner extends Thread {
-    
+
     private final V8Thread mV8Thread;
     private final TextView mErrorViewer, mStatsViewer;
     private final Context mContext;
-    
+
     public V8Joiner(V8Thread v8Thread, TextView errorViewer, TextView statsViewer, Context context) {
         super("V8-JOINER");
         mV8Thread = v8Thread;
@@ -19,13 +23,13 @@ public class V8Joiner extends Thread {
         mStatsViewer = statsViewer;
         mContext = context;
     }
-    
+
     @Override
     public void run() {
         try {
             // Wait till V8 thread is finished:
             mV8Thread.join();
-    
+
         } catch (InterruptedException ignored) {
             // Will be interrupted if js execution is interrupted
         }

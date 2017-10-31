@@ -13,7 +13,7 @@ import java.util.TimerTask;
 import io.jimeckerlein.jsshell.Util;
 
 /**
- * A V8 engine with all predefined functions (print, sleep, ...)
+ * A V8 engine with all predefined functions (print, sleep, ...).
  */
 public class V8Thread extends V8Executor {
     

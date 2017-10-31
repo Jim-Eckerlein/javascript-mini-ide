@@ -17,8 +17,11 @@ import android.widget.TextView;
 import io.jimeckerlein.jsshell.editor.CodeEditorView;
 import io.jimeckerlein.jsshell.keyboard.KeyboardView;
 
+/**
+ * Tab representing the editor.
+ */
 public class EditorTab extends Fragment {
-    
+
     private CodeEditorView mEditor;
     private ViewPager mViewPager;
     private TextView mCurrentFileName;
@@ -31,23 +34,23 @@ public class EditorTab extends Fragment {
     public void setPager(ViewPager viewPager) {
         mViewPager = viewPager;
     }
-    
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    
+
         mKeyboardTransition.setDuration(200);
         mKeyboardTransition.setInterpolator(new AccelerateDecelerateInterpolator());
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_editor, container, false);
-    
+
         // Editor:
         mEditor = view.findViewById(R.id.editor);
         mCurrentFileName = view.findViewById(R.id.current_file_name);
-        
+
         // Keyboard:
         mKeyboardView = view.findViewById(R.id.keyboard);
         mKeyboardView.setEditor(mEditor);
@@ -56,7 +59,7 @@ public class EditorTab extends Fragment {
 
         view.findViewById(R.id.run_code_key).setOnClickListener(v -> mViewPager.setCurrentItem(TabManager.RUN_TAB_POSITION));
         view.findViewById(R.id.run_code_key_shortcut).setOnClickListener(v -> mViewPager.setCurrentItem(TabManager.RUN_TAB_POSITION));
-        
+
         return view;
     }
 
@@ -69,7 +72,7 @@ public class EditorTab extends Fragment {
         mHasOpenedFile = false;
         mEditor.clear();
     }
-    
+
     public void loadExample(String exampleTitle, @RawRes final int id) {
         mCurrentFileName.setText(exampleTitle);
         mCurrentFileIsExample = true;
@@ -77,11 +80,11 @@ public class EditorTab extends Fragment {
         mEditor.clear();
         mEditor.write(Util.readTextFile(getContext(), id), true);
     }
-    
+
     public CodeEditorView getEditor() {
         return mEditor;
     }
-    
+
     public void loadFile(String filename, String content) {
         mCurrentFileName.setText(filename);
         mCurrentFileIsExample = false;
@@ -89,23 +92,23 @@ public class EditorTab extends Fragment {
         mEditor.clear();
         mEditor.write(content, true);
     }
-    
+
     public String getCurrentFileName() {
         return mCurrentFileName.getText().toString();
     }
-    
+
     public boolean currentFileIsExample() {
         return mCurrentFileIsExample;
     }
-    
+
     public boolean hasOpenedFile() {
         return mHasOpenedFile;
     }
-    
+
     public boolean isKeyboardVisible() {
         return mIsKeyboardVisible;
     }
-    
+
     public void hideKeyboard() {
         if (!mIsKeyboardVisible) {
             return;
@@ -115,7 +118,7 @@ public class EditorTab extends Fragment {
         ((RelativeLayout.LayoutParams) mEditor.getLayoutParams()).addRule(RelativeLayout.ABOVE, R.id.show_keyboard_wrapper);
         mIsKeyboardVisible = false;
     }
-    
+
     public void showKeyboard() {
         if (mIsKeyboardVisible) {
             return;

@@ -43,7 +43,12 @@ public class KeyboardView extends FrameLayout {
         // Hide keyboard animation:
         findViewById(R.id.hide_keyboard).setOnClickListener(v -> mOnHideKeyboardListener.run());
     }
-    
+
+    /**
+     * Ran once to connect all keys with this keyboard.
+     *
+     * @param view Root view, this function runs recursively.
+     */
     private void initKeys(View view) {
         if (view instanceof ShiftKeyView) {
             mShiftKey = ((ShiftKeyView) view);
@@ -62,7 +67,11 @@ public class KeyboardView extends FrameLayout {
             }
         }
     }
-    
+
+    /**
+     * Writes the given code considering upper-casing through the shift key.
+     * @param code
+     */
     public void write(String code) {
         mEditor.write(mShiftKey.process(code));
     }

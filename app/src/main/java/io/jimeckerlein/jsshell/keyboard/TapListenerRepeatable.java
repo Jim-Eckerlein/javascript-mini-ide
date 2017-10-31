@@ -8,8 +8,12 @@ import java.util.TimerTask;
 
 import io.jimeckerlein.jsshell.Util;
 
+/**
+ * Similar to {@code TapListener}, except the no long tap exist.
+ * Instead, a longer tap means repeating the key.
+ */
 public abstract class TapListenerRepeatable implements View.OnTouchListener {
-    
+
     private static final long INITIAL_DELAY_MILLIS = 300;
     private static final long REPEAT_DELAY_MILLIS = 70;
 
@@ -22,7 +26,7 @@ public abstract class TapListenerRepeatable implements View.OnTouchListener {
     public boolean onTouch(View view, MotionEvent event) {
         boolean processed = false;
         int action = event.getAction();
-        
+
         if (MotionEvent.ACTION_DOWN == action) {
 
             mInitiateRepeatTimer = new Timer();
@@ -72,17 +76,17 @@ public abstract class TapListenerRepeatable implements View.OnTouchListener {
             onUp();
             processed = true;
         }
-        
+
         return processed;
     }
-    
+
     public void onTap() {
     }
-    
+
     public void onDown() {
     }
-    
+
     public void onUp() {
     }
-    
+
 }

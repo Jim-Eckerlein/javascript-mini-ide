@@ -7,35 +7,44 @@ import android.util.AttributeSet;
 
 import io.jimeckerlein.jsshell.R;
 
+/**
+ * The shift key of the keyboard.
+ * If simply tapped, only one character is upper cased, a long tap toggles the upper casing.
+ */
 public class ShiftKeyView extends android.support.v7.widget.AppCompatImageView implements KeyboardKeyConnection {
 
     public static final int INACTIVE = 0;
     public static final int SHIFT = 1;
     public static final int ALL_CAPS = 2;
-    
+
     private int mStatus = INACTIVE;
-    
+
     public ShiftKeyView(Context context) {
         super(context);
         init();
     }
-    
+
     public ShiftKeyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
-    
+
     public ShiftKeyView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
-    
+
     private void init() {
         setOnTouchListener(new TouchListener());
         setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.shift));
         setAlpha(KeyboardView.ALPHA_INACTIVE);
     }
 
+    /**
+     * Sets the drawable based on the current state.
+     *
+     * @param status New status to be set.
+     */
     private void setStatus(int status) {
         mStatus = status;
         if (INACTIVE == status) {
@@ -63,7 +72,7 @@ public class ShiftKeyView extends android.support.v7.widget.AppCompatImageView i
         }
         return input;
     }
-    
+
     private class TouchListener extends TapListener {
 
         @Override

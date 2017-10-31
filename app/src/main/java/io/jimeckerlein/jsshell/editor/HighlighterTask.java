@@ -5,8 +5,12 @@ import android.os.AsyncTask;
 import android.text.Spannable;
 import android.widget.EditText;
 
+/**
+ * The asynchronous task launching the highlighter, so that the highlighting process
+ * runs independently from the UI thread, avoid UI performance issues.
+ */
 public class HighlighterTask extends AsyncTask<HighlighterTask.Params, Integer, HighlighterTask.Params> {
-    
+
     private final Highlighter mHighlighter;
     private final OnFinishListener mOnFinish;
 
@@ -14,14 +18,14 @@ public class HighlighterTask extends AsyncTask<HighlighterTask.Params, Integer, 
         mHighlighter = new Highlighter(context);
         mOnFinish = onFinish;
     }
-    
+
     @Override
     protected Params doInBackground(Params... params) {
         String code = params[0].mCode;
         params[0].mHighlightedCode = mHighlighter.highlight(code);
         return params[0];
     }
-    
+
     @Override
     protected void onPostExecute(Params result) {
         /*mEditText.setText(result.mHighlightedCode);

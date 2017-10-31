@@ -11,6 +11,9 @@
 #include <functional>
 #include <vector>
 
+/**
+ * C++ implementation of the highlighter.
+ */
 class NativeHighlighter {
 
 private:
@@ -54,6 +57,10 @@ private:
 
 public:
 
+    /**
+     * Actual function performing the code parse and generates Android Text Spans.
+     * @param code
+     */
     void run(const std::string &code);
 
     std::vector<int> getSpanTypes();

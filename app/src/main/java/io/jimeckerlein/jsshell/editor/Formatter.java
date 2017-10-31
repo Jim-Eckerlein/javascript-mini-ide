@@ -6,7 +6,7 @@ import android.text.Spanned;
 
 /**
  * Format code to follow some general guide-lines.
- * Indents 4 spaces, continuation is indented by 2 spaces
+ * Indents 4 spaces, continuation is indented by 2 spaces.
  */
 public class Formatter {
 
@@ -14,10 +14,9 @@ public class Formatter {
             '+', '*', '/', '|', '!', '?', '%', '^',
             '.', '~', '=', '-', '&', '<', '>', ':', '\\'
     };
-
-    private Editable mEditable;
     private final Cursor mI = new Cursor();
     private final Cursor mLineStart = new Cursor();
+    private Editable mEditable;
     private int mIndent;
     private int mLeadingSpaceCount;
     private boolean mInContinuation;
