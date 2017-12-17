@@ -18,7 +18,11 @@ The JavaScript evaluator uses the high-performance J2V8 engine, a Java binding t
 
 ### Run
 
-![Editor](screenshots/run_0.png)
+![Run](screenshots/run_0.png)
+
+### Files manager
+
+![Files](screenshots/files_0.png)
 
 ## Dev Notes - Supply an SVG Logo
 
